@@ -3,26 +3,22 @@
     const button = document.querySelector('#run-script-button');
     button.addEventListener("click", (event) => {
         let script = document.getElementById('script-textbox');
-        alert(script.value);
+        sendScript(script.value);
     });
 
-    async function sendScript() {
-        const response = await fetch("https://reqbin.com/echo/post/json", {
+    async function sendScript(script) {
+        console.log(script);
+        const response = await fetch(window.location.href, {
             method: 'POST',
             headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             },
-            body: `{
-            "Id": 78912,
-            "Customer": "Jason Sweet",
-            "Quantity": 1,
-            "Price": 18.00
-            }`,
+            body: JSON.stringify({script: script})
             });
-        
+
             response.json().then(data => {
-            console.log(JSON.stringify(data));
+                document.getElementById("results").innerHTML = data.data;
             });
     }
  })();

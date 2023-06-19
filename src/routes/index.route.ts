@@ -13,5 +13,6 @@ export class IndexRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.index.getHomepage);
+    this.router.post(`${this.path}`, this.index.sendScript);
   }
 }
