@@ -13,12 +13,12 @@ export class IndexController {
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const script = String(req.body.script);
-      exec('Rscript -e ' + '"' + script + '"', (error, stdout, stderr) => {
+      exec('Rscript -e ' + '"' + script + '" > src/output/output.txt', (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
           return;
         }
-        console.log(`R script output: ${stdout}`);
+        //console.log(`R script output: ${stdout}`);
         res.status(200).json({ data: stdout, message: 'sent' });
       });
     } catch (error) {
