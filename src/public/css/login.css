@@ -93,7 +93,7 @@ body {
     box-shadow: 0px 2px 10px 0px rgba(142, 118, 157, 0.22);
 }
 
-.sign-in-btn {
+#sign-in-btn {
     margin-top: 20px;
     display: flex;
     width: 100%;
