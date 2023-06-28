@@ -9,15 +9,18 @@ import { readFileSync } from 'fs';
  * 
  * 
  * @param filepath le répertoire du fichier (le répertoire 
- * racine commence à partir du dossier src)
+ * racine commence à partir du dossier racine)
+ * 
+ * @returns format JSON
  * 
  */
-const csvParse = (filepath:string) =>
+export const csvParse = (filepath:string) =>
 {
 
     var file = readFileSync(filepath, 'utf8');
 
 parse(file, {
+    header: true,
     complete: (result) => {
         console.dir(result.data);
         return result.data;
