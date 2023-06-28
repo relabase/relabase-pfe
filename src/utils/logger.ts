@@ -58,7 +58,7 @@ logger.add(
 
 const stream = {
   write: (message: string) => {
-    logger.info(message.substring(0, message.lastIndexOf('\n')));
+    // logger.info(message.substring(0, message.lastIndexOf('\n')));
   },
 };
 
