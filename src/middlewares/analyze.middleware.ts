@@ -8,9 +8,10 @@ const verifyScript = (req: Request): string => {
 export const AnalyzeMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Valid = verifyScript(req);
-
     if (Valid) {
         next();
+    } else if (Valid.trimEnd().trimStart().length == 0) {
+        next(new HttpException(404, 'script empty'));
     } else {
         next(new HttpException(404, 'Error happened'));
     }
