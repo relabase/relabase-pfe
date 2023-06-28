@@ -1,5 +1,6 @@
 import { parse } from 'papaparse';
 import { readFileSync } from 'fs';
+import { User } from '@/interfaces/users.interface';
 
 
 
@@ -14,20 +15,24 @@ import { readFileSync } from 'fs';
  * @returns format JSON
  * 
  */
-export const csvParse = (filepath:string) =>
+
+export function csvParse(filepath:string):User[]
 {
 
     var file = readFileSync(filepath, 'utf8');
+    var res;
 
 parse(file, {
     header: true,
     complete: (result) => {
         console.dir(result.data);
-        return result.data;
+        res = result.data;
     
     
     }
 });
+
+return res;
 
 };
 
