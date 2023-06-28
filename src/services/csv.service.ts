@@ -25,10 +25,7 @@ export function csvParse(filepath:string):User[]
 parse(file, {
     header: true,
     complete: (result) => {
-        console.dir(result.data);
         res = result.data;
-    
-    
     }
 });
 
