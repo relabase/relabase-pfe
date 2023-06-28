@@ -12,7 +12,6 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      console.log(req.body.user);
       const script = String(req.body.script);
       exec('Rscript -e ' + '"' + script + '" > src/output/output.txt', (error, stdout, stderr) => {
         if (error) {

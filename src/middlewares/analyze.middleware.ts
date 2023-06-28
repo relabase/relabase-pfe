@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpException } from '@exceptions/httpException';
 
-const verifyScript = req => {
-  return req.body.script;
+const verifyScript = (req: Request): string => {
+  return String(req.body.script);
 };
 
 export const AnalyzeMiddleware = async (req: Request, res: Response, next: NextFunction) => {
