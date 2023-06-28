@@ -1,9 +1,20 @@
 body {
     margin: 0px;
     height: 100vh;
+    color: #130214;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
+
+.feather {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
 
 .half-container {
     width: 50%;
@@ -23,7 +34,7 @@ body {
 }
 
 .login-logo {
-    top: 7rem;
+    top: 10%;
     position: absolute;
     width: 10rem;
 }
@@ -56,15 +67,19 @@ body {
     display: flex; 
     flex-direction: row; 
     justify-content: space-evenly;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .input-before {
-    padding: 20px;
+    padding: 0px 10px;
 }
 
 .input-after {
     text-align: left;
     height: 100%;
+    padding-right: 15px;
+    width: 100%;
 }
 
 .input {
@@ -115,6 +130,11 @@ body {
 input {
     border: none;
     padding: 0px;
+    color: #130214;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: 100%;
 }
 
 textarea:focus, input:focus{
