@@ -22,6 +22,18 @@ body {
     color: #7E6D80;
 }
 
+.login-logo {
+    top: 7rem;
+    position: absolute;
+    width: 10rem;
+}
+
+.welcome-back {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
 .left-container {
     margin: auto;
     width: 25rem;
