@@ -10,6 +10,11 @@ WORKDIR /app
 # Install Node Package
 RUN npm install --legacy-peer-deps
 
+# Install Linux Package
+RUN apt-get update && apt-get install -y \
+    r-base \
+  && rm -rf /var/lib/apt/lists/*
+
 # Set Env
 ENV NODE_ENV development
 EXPOSE 3000
