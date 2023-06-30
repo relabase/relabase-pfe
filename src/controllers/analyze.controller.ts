@@ -21,10 +21,6 @@ export class AnalyzeController {
           console.error(`Error executing R script: ${error}`);
           return;
         }
-        if (stdout.length == 0) {
-          console.error('Invalid script');
-          return;
-        }
         console.log(stdout);
         res.status(200).json({ data: stdout, message: 'sent' });
       });
