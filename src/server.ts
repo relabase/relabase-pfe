@@ -4,9 +4,10 @@ import { UserRoute } from '@routes/users.route';
 import { AnalyzeRoute } from '@/routes/analyze.route';
 import { LoginRoute } from '@routes/login.route';
 import { ValidateEnv } from '@utils/validateEnv';
+import { LogRoute } from '@routes/logs.route';
 
 ValidateEnv();
 
-const app = new App([new UserRoute(), new AuthRoute(), new AnalyzeRoute(), new LoginRoute()]);
+const app = new App([new UserRoute(), new AuthRoute(), new AnalyzeRoute(), new LoginRoute(), new LogRoute()]);
 
 app.listen();

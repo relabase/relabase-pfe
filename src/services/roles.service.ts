@@ -9,7 +9,7 @@ import { connection } from '@/database/MysqlConnect';
 @Service()
 export class UserService {
   public async findAllUser(): Promise<User[]> {
-
+    var thing:Promise<User>;
     return new Promise((resolve,reject) =>
     connection.query<User[]>('SELECT * FROM `user`',  
     (err,res)=>{
@@ -36,51 +36,41 @@ export class UserService {
 
   public async createUser(userData: User): Promise<User> {
     return new Promise((resolve,reject)=>{
-      hash(userData.password, 10).then(
-        (val)=>{
-          console.log(val);
-          connection.query<OkPacket>('INSERT INTO user(email,password) VALUE(?,?)', 
-          [ userData.email,val],
-          (err,res)=>{
-            if (err) reject(err);
-            else
-            {
-              console.log("user " + userData.email + " created");
-              resolve(userData);
-            }
-          });
-        },
-        (rej) => {
-          reject(rej);
+      const hashedPassword = hash(userData.password, 10);
+
+      connection.query<OkPacket>('INSERT INTO user(email,pasword) VALUES(?,?,?)', 
+      [ userData.email,hashedPassword],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          console.log("user " + userData.email + " created");
         }
-      );
+      });
+      
+
     })
   }
 
   public async updateUser(userId: number, userData: User): Promise<User> {
 
     return new Promise((resolve,reject)=>{
-      hash(userData.password, 10).then((val)=>{
+      const hashedPassword = hash(userData.password, 10);
 
-        connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
-        [ val, userId],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            this.findUserById(userId)
-            .then((res)=>{
-              console.log(res);
-              resolve(res);
-            })
-            .catch(reject);
-          }
-        });
-      },
-      (rej)=>{
-        reject(rej);
-      }
-      );
+      connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
+      [ hashedPassword, userId],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          this.findUserById(userId)
+          .then((res)=>{
+            console.log(res);
+            resolve(res);
+          })
+          .catch(reject);
+        }
+      });
     })
   }
 
