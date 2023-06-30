@@ -3,49 +3,99 @@ import { Service } from 'typedi';
 import { HttpException } from '@exceptions/httpException';
 import { User } from '@interfaces/users.interface';
 import { UserModel } from '@models/users.model';
+import { OkPacket } from 'mysql2';//Pour la création d'un user seulement
+import { connection } from '@/database/MysqlConnect';
 
 @Service()
 export class UserService {
   public async findAllUser(): Promise<User[]> {
-    const users: User[] = UserModel;
-    return users;
+    var thing:Promise<User>;
+    return new Promise((resolve,reject) =>
+    connection.query<User[]>('SELECT * FROM `user`',  
+    (err,res)=>{
+      console.log(res);
+      if (err) reject(err);
+      else resolve(res);
+    })
+   )
   }
 
   public async findUserById(userId: number): Promise<User> {
-    const findUser: User = UserModel.find(user => user.id === userId);
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
 
-    return findUser;
+    return new Promise((resolve,reject) => {
+      connection.query<User[]>(
+        'SELECT * FROM `user` where id_user = ?',
+        [ userId ],
+        (err,res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]);
+        }
+        )
+    })
   }
 
   public async createUser(userData: User): Promise<User> {
-    const findUser: User = UserModel.find(user => user.email === userData.email);
-    if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
+    return new Promise((resolve,reject)=>{
+      const hashedPassword = hash(userData.password, 10);
 
-    const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = { ...userData, id: UserModel.length + 1, password: hashedPassword };
+      connection.query<OkPacket>('INSERT INTO user(email,pasword) VALUES(?,?,?)', 
+      [ userData.email,hashedPassword],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          console.log("user " + userData.email + " created");
+        }
+      });
+      
 
-    return createUserData;
+    })
   }
 
-  public async updateUser(userId: number, userData: User): Promise<User[]> {
-    const findUser: User = UserModel.find(user => user.id === userId);
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
+  public async updateUser(userId: number, userData: User): Promise<User> {
 
-    const hashedPassword = await hash(userData.password, 10);
-    const updateUserData: User[] = UserModel.map((user: User) => {
-      if (user.id === findUser.id) user = { ...userData, id: userId, password: hashedPassword };
-      return user;
-    });
+    return new Promise((resolve,reject)=>{
+      const hashedPassword = hash(userData.password, 10);
 
-    return updateUserData;
+      connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
+      [ hashedPassword, userId],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          this.findUserById(userId)
+          .then((res)=>{
+            console.log(res);
+            resolve(res);
+          })
+          .catch(reject);
+        }
+      });
+    })
   }
 
-  public async deleteUser(userId: number): Promise<User[]> {
-    const findUser: User = UserModel.find(user => user.id === userId);
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
+  public async deleteUser(userId: number): Promise<User> {
+    return new Promise((resolve,reject)=>{
 
-    const deleteUserData: User[] = UserModel.filter(user => user.id !== findUser.id);
-    return deleteUserData;
+      this.findUserById(userId)
+      .then((users) => {
+
+        connection.query<OkPacket>('DELETE FROM user WHERE id_user = ?', 
+        [ userId ],
+        (err,res)=>{
+          if (err) reject(err);
+          else
+          {
+            this.findUserById(userId)
+            .then((res)=>{
+              console.log(res);
+              resolve(users);
+            })
+            .catch(reject);
+          }
+        });
+      })
+      .catch(reject);
+    })
   }
 }
