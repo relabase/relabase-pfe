@@ -1,5 +1,11 @@
-// This file should contain all global css 
+// This file should contain all global css
 
-@import 'utilities/mixin';
-@import 'utilities/variables';
+// Import partials
+@import 'partials/mixin';
+@import 'partials/variables';
+
+// Import components
+@import 'components/navbar';
+
+// Import page-specific styles
 @import 'pages/login';

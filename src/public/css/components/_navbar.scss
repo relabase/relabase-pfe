@@ -1,0 +1,55 @@
+#navbar {
+  @include flex-center;
+  justify-content: space-between;
+  width: 1600px;
+  height: 70px;
+  background: $background-color;
+
+  .navbar-item-group {
+    @include flex-center;
+    gap: 20px;
+    color: $navbar-font-color;
+    font-size: 13px;
+    font-family: $main-font;
+    font-style: normal;
+    font-weight: 600;
+    line-height: $standard-line-height;
+    letter-spacing: $standard-letter-spacing;
+  }
+
+  .navbar-link {
+    @extend .navbar-item-group;
+    text-decoration: none; 
+    cursor: pointer;
+
+    &:hover {
+        color: pink; //todo
+      }
+  }
+
+  .navbar-link.active {
+    color: $main-font-color
+  }
+
+  .navbar-item-group-right {
+    @extend .navbar-item-group;
+    gap: 6px;
+  }
+
+  #navbar-logo {
+    width: 35px;
+    height: 24px;
+    padding: 28px 23px;
+    flex-shrink: 0;
+  }
+
+  #navbar-person-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .down-arrow-icon {
+    width: 12px;
+    height: 20px;
+  }
+}
