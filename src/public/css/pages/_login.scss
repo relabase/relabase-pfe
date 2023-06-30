@@ -1,15 +1,39 @@
-// This page should contain the css exclusive to login.html 
-// TODO: remove reused assets and move to respective files
+// This page should contain the css exclusive to login.html
 
-body {
-  margin: 0px;
+.login-page-wrapper {
   height: 100vh;
-  color: $main-font-color;
-  font-weight: bold;
-  font-family: $main-font;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.half-container,
+.half-container {
+  text-align: center;
+  width: 50%;
+  margin: 0px 5px;
+  padding: 0 5px;
+  box-sizing: border-box;
+
+  .left-container {
+    @include flex-center;
+    margin: auto;
+    width: 25rem;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  &.fill {
+    height: 98%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50px 0px;
+    }
+  }
+}
+
 .toggle-container,
 .input,
 #sign-in-btn,
@@ -18,11 +42,6 @@ body {
   margin-top: 10px;
   width: 100%;
   border-radius: $standard-border-radius;
-}
-
-.half-container {
-  width: 50%;
-  margin: 0px 10px;
 }
 
 .active {
@@ -59,14 +78,6 @@ body {
   margin-bottom: 20px;
 }
 
-.left-container {
-  @include flex-center;
-  margin: auto;
-  width: 25rem;
-  text-align: center;
-  flex-direction: column;
-}
-
 .input {
   height: 60px;
   flex-direction: row;
@@ -98,26 +109,15 @@ body {
   justify-content: center;
   color: $secondary-font-color;
   border: 1px solid #e3e1e3;
+
+  img {
+    margin-right: 10px;
+  }
 }
 
 .fill img {
   min-width: 100%;
   min-height: 100%;
-}
-
-input {
-  border: none;
-  padding: 0px;
-  color: $main-font-color;
-  font-family: $main-font;
-  font-size: $standard-font-size;
-  font-weight: 600;
-  width: 100%;
-}
-
-textarea:focus,
-input:focus {
-  outline: none;
 }
 
 hr.or-google-divider {
