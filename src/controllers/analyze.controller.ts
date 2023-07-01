@@ -13,8 +13,13 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      this.generateRFileFromString(String(req.body.script), next);
-      
+      const user_script = String(req.body.script);
+      const inject_csv_data = 'data = read.csv("src/test/WalkTheDogs.csv")\n';
+      const modded_script = inject_csv_data + user_script;
+      console.log(modded_script);
+
+      this.generateRFileFromString(modded_script, next);
+
       const command = 'Rscript -e "source(\'src/input/input.R\')" > src/output/output.txt';
       exec(command, (error, stdout, stderr) => {
         if (error) {
