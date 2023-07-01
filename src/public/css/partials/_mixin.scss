@@ -1,5 +1,12 @@
 // Mixins
-@mixin flex-center {
+@mixin flex-center($justify: center) {
   display: flex;
   align-items: center;
+  justify-content: $justify;
+}
+
+@mixin font-style($weight: $standard-font-weight, $size: $standard-font-size, $family: $main-font) {
+  font-weight: $weight;
+  font-size: $size;
+  font-family: $family;
 }

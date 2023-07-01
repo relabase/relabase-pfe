@@ -1,25 +1,24 @@
 // Login page-specific styles
 .login-page-wrapper {
+  @include flex-center;
+
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
 .half-container {
-  text-align: center;
+  box-sizing: border-box;
   width: 50%;
   margin: 0 5px;
   padding: 0 5px;
-  box-sizing: border-box;
+  text-align: center;
 
   &.fill {
     height: 98%;
 
     img {
-      height: 100%;
       width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 50px 0;
     }
@@ -27,10 +26,11 @@
 
   .left-container {
     @include flex-center;
-    margin: auto;
-    width: 25rem;
-    text-align: center;
+
     flex-direction: column;
+    width: 25rem;
+    margin: auto;
+    text-align: center;
   }
 }
 
@@ -39,24 +39,25 @@
 #sign-in-btn,
 .google-sign-in-btn {
   @include flex-center;
-  margin-top: 10px;
+
   width: 100%;
+  margin-top: 10px;
   border-radius: $standard-border-radius;
 }
 
 .active {
-  background-color: $background-color;
   color: $main-font-color !important;
+  background-color: $background-color;
 }
 
 .toggle-container {
-  background-color: #fce5f1;
-  margin-bottom: 10px;
-  height: 50px;
+  @include flex-center(space-evenly);
+  @include font-style;
+
   flex-direction: row;
-  justify-content: space-evenly;
-  font-size: $standard-font-size;
-  font-weight: 600;
+  height: 50px;
+  margin-bottom: 10px;
+  background-color: $primary-background-color;
 }
 
 .sign-in-toggle,
@@ -66,25 +67,25 @@
   color: $secondary-font-color;
 
   &:hover {
-    background: #fce5f1;
+    background: $primary-background-color;
   }
 }
 
 .login-logo {
-  top: 10%;
   position: absolute;
+  top: 10%;
   width: 10rem;
 }
 
 .welcome-back {
-  font-size: 3rem;
-  font-weight: 300;
+  @include font-style($weight: 300, $size: 3rem);
+
   margin-bottom: 20px;
 }
 
 .input {
-  height: 60px;
   flex-direction: row;
+  height: 60px;
   box-shadow: $main-shadow;
 
   &-before {
@@ -92,35 +93,30 @@
   }
 
   &-after {
-    text-align: left;
+    width: 100%;
     height: 100%;
     padding-right: 15px;
-    width: 100%;
+    text-align: left;
   }
 }
 
-.fill img {
-  min-width: 100%;
-  min-height: 100%;
-}
-
-hr.or-google-divider {
-  margin-top: 30px;
+.or-google-divider {
   width: 100%;
+  margin-top: 30px;
   padding: 0;
   overflow: visible;
-  border: none;
-  border-top: 1px solid $light-outline-color;
   text-align: center;
+  border: 0;
+  border-top: 1px solid $light-outline-color;
 
-  &:after {
-    content: 'Or';
-    display: inline-block;
+  &::after {
     position: relative;
     top: -10px;
+    display: inline-block;
     padding: 0 16px;
-    background: $background-color;
     color: $secondary-font-color;
+    background: $background-color;
+    content: 'Or';
   }
 }
 

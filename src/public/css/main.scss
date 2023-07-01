@@ -13,21 +13,20 @@
 // This file should contain all global CSS
 
 body {
-  margin: 0;
+  @include font-style(bold);
+
   height: 100vh;
+  margin: 0;
   color: $main-font-color;
-  font-weight: bold;
-  font-family: $main-font;
 }
 
 input {
-  border: none;
+  @include font-style;
+
+  width: 100%;
   padding: 0;
   color: $main-font-color;
-  font-family: $main-font;
-  font-size: $standard-font-size;
-  font-weight: 600;
-  width: 100%;
+  border: 0;
 }
 
 textarea:focus,
