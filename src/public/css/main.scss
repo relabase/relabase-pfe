@@ -1,27 +1,28 @@
-// This file should contain all global css
-
 // Import partials
 @import 'partials/mixin';
 @import 'partials/variables';
 
 // Import components
 @import 'components/navbar';
+@import 'components/buttons';
 
 // Import page-specific styles
 @import 'pages/login';
+@import 'pages/analyze';
+
+// This file should contain all global CSS
 
 body {
-  margin: 0px;
+  margin: 0;
   height: 100vh;
   color: $main-font-color;
   font-weight: bold;
   font-family: $main-font;
 }
 
-//TODO: possibly change to .input, with @extend depending on the page, and move to a /components
 input {
   border: none;
-  padding: 0px;
+  padding: 0;
   color: $main-font-color;
   font-family: $main-font;
   font-size: $standard-font-size;

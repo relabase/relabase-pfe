@@ -1,3 +1,4 @@
+// Navbar styles
 #navbar {
   @include flex-center;
   justify-content: space-between;
@@ -8,7 +9,7 @@
   .navbar-item-group {
     @include flex-center;
     gap: 20px;
-    color: $navbar-font-color;
+    color: $primary-font-color;
     font-size: 13px;
     font-family: $main-font;
     font-style: normal;
@@ -19,16 +20,16 @@
 
   .navbar-link {
     @extend .navbar-item-group;
-    text-decoration: none; 
+    text-decoration: none;
     cursor: pointer;
 
     &:hover {
-        color: pink; //todo
-      }
+      color: pink; //todo
+    }
   }
 
   .navbar-link.active {
-    color: $main-font-color
+    color: $main-font-color;
   }
 
   .navbar-item-group-right {

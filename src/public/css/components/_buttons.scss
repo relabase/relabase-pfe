@@ -1,0 +1,61 @@
+.shared-button{
+  justify-content: center;
+  color: $button-font-color;
+  font-family: $main-font;
+}
+
+.primary-button {
+  @include flex-center;
+  @extend .shared-button;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 9px 19px;
+  border-radius: 49px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  border-color: transparent;
+  gap: 10px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(89deg, $gradient-color-start 0%, $gradient-color-mid 50%, $gradient-color-end 100%);
+    box-shadow: $btn-shadow;
+    z-index: -1;
+  }
+
+  &:hover::before {
+    background: $gradient-color-start;
+  }
+}
+
+.large-button {
+  @extend .shared-button;
+  margin-top: 20px;
+  height: 50px;
+  background: linear-gradient(45deg, $gradient-color-start 0.01%, $gradient-color-mid 49.97%, $gradient-color-end 100%);
+  box-shadow: $btn-shadow;
+  
+  &:hover {
+    background: $gradient-color-start;
+  }
+}
+
+.google-sign-in-btn {
+  @extend .shared-button;
+  height: 50px;
+  color: $secondary-font-color;
+  border: 1px solid $light-outline-color;
+
+  img {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    border-color: pink;
+  }
+}

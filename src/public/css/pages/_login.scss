@@ -1,5 +1,4 @@
-// This page should contain the css exclusive to login.html
-
+// Login page-specific styles
 .login-page-wrapper {
   height: 100vh;
   display: flex;
@@ -11,9 +10,20 @@
 .half-container {
   text-align: center;
   width: 50%;
-  margin: 0px 5px;
+  margin: 0 5px;
   padding: 0 5px;
   box-sizing: border-box;
+
+  &.fill {
+    height: 98%;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50px 0;
+    }
+  }
 
   .left-container {
     @include flex-center;
@@ -21,16 +31,6 @@
     width: 25rem;
     text-align: center;
     flex-direction: column;
-  }
-
-  &.fill {
-    height: 98%;
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      border-radius: 50px 0px;
-    }
   }
 }
 
@@ -62,8 +62,12 @@
 .sign-in-toggle,
 .sign-up-toggle {
   width: 49%;
-  padding: 13px 0px;
+  padding: 13px 0;
   color: $secondary-font-color;
+
+  &:hover {
+    background: #fce5f1;
+  }
 }
 
 .login-logo {
@@ -84,7 +88,7 @@
   box-shadow: $main-shadow;
 
   &-before {
-    padding: 0px 10px;
+    padding: 0 10px;
   }
 
   &-after {
@@ -92,26 +96,6 @@
     height: 100%;
     padding-right: 15px;
     width: 100%;
-  }
-}
-
-#sign-in-btn {
-  margin-top: 20px;
-  height: 50px;
-  justify-content: center;
-  color: white;
-  background: var(--gradient, linear-gradient(45deg, #b287ae 0.01%, #df98c3 49.97%, #fda4cf 100%));
-  box-shadow: $btn-shadow;
-}
-
-.google-sign-in-btn {
-  height: 50px;
-  justify-content: center;
-  color: $secondary-font-color;
-  border: 1px solid #e3e1e3;
-
-  img {
-    margin-right: 10px;
   }
 }
 
@@ -126,8 +110,7 @@ hr.or-google-divider {
   padding: 0;
   overflow: visible;
   border: none;
-  border-top: 1px solid #e0e0e0;
-  color: #e3e1e3;
+  border-top: 1px solid $light-outline-color;
   text-align: center;
 
   &:after {
