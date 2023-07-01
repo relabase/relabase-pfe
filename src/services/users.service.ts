@@ -27,6 +27,7 @@ export class UserService {
         'SELECT * FROM `user` where id_user = ?',
         [ userId ],
         (err,res) => {
+          console.log(res);
           if (err) reject(err);
           else resolve(res?.[0]);
         }

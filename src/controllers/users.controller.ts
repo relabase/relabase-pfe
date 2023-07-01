@@ -20,8 +20,18 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.user.findUserById(userId);
+/*
+      if(findOneUserData)
+      {
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
+      */
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
+
+
+
+
     } catch (error) {
       next(error);
     }

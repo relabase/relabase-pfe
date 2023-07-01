@@ -50,28 +50,6 @@ export class LogService {
     })
   }
 /*
-  public async updateUser(userId: number, userData: User): Promise<User> {
-
-    return new Promise((resolve,reject)=>{
-      const hashedPassword = hash(userData.password, 10);
-
-      connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
-      [ hashedPassword, userId],
-      (err,res)=>{
-        if (err) reject(err);
-        else
-        {
-          this.findUserById(userId)
-          .then((res)=>{
-            console.log(res);
-            resolve(res);
-          })
-          .catch(reject);
-        }
-      });
-    })
-  }
-
   public async deleteUser(userId: number): Promise<User> {
     return new Promise((resolve,reject)=>{
 
