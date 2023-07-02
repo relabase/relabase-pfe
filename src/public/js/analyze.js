@@ -3,6 +3,8 @@
   const downloadFileButton = document.querySelector('#download-button');
   const textbox = document.getElementById('script-textbox');
   const lineNumbers = document.getElementById('line-numbers');
+  const iframeResults = document.getElementById('results-iframe');
+  const iframeDocumentResults = iframeResults.contentDocument || iframeResults.contentWindow.document;
   filename = "";
 
   runScriptButton.addEventListener('click', event => {
@@ -28,7 +30,7 @@
   });
 
   async function sendScript(script) {
-    document.getElementById('results').innerHTML = "Loading...";
+    iframeDocumentResults.body.innerHTML = "Loading...";
     const response = await fetch(window.location.href, {
       method: 'POST',
       headers: {
@@ -40,7 +42,7 @@
 
     response.json().then(data => {
       filename = data.filename;
-      document.getElementById('results').innerHTML = data.data;
+      iframeDocumentResults.body.innerHTML = data.data;
     });
   }
 

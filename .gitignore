@@ -125,3 +125,6 @@ dist
 # files
 input
 output
+
+# sass
+*.css.map
