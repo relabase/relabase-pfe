@@ -16,6 +16,7 @@
     downloadHtmlFile(filename);
   });
 
+  //line numbers
   lineNumbers.innerText = '1.';
 
   // Add code line number to script textbox
