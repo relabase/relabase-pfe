@@ -23,7 +23,7 @@ export class AnalyzeController {
         }
         //if - parse output file to check for errors/if the file is empty
         // console.log(stdout);
-        res.status(200).json({ data: stdout, message: 'sent' });
+        res.status(200).json({ data: filename, message: 'sent' });
       });
     } catch (error) {
       next(error);
@@ -32,6 +32,7 @@ export class AnalyzeController {
 
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
+      //TODO: maybe add ```{r} at the start by default?
       fs.writeFileSync(`src/input/${filename}.Rmd`, script);
     } catch (error) {
       next(error);
