@@ -39,7 +39,7 @@
     });
 
     response.json().then(data => {
-      filename = data.data;
+      filename = data.filename;
       document.getElementById('results').innerHTML = data.data;
     });
   }

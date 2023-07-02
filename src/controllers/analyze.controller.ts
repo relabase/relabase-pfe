@@ -21,9 +21,13 @@ export class AnalyzeController {
           console.error(`Error executing R script: ${error}`);
           return;
         }
-        //if - parse output file to check for errors/if the file is empty
-        // console.log(stdout);
-        res.status(200).json({ data: filename, message: 'sent' });
+        fs.readFile('src/output/' + filename + '.html', 'utf8', (err, data) => {
+          if (error) {
+            console.error(`Error reading .htm file: ${error}`);
+            return;
+          }
+          res.status(200).json({ data: data, filename: filename, message: 'sent' });
+        });
       });
     } catch (error) {
       next(error);
