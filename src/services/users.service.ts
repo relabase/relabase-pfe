@@ -1,9 +1,7 @@
 import { hash } from 'bcrypt';
 import { Service } from 'typedi';
-import { HttpException } from '@exceptions/httpException';
 import { User } from '@interfaces/users.interface';
-import { UserModel } from '@models/users.model';
-import { OkPacket } from 'mysql2';//Pour la création d'un user seulement
+import { OkPacket } from 'mysql2';
 import { connection } from '@/database/MysqlConnect';
 
 @Service()

@@ -20,12 +20,12 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.user.findUserById(userId);
-/*
-      if(findOneUserData)
+      if(findOneUserData === undefined)
       {
+        
         res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
       }
-      */
+      
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
 
@@ -54,6 +54,11 @@ export class UserController {
       const userData: User = req.body;
       const updateUserData: User = await this.user.updateUser(userId, userData);
 
+      if(updateUserData === undefined)
+      {
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
+
       res.status(200).json({ data: updateUserData, message: 'updated' });
     } catch (error) {
       next(error);
@@ -64,6 +69,11 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const deleteUserData: User = await this.user.deleteUser(userId);
+      if(deleteUserData === undefined)
+      {
+        
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });
     } catch (error) {

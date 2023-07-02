@@ -1,14 +1,12 @@
-import { hash } from 'bcrypt';
 import { Service } from 'typedi';
-import { HttpException } from '@exceptions/httpException';
+
 import { Log } from '@interfaces/logs.interface';
-import { OkPacket } from 'mysql2';//Pour la création d'un user seulement
+import { OkPacket } from 'mysql2';
 import { connection } from '@/database/MysqlConnect';
 
 @Service()
 export class LogService {
   public async findAllLog(): Promise<Log[]> {
-    var thing:Promise<Log>;
     return new Promise((resolve,reject) =>
     connection.query<Log[]>('SELECT * FROM `log`',  
     (err,res)=>{
@@ -49,23 +47,23 @@ export class LogService {
 
     })
   }
-/*
-  public async deleteUser(userId: number): Promise<User> {
+
+  public async deleteLog(LogId: number): Promise<Log> {
     return new Promise((resolve,reject)=>{
 
-      this.findUserById(userId)
-      .then((users) => {
+      this.findLogById(LogId)
+      .then((Logs) => {
 
-        connection.query<OkPacket>('DELETE FROM user WHERE id_user = ?', 
-        [ userId ],
+        connection.query<OkPacket>('DELETE FROM Log WHERE id_Log = ?', 
+        [ LogId ],
         (err,res)=>{
           if (err) reject(err);
           else
           {
-            this.findUserById(userId)
+            this.findLogById(LogId)
             .then((res)=>{
               console.log(res);
-              resolve(users);
+              resolve(Logs);
             })
             .catch(reject);
           }
@@ -74,5 +72,5 @@ export class LogService {
       .catch(reject);
     })
   }
-  */
+  
 }
