@@ -253,6 +253,10 @@
   scroll-behavior: smooth;
 }
 
+#script-textbox {
+  resize: none;
+}
+
 #results {
   padding-left: 0px;
   overflow: hidden;
