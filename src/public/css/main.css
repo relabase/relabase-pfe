@@ -252,6 +252,19 @@
   resize: none;
   scroll-behavior: smooth;
 }
+.script::-webkit-scrollbar {
+  width: 0.625rem;
+}
+.script::-webkit-scrollbar-track {
+  border-radius: 2.5rem;
+}
+.script::-webkit-scrollbar-thumb {
+  background: #f0c2d8;
+  border-radius: 2.5rem;
+}
+.script::-webkit-scrollbar-thumb:hover, .script::-webkit-scrollbar-thumb:active {
+  background-color: #fda4cf;
+}
 
 #script-textbox {
   resize: none;
