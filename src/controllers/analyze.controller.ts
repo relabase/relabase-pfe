@@ -32,8 +32,8 @@ export class AnalyzeController {
 
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
-      //TODO: maybe add ```{r} at the start by default?
-      fs.writeFileSync(`src/input/${filename}.Rmd`, script);
+      let prepend: string = "```{r}\n";
+      fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
       next(error);
     }
