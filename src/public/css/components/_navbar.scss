@@ -1,0 +1,61 @@
+// Navbar styles
+#navbar {
+  @include flex-center(space-between);
+
+  width: 1600px;
+  height: 70px;
+  background: $background-color;
+
+  %navbar-item-group {
+    @include flex-center;
+    @include font-style;
+
+    gap: 20px;
+    color: $primary-font-color;
+    font-style: normal;
+    line-height: $standard-line-height;
+    letter-spacing: $standard-letter-spacing;
+  }
+
+  .navbar-link {
+    @extend %navbar-item-group;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  .navbar-link.active {
+    color: $main-font-color;
+  }
+
+  .navbar-item-group-left {
+    @extend %navbar-item-group;
+  }
+
+  .navbar-item-group-right {
+    @extend %navbar-item-group;
+
+    gap: 6px;
+  }
+
+  #navbar-logo {
+    flex-shrink: 0;
+    width: 35px;
+    height: 24px;
+    padding: 28px 23px;
+  }
+
+  #navbar-person-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .down-arrow-icon {
+    width: 12px;
+    height: 20px;
+  }
+}

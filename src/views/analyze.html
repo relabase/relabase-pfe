@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <textarea id="script-textbox"></textarea>
-        <button id="run-script-button">run script</button>
-        <div id="results"></div>
-    </body>
+  <head>
+    <title>Analyze</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="navbar-item-group-left">
+        <a href="home.html"><img id="navbar-logo" src="img/navbar_logo.svg" /></a>
+        <a class="navbar-link" href="home.html">Home</a>
+        <a class="navbar-link" href="analyze.html">Analyze</a>
+        <a class="navbar-link" href="history.html">History</a>
+        <a class="navbar-link" href="admin.html">Admin</a>
+        <a class="navbar-link" href="help.html">Help</a>
+      </div>
+      <div class="navbar-item-group-right">
+        <img id="navbar-user-icon" src="img/person.svg" />
+        <div id="navbar-user">John Doe</div>
+        <img class="down-arrow-icon" src="img/arrow_drop_down.svg" />
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+    <div class="content-left">
+      <div class="analyze-header"> R Script
+        <button id="run-script-button" class="primary-button">Run Script</button>
+      </div>
+      <div class="editor">
+        <div id="line-numbers"></div>
+        <textarea id="script-textbox" class="script" spellcheck="false"></textarea>
+      </div>
+
+    </div>
+    <div class="content-right">
+      <div class="analyze-header"> Results
+        <button id="download-button" class="primary-button">Download .HTML</button>
+      </div>
+      <div id="results" class="script"><iframe id="results-iframe"></iframe></div>
+    </div>
+  </div>
+  </body>
 </html>
-<script src="js/script.js"></script>
+<script src="js/analyzescript.js"></script>

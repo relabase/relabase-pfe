@@ -1,0 +1,35 @@
+// Import partials
+@import 'partials/mixin';
+@import 'partials/variables';
+
+// Import components
+@import 'components/navbar';
+@import 'components/buttons';
+
+// Import page-specific styles
+@import 'pages/login';
+@import 'pages/analyze';
+
+// This file should contain all global CSS
+
+body {
+  @include font-style(bold);
+
+  height: 100vh;
+  margin: 0;
+  color: $main-font-color;
+}
+
+input {
+  @include font-style;
+
+  width: 100%;
+  padding: 0;
+  color: $main-font-color;
+  border: 0;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
