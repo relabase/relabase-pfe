@@ -1,4 +1,3 @@
-import { hash } from 'bcrypt';
 import { Service } from 'typedi';
 import { User_request } from '@interfaces/user_requests.interface';
 import { OkPacket } from 'mysql2';
