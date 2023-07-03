@@ -24,21 +24,21 @@
     <div class="content-wrapper">
     <div class="content-left">
       <div class="analyze-header"> R Script
-        <button id="run-script-button" class="primary-button">Run script</button>
+        <button id="run-script-button" class="primary-button">Run Script</button>
       </div>
       <div class="editor">
         <div id="line-numbers"></div>
-        <textarea id="script-textbox" class="script"></textarea>
+        <textarea id="script-textbox" class="script" spellcheck="false"></textarea>
       </div>
 
     </div>
     <div class="content-right">
       <div class="analyze-header"> Results
-        <button id="download-button" class="primary-button">Download pdf</button>
+        <button id="download-button" class="primary-button">Download .HTML</button>
       </div>
-      <div id="results" class="script"></div>
+      <div id="results" class="script"><iframe id="results-iframe"></iframe></div>
     </div>
   </div>
   </body>
 </html>
-<script src="js/script.js"></script>
+<script src="js/analyze.js"></script>

@@ -1,0 +1,17 @@
+---
+title: My Simple R Markdown File
+author: Your Name
+date: June 28, 2023
+---
+
+Introduction
+This is a simple R Markdown example.
+
+R Code Chunk
+Here's an R code chunk that calculates the sum of two numbers:
+
+```{r}
+a <- 3
+b <- 5
+sum <- a + b
+sum
