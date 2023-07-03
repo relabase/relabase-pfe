@@ -5,6 +5,11 @@ export class CreateLogDto {
   @IsNotEmpty()
   @MaxLength(255)
   public text: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  public author: string;
 }
 
 export class UpdateLogDto {

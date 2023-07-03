@@ -9,6 +9,18 @@ export class CreateUserDto {
   @MinLength(9)
   @MaxLength(32)
   public password: string;
+
+  @IsNotEmpty()
+  public id_role: number;
+
+  @IsString()
+  @IsNotEmpty()
+  public first_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public last_name: string;
+
 }
 
 export class UpdateUserDto {

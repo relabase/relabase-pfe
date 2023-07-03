@@ -33,8 +33,9 @@ export class LogService {
 
   public async createLog(logData: Log): Promise<Log> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO log(text) value(?)', 
-      [ logData.text ],
+      connection.query<OkPacket>('INSERT INTO log(text,author) value(?,?)', 
+      [ logData.text,
+        logData.author ],
       (err,res)=>{
         if (err) reject(err);
         else

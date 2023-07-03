@@ -36,10 +36,14 @@ export class UserService {
   public async createUser(userData: User): Promise<User> {
     return new Promise((resolve,reject)=>{
       hash(userData.password, 10).then(
-        (val)=>{
-          console.log(val);
-          connection.query<OkPacket>('INSERT INTO user(email,password) VALUE(?,?)', 
-          [ userData.email,val],
+        (hashedPass)=>{
+          console.log(hashedPass);
+          connection.query<OkPacket>('INSERT INTO user(email,password,first_name,last_name,id_role) VALUE(?,?,?,?,?)', 
+          [ userData.email,
+            hashedPass,
+            userData.first_name,
+            userData.last_name,
+            userData.id_role],
           (err,res)=>{
             if (err) reject(err);
             else
@@ -62,7 +66,8 @@ export class UserService {
       hash(userData.password, 10).then((val)=>{
 
         connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
-        [ val, userId],
+        [ val,
+          userId],
         (err,res)=>{
           if (err) reject(err);
           else
