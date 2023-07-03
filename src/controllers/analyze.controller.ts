@@ -13,33 +13,50 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user_script = String(req.body.script);
-      const inject_csv_data = 'data = read.csv("src/test/WalkTheDogs.csv")\n';
-      const modded_script = inject_csv_data + user_script;
-      console.log(modded_script);
-
-      this.generateRFileFromString(modded_script, next);
-
-      const command = 'Rscript -e "source(\'src/input/input.R\')" > src/output/output.txt';
+      let filename: string = this.getTimestamp();
+      this.generateRFileFromString(String(req.body.script), filename, next);
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.html\')"`;
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
           return;
         }
-        console.log(stdout);
-        res.status(200).json({ data: stdout, message: 'sent' });
+        fs.readFile('src/output/' + filename + '.html', 'utf8', (err, data) => {
+          if (error) {
+            console.error(`Error reading .htm file: ${error}`);
+            return;
+          }
+          res.status(200).json({ data: data, filename: filename, message: 'sent' });
+        });
       });
     } catch (error) {
       next(error);
     }
   };
 
-  private generateRFileFromString = async (script: string, next: NextFunction): Promise<void> => {
+  private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
-      fs.writeFileSync('src/input/input.R', script);
+      //TODO: add date and author's name
+      let prepend: string = "```{r}\n";
+      fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
       next(error);
     }
   };
+
+  private getTimestamp(): string {
+    const now = new Date();
+
+    const year = now.getFullYear().toString().padStart(4, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+    const timestamp = year + month + day + hours + minutes + seconds;
+
+    return timestamp;
+  }
 }
 

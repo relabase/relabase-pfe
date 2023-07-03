@@ -1,0 +1,338 @@
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 70px;
+  background: #fff;
+}
+#navbar .navbar-item-group-right, #navbar .navbar-item-group-left, #navbar .navbar-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: "Roboto", sans-serif;
+  gap: 20px;
+  color: #926296;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.39px;
+}
+#navbar .navbar-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+#navbar .navbar-link:hover {
+  color: #f5bdd8;
+}
+#navbar .navbar-link.active {
+  color: #130214;
+}
+#navbar .navbar-item-group-right {
+  gap: 6px;
+}
+#navbar #navbar-logo {
+  flex-shrink: 0;
+  width: 35px;
+  height: 24px;
+  padding: 28px 23px;
+}
+#navbar #navbar-person-icon {
+  width: 20px;
+  height: 20px;
+}
+#navbar .down-arrow-icon {
+  width: 12px;
+  height: 20px;
+}
+
+.google-sign-in-btn, .large-button, .primary-button {
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: "Roboto", sans-serif;
+  justify-content: center;
+  color: #fff;
+}
+
+.primary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+  gap: 10px;
+  padding: 9px 19px;
+  overflow: hidden;
+  text-align: center;
+  border-color: transparent;
+  border-radius: 49px;
+}
+.primary-button::before {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(89deg, #b287ae 0%, #df98c3 50%, #fda4cf 100%);
+  box-shadow: 0 6px 16px 0 rgba(251, 164, 206, 0.3);
+  content: "";
+}
+.primary-button:hover::before {
+  background: #b287ae;
+}
+
+.large-button {
+  height: 50px;
+  margin-top: 20px;
+  background: linear-gradient(45deg, #b287ae 0.01%, #df98c3 49.97%, #fda4cf 100%);
+  box-shadow: 0 6px 16px 0 rgba(251, 164, 206, 0.3);
+}
+.large-button:hover {
+  background: #b287ae;
+}
+
+.google-sign-in-btn {
+  height: 50px;
+  color: #7e6d80;
+  border: 1px solid #e3e1e3;
+}
+.google-sign-in-btn img {
+  margin-right: 10px;
+}
+.google-sign-in-btn:hover {
+  border-color: #f5bdd8;
+}
+
+.login-page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.half-container {
+  box-sizing: border-box;
+  width: 50%;
+  margin: 0 5px;
+  padding: 0 5px;
+  text-align: center;
+}
+.half-container.fill {
+  height: 98%;
+}
+.half-container.fill img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50px 0;
+}
+.half-container .left-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 25rem;
+  margin: auto;
+  text-align: center;
+}
+
+.toggle-container,
+.input,
+#sign-in-btn,
+.google-sign-in-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.active {
+  color: #130214 !important;
+  background-color: #fff;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: "Roboto", sans-serif;
+  flex-direction: row;
+  height: 50px;
+  margin-bottom: 10px;
+  background-color: #fce5f1;
+}
+
+.sign-in-toggle,
+.sign-up-toggle {
+  width: 49%;
+  padding: 13px 0;
+  color: #7e6d80;
+}
+.sign-in-toggle:hover,
+.sign-up-toggle:hover {
+  background: #fce5f1;
+}
+
+.login-logo {
+  position: absolute;
+  top: 10%;
+  width: 10rem;
+}
+
+.welcome-back {
+  font-weight: 300;
+  font-size: 3rem;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 20px;
+}
+
+.input {
+  flex-direction: row;
+  height: 60px;
+  box-shadow: 0 2px 10px 0 rgba(142, 118, 157, 0.22);
+}
+.input-before {
+  padding: 0 10px;
+}
+.input-after {
+  width: 100%;
+  height: 100%;
+  padding-right: 15px;
+  text-align: left;
+}
+
+.or-google-divider {
+  width: 100%;
+  margin-top: 30px;
+  padding: 0;
+  overflow: visible;
+  text-align: center;
+  border: 0;
+  border-top: 1px solid #e3e1e3;
+}
+.or-google-divider::after {
+  position: relative;
+  top: -10px;
+  display: inline-block;
+  padding: 0 16px;
+  color: #7e6d80;
+  background: #fff;
+  content: "Or";
+}
+
+#login-input-email,
+#login-input-password {
+  height: 100%;
+}
+
+.editor {
+  display: flex;
+  width: 100%;
+  height: 79vh;
+  max-height: 100vh;
+}
+
+.script {
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-height: 79vh;
+  padding-left: 1.875rem;
+  overflow-y: auto;
+  font-family: "Courier New", monospace;
+  background: linear-gradient(180deg, #fce5f1 0%, rgba(254, 221, 225, 0.8) 100%), #fce5f1;
+  border: 0;
+  resize: none;
+  scroll-behavior: smooth;
+}
+
+#script-textbox {
+  resize: none;
+}
+
+#results {
+  padding-left: 0px;
+  overflow: hidden;
+}
+
+#results-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#line-numbers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0 0.4375rem;
+  overflow: hidden;
+  color: #c2a6c5;
+  font-family: "Courier New", monospace;
+  white-space: pre;
+  text-align: right;
+  background: rgba(194, 166, 197, 0.2);
+  border-right: 1px solid #f1d7e6;
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+
+.content-left,
+.content-right {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-height: 100vh;
+  background: linear-gradient(0deg, #fce5f1 0%, #fce5f1 100%), linear-gradient(180deg, #fce5f1 0%, rgba(254, 221, 225, 0.8) 100%);
+}
+
+.analyze-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 1.25rem;
+  font-family: "Roboto", sans-serif;
+  padding: 23px 15px 19px;
+  color: #926296;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.0375rem;
+  border-bottom: 0.5px #f1d7e6 solid;
+}
+
+body {
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+  margin: 0;
+  color: #130214;
+}
+
+input {
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  padding: 0;
+  color: #130214;
+  border: 0;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}/*# sourceMappingURL=main.css.map */
