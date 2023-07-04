@@ -1,0 +1,43 @@
+// Admin page-specific styles
+#admin-content {
+  height: calc(100% - #{$navbar-height} - #{$content-padding});
+  margin-right: $content-padding;
+  margin-left: $content-padding;
+  background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%), $primary-background-color;
+
+  .tabs {
+    @include flex-center(flex-start);
+
+    gap: $tab-gap;
+    padding: 0.9375rem 0 0 $content-padding;
+    border-bottom: $tab-border solid $button-font-color;
+
+    .tab {
+      @include font-style;
+
+      align-items: center;
+      padding: 0.625rem 1.25rem;
+      color: $secondary-font-color;
+      border: $tab-border solid transparent;
+      border-radius: 0.75rem 0.75rem 0 0;
+
+      &.active {
+        color: $main-font-color;
+        background: $background-color;
+        border-color: $button-font-color;
+      }
+    }
+  }
+
+  .tab-content {
+    padding: $tab-padding;
+
+    .tab-pane {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}

@@ -1,1 +1,41 @@
-hello
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Analyze</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <div id="navbar">
+        <div class="navbar-item-group-left">
+            <a href="home.html"><img id="navbar-logo" src="img/navbar_logo.svg" /></a>
+            <a class="navbar-link" href="home">Home</a>
+            <a class="navbar-link" href="analyze">Analyze</a>
+            <a class="navbar-link" href="history">History</a>
+            <a class="navbar-link" href="admin">Admin</a>
+            <a class="navbar-link" href="help">Help</a>
+        </div>
+        <div class="navbar-item-group-right">
+            <img id="navbar-user-icon" src="img/person.svg" />
+            <div id="navbar-user">John Doe</div>
+            <img class="down-arrow-icon" src="img/arrow_drop_down.svg" />
+        </div>
+    </div>
+
+    <div id="admin-content">
+        <div class="tabs">
+            <div class="tab" id="tab1">User Applications</div>
+            <div class="tab" id="tab2">Package Requests</div>
+            <div class="tab" id="tab3">User Management</div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane" id="pane1">Content for Tab 1</div>
+            <div class="tab-pane" id="pane2">Content for Tab 2</div>
+            <div class="tab-pane" id="pane3">Content for Tab 3</div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="js/admin.js"></script>
