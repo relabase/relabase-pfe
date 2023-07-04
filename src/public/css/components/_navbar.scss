@@ -3,7 +3,6 @@
   @include flex-center(space-between);
 
   padding-right: 0.625rem;
-  height: 4.375rem;
   background: $background-color;
 
   %navbar-item-group {
@@ -11,6 +10,7 @@
     @include font-style;
 
     gap: 1.25rem;
+    height: $navbar-height;
     color: $primary-font-color;
     font-style: normal;
     line-height: $standard-line-height;
