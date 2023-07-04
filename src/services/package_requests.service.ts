@@ -49,35 +49,22 @@ export class Package_requestService {
       );
     
   }
-/*
-  public async updatePackage_request(package_requestId: number, package_requestData: Package_request): Promise<Package_request> {
+
+  public async approvePackage_request(package_requestId: number): Promise<OkPacket> {
 
     return new Promise((resolve,reject)=>{
-      hash(package_requestData.password, 10).then((val)=>{
-
-        connection.query<OkPacket>('UPDATE package_request SET password = ? WHERE id_package_request = ?', 
-        [ val,
-          package_requestId],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            this.findPackage_requestById(package_requestId)
-            .then((res)=>{
-              console.log(res);
-              resolve(res);
-            })
-            .catch(reject);
-          }
-        });
-      },
-      (rej)=>{
-        reject(rej);
-      }
-      );
-    })
+      connection.query<OkPacket>('UPDATE package_request SET is_approve = 1 WHERE id_package_request = ?', 
+      [package_requestId],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          resolve(res);
+        }
+      });
+  })
   }
-*/
+
   public async deletePackage_request(package_requestId: number): Promise<Package_request> {
     return new Promise((resolve,reject)=>{
 

@@ -17,7 +17,7 @@ export class Package_requestRoute implements Routes {
     this.router.get(`${this.path}`, this.package_request.getPackage_requests);
     this.router.get(`${this.path}/:id(\\d+)`, this.package_request.getPackage_requestById);
     this.router.post(`${this.path}`, ValidationMiddleware(CreatePackage_requestDto), this.package_request.createPackage_request);
-    //this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdatePackage_requestDto), this.package_request.updatePackage_request);
+    this.router.put(`${this.path}/:id(\\d+)`, this.package_request.approvePackage_request);
     this.router.delete(`${this.path}/:id(\\d+)`, this.package_request.deletePackage_request);
   }
 }

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { Package_request } from '@interfaces/package_requests.interface';
 import { Package_requestService } from '@services/package_requests.service';
+import { OkPacket } from 'mysql2';
 
 export class Package_requestController {
   public package_request = Container.get(Package_requestService);
@@ -48,24 +49,31 @@ export class Package_requestController {
       next(error);
     }
   };
-/*
-  public updatePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+
+  public approvePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const package_requestId = Number(req.params.id);
-      const package_requestData: Package_request = req.body;
-      const updatePackage_requestData: Package_request = await this.package_request.updatePackage_request(package_requestId, package_requestData);
+      const Package_requestData: Package_request = await this.package_request.findPackage_requestById(package_requestId);
 
-      if(updatePackage_requestData === undefined)
+      if(Package_requestData === undefined)
       {
-        res.status(409).json({ data: "Package_request doesn't exist", message: 'findOne' });
+        res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
       }
+      else if (Package_requestData.is_approve == true)
+      {
+        res.status(409).json({ data: "already approve", message: 'approve' });
+      }
+
+      const updatePackage_requestData: OkPacket = await this.package_request.approvePackage_request(package_requestId);
+
+
 
       res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
     } catch (error) {
       next(error);
     }
   };
-*/
+
   public deletePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const package_requestId = Number(req.params.id);

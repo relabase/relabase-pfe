@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { User_request } from '@interfaces/user_requests.interface';
 import { User_requestService } from '@services/user_requests.service';
+import { OkPacket } from 'mysql2';
 
 export class User_requestController {
   public user_request = Container.get(User_requestService);
@@ -48,24 +49,29 @@ export class User_requestController {
       next(error);
     }
   };
-/*
-  public updateUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public approveUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);
-      const user_requestData: User_request = req.body;
-      const updateUser_requestData: User_request = await this.user_request.updateUser_request(user_requestId, user_requestData);
+      const User_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
 
-      if(updateUser_requestData === undefined)
+      if(User_requestData === undefined)
       {
-        res.status(409).json({ data: "User_request doesn't exist", message: 'findOne' });
+        res.status(409).json({ data: "User_request doesn't exist", message: 'approve' });
       }
+      else if (User_requestData.is_approve == true)
+      {
+        res.status(409).json({ data: "already approve", message: 'approve' });
+      }
+
+      const updateUser_requestData: OkPacket = await this.user_request.approveUser_request(user_requestId);
+
+
 
       res.status(200).json({ data: updateUser_requestData, message: 'updated' });
     } catch (error) {
       next(error);
     }
   };
-*/
   public deleteUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);
