@@ -13,7 +13,7 @@
             <a class="navbar-link" href="home">Home</a>
             <a class="navbar-link" href="analyze">Analyze</a>
             <a class="navbar-link" href="history">History</a>
-            <a class="navbar-link" href="admin">Admin</a>
+            <a class="navbar-link active" href="admin">Admin</a>
             <a class="navbar-link" href="help">Help</a>
         </div>
         <div class="navbar-item-group-right">
@@ -25,12 +25,34 @@
 
     <div id="admin-content">
         <div class="tabs">
-            <div class="tab" id="tab1">User Applications</div>
-            <div class="tab" id="tab2">Package Requests</div>
-            <div class="tab" id="tab3">User Management</div>
+            <div class="tab" id="tab-user-application">User Applications</div>
+            <div class="tab" id="tab-package-request">Package Requests</div>
+            <div class="tab" id="tab-user-management">User Management</div>
         </div>
         <div class="tab-content">
-            <div class="tab-pane" id="pane1">Content for Tab 1</div>
+            <div class="tab-pane" id="pane1">
+                <div class="admin-header">User Applications</div>
+                <div class="user-section">
+                    <div class="user-list">
+                        <!-- Users will be generated here -->
+                    </div>
+                    <div class="user-content">
+                        <div class="content-header">
+                            <div class="large-header"><!-- set name in js--></div>
+                            <button id="approve-button">Approve</button>
+                            <button id="decline-button">Decline</button>
+                        </div>
+                        <hr />
+                        <div class="smaller-header">Email</div>
+                        <a id="email-link"></a>
+                        <!-- set email in js-->
+                        <div class="smaller-header">Application message</div>
+                        <p id="application-message"><!-- set application mesage in js --></p>
+                        
+                    </div>
+                    <div id="no-content-selected" class="large-thin-header show-content">No user selected</div>
+                </div>
+            </div>
             <div class="tab-pane" id="pane2">Content for Tab 2</div>
             <div class="tab-pane" id="pane3">Content for Tab 3</div>
         </div>

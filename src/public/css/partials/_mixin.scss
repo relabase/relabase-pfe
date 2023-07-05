@@ -10,3 +10,17 @@
   font-size: $size;
   font-family: $family;
 }
+
+@mixin tab-style {
+  align-items: center;
+  padding: $content-padding $tab-content-padding;
+  color: $secondary-font-color;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+@mixin content-style {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  @extend %scrollbar;
+}
