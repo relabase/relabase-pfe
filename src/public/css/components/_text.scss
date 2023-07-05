@@ -1,0 +1,43 @@
+%header {
+    @include flex-center(space-between);
+    @include font-style($weight: 400, $size: 1.25rem);
+  
+    padding: 0.9375rem $content-padding;
+    color: $primary-font-color;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.0375rem;
+  }
+
+.large-header{
+  @include font-style($size: 2rem, $weight: 300);
+ 
+  color: $main-font-color;
+  font-style: normal;
+  line-height: normal;
+} 
+
+.large-thin-header{
+  @include font-style($size: 2.5625rem, $weight: 200);
+
+  color: $background-color;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.077rem;
+}
+
+.small-header {
+  @include font-style($size: 0.9375rem);
+
+  color: $main-font-color;
+  line-height: normal;
+  text-align: left;
+}
+
+.smaller-header {
+  @include font-style($size: 0.6875rem);
+
+  color: $secondary-font-color;
+  line-height: normal;
+  text-align: left;
+}
