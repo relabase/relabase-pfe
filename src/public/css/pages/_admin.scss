@@ -70,7 +70,7 @@ $user-application-selector: "#{$tab-pane-selector} .user-application";
   @include flex-center(space-between);
 
   height: 4.8125rem;
-  margin: $content-padding;
+  margin: 0 $content-padding $content-padding $content-padding;
   background: rgb(255 255 255 / 60%);
   border-radius: 0.75rem;
 
