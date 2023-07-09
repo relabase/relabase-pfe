@@ -5,4 +5,6 @@ export interface Log extends RowDataPacket{
   create_time?: string;
   text: string;
   author:string;
+  file_path_input:string;
+  file_path_result:string;
 }

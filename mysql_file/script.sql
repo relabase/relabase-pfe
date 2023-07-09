@@ -14,11 +14,13 @@ INSERT INTO package_request(name_package,reason) VALUE("a package","lllllll");
 
 
 
-insert into log(text) value('a text'); 
-insert log(text) value('a text'); 
-insert log(text) value('a text');
+INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
 
-INSERT INTO log(text) VALUE('aaaa'); 
+INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+
 
 -- UPDATE user SET password = 'dwqwddqwd' WHERE id_user = 4;
 

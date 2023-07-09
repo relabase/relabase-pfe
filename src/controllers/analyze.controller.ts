@@ -1,8 +1,14 @@
+import { LogService } from '@/services/logs.service';
 import { exec } from 'child_process';
 import { NextFunction, Request, Response } from 'express';
+import { Container } from 'typedi';
 import fs from 'fs';
 
+
+
 export class AnalyzeController {
+  public log = Container.get(LogService);
+
   public getView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       res.sendFile('analyze.html', { root: './src/views' });
@@ -19,11 +25,18 @@ export class AnalyzeController {
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
+          //TODO add database
+          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.html`,"TODO name author", `Error executing R script: ${error}`)
           return;
+        }
+        else
+        {
+          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.html`,"TODO name author", `Success`)
         }
         fs.readFile('src/output/' + filename + '.html', 'utf8', (err, data) => {
           if (error) {
             console.error(`Error reading .htm file: ${error}`);
+
             return;
           }
           res.status(200).json({ data: data, filename: filename, message: 'sent' });

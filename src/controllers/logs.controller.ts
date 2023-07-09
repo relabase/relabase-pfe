@@ -4,6 +4,7 @@ import { User } from '@interfaces/users.interface';
 import { UserService } from '@services/users.service';
 import { Log } from '@/interfaces/logs.interface';
 import { LogService } from '@/services/logs.service';
+import { OkPacket } from 'mysql2';
 
 export class LogController {
   public log = Container.get(LogService);
@@ -33,9 +34,9 @@ export class LogController {
     try {
 
       const logData: Log = req.body;
-      const createLogData: Log = await this.log.createLog(logData);
+      const createLogData: OkPacket = await this.log.createLog(logData.file_path_input,logData.file_path_result,logData.author,logData.text);
 
-      res.status(201).json({ data: createLogData, message: 'created' });
+      res.status(201).json({ data: "createLogData", message: 'created' });
 
     } catch (error) {
       next(error);
