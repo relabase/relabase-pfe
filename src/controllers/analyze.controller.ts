@@ -13,8 +13,13 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const analyze_rscript_path = 'src/resources/analyze_rscript.R';
+      const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
+      const analyze_user_script = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', String(req.body.script)).
+      replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
+
       let filename: string = this.getTimestamp();
-      this.generateRFileFromString(String(req.body.script), filename, next);
+      this.generateRFileFromString(analyze_user_script, filename, next);
       let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.html\')"`;
       exec(command, (error, stdout, stderr) => {
         if (error) {
