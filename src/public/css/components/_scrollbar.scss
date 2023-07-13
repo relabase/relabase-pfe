@@ -1,20 +1,20 @@
 // Scrollbar styles
 %scrollbar {
-    &::-webkit-scrollbar {
-      width: $content-padding;
-    }
-  
-    &::-webkit-scrollbar-track {
-      border-radius: $scrollbar-border-radius;
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      background: $scrollbar-color;
-      border-radius: $scrollbar-border-radius;
-    }
-  
-    &::-webkit-scrollbar-thumb:hover,
-    &::-webkit-scrollbar-thumb:active {
-      background-color: $gradient-color-end;
-    }
+  &::-webkit-scrollbar {
+    width: $content-padding;
   }
+
+  &::-webkit-scrollbar-track {
+    border-radius: $scrollbar-border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-color;
+    border-radius: $scrollbar-border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb:hover,
+  &::-webkit-scrollbar-thumb:active {
+    background-color: $gradient-color-end;
+  }
+}
