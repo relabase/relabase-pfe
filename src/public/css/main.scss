@@ -40,3 +40,23 @@ textarea:focus,
 input:focus {
   outline: none;
 }
+
+hr {
+  flex-shrink: 0;
+  padding-bottom: $content-padding;
+  border: 0;
+  border-top: $hr-height solid $primary-background-color;
+}
+
+p {
+  font-size: $paragraph-font-size;
+}
+
+.spacing {
+  margin-bottom: $spacing;
+}
+
+p {
+  font-size: $paragraph-font-size;
+}
+
