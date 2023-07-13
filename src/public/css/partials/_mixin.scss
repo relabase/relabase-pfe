@@ -18,9 +18,27 @@
   border-radius: 0.75rem 0.75rem 0 0;
 }
 
-@mixin content-style {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  @extend %scrollbar;
+@mixin svg-icon($width, $height) {
+  flex-shrink: 0;
+  width: $width;
+  height: $height;
+}
+
+@mixin svg-icon-button($bg-color, $icon-url, $width: $button-svg-size, $height: $button-svg-size) {
+  @extend %shared-button;
+
+  display: inline-flex;
+  gap: $button-gap;
+  align-items: center;
+  padding: $button-padding-y $button-padding-x;
+  background: $bg-color;
+  border: 1px solid transparent;
+  border-radius: $button-border-radius;
+
+  &::before {
+    @include svg-icon($width, $height);
+
+    background-image: url($icon-url);
+    content: '';
+  }
 }

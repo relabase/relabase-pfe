@@ -60,3 +60,11 @@
     border-color: $hover-color;
   }
 }
+
+#approve-button {
+  @include svg-icon-button($button-approve-color, '../img/check_circle.svg');
+}
+
+#decline-button {
+  @include svg-icon-button($button-decline-color, '../img/cancel.svg');
+}

@@ -47,7 +47,6 @@
 
 .toggle-container {
   @include flex-center(space-evenly);
-  @include font-style;
 
   flex-direction: row;
   height: 3.125rem;
