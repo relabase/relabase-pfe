@@ -7,12 +7,11 @@
   min-height: 0;
   margin: 0 $content-padding;
   background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%), $primary-background-color;
-
 }
 
 // Tabs Styles
 .tabs {
-    @include flex-center(flex-start);
+  @include flex-center(flex-start);
 
   position: relative;
   gap: $tab-gap;
@@ -107,7 +106,7 @@
 #admin-content .user-section {
   display: flex;
   flex: 1;
-  flex-direction: row; 
+  flex-direction: row;
   height: 100%;
   overflow: hidden;
 }
@@ -170,4 +169,23 @@
 
 .hide-content {
   display: none;
+}
+
+// image
+.image-container {
+  padding-top: 2.5rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 37.5rem;
+  height: 25rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+#user-id-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

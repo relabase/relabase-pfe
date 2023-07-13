@@ -24,8 +24,9 @@
   height: $height;
 }
 
-@mixin svg-icon-button($bg-color, $icon-url, $width: $button-svg-size, $height: $button-svg-size) {
+@mixin svg-icon-button($bg-color, $icon-url, $width: $button-svg-size, $height: $button-svg-size, $hover-color: $hover-color) {
   @extend %shared-button;
+  @include font-style;
 
   display: inline-flex;
   gap: $button-gap;
@@ -40,5 +41,10 @@
 
     background-image: url($icon-url);
     content: '';
+  }
+
+  &:hover {
+    border-color: $hover-color;
+    cursor: pointer;
   }
 }

@@ -62,9 +62,22 @@
 }
 
 #approve-button {
-  @include svg-icon-button($button-approve-color, '../img/check_circle.svg');
+  @include svg-icon-button($button-approve-color, '../img/check_circle.svg', $hover-color: darken($button-approve-color, 10%));
 }
 
 #decline-button {
-  @include svg-icon-button($button-decline-color, '../img/cancel.svg');
+  @include svg-icon-button($button-decline-color, '../img/cancel.svg', $hover-color: darken($button-decline-color, 10%));
+}
+
+.unblur-button {
+  @include svg-icon-button($button-visibility-color, '../img/visibility.svg', $hover-color: darken($button-visibility-color, 10%), $height: 1rem);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.unblur-button.hidden {
+  display: none;
 }

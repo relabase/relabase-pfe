@@ -10,6 +10,7 @@
     applicationMessage: document.querySelector('#application-message'),
     approveButton: document.querySelector('#approve-button'),
     declineButton: document.querySelector('#decline-button'),
+    idImage: document.querySelector('#user-id-image')
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -81,14 +82,18 @@
   function showUserContent(userId, userName, userEmail, userApplicationMessage) {
     UI.userContent.classList.remove('hide-content');
     UI.noUserSelectedMessage.classList.add('hide-content');
-
+  
     UI.contentTitle.textContent = userName;
     UI.emailLink.href = `mailto:${userEmail}`;
     UI.emailLink.textContent = userEmail;
     UI.applicationMessage.textContent = userApplicationMessage;
-
+    UI.idImage.src = '../img/test-id.jpg';
+    UI.idImage.style.filter = "blur(10px)";
+    
     UI.approveButton.onclick = () => approveUser(userId);
     UI.declineButton.onclick = () => declineUser(userId);
+
+    document.querySelector('.unblur-button').classList.remove('hidden');
   }
 
   function hideUserContent() {
@@ -121,4 +126,9 @@
       hideUserContent();
     }
   }
+  
+  document.querySelector('.unblur-button').addEventListener('click', function() {
+    this.classList.add('hidden'); // Hide the button when clicked
+    UI.idImage.style.filter = "none";
+  });
 })();
