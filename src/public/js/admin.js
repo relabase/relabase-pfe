@@ -14,18 +14,18 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     handleTabs(UI.tabs, UI.panes);
-    UI.userContent.classList.add('hide-content'); 
-    generateDummyUsers(2);
+    UI.userContent.classList.add('hide-content');
+    generateDummyUsers(20);
   });
 
   function handleTabs(tabs, panes) {
     tabs.forEach((tab, index) => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(tab => tab.classList.remove('active'));
-            panes.forEach(pane => pane.classList.remove('active'));
-            tab.classList.add('active');
-            panes[index].classList.add('active');
-        });
+      tab.addEventListener('click', () => {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        panes.forEach(pane => pane.classList.remove('active'));
+        tab.classList.add('active');
+        panes[index].classList.add('active');
+      });
     });
 
     // Set first tab as being active at the start
@@ -35,8 +35,8 @@
 
   function generateDummyUsers(count) {
     for (let i = 1; i <= count; i++) {
-        const user = createDummyUser(i);
-        UI.userApplications.appendChild(user);
+      const user = createDummyUser(i);
+      UI.userApplications.appendChild(user);
     }
   }
 
@@ -69,10 +69,10 @@
     user.dataset.applicationMessage = id + ' Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
     user.addEventListener('click', () => {
-        const allUsers = document.querySelectorAll('.user-application');
-        allUsers.forEach(user => user.classList.remove('active'));
-        user.classList.add('active');
-        showUserContent(user.id, user.dataset.name, user.dataset.email, user.dataset.applicationMessage);
+      const allUsers = document.querySelectorAll('.user-application');
+      allUsers.forEach(user => user.classList.remove('active'));
+      user.classList.add('active');
+      showUserContent(user.id, user.dataset.name, user.dataset.email, user.dataset.applicationMessage);
     });
 
     return user;
@@ -96,19 +96,28 @@
     UI.noUserSelectedMessage.classList.remove('hide-content');
   }
 
-  function approveUser(userId){
+  function approveUser(userId) {
     console.log("approved " + userId);
-    document.getElementById(userId).remove();
+    let userElement = document.getElementById(userId);
+    let nextUser = userElement.nextElementSibling || userElement.previousElementSibling;
+    userElement.remove();
 
-    if(document.querySelectorAll('.user-application').length === 0) {
+    if (nextUser) {
+      nextUser.click();
+    } else {
       hideUserContent();
     }
   }
-  function declineUser(userId){
-    console.log("declined " + userId);
-    document.getElementById(userId).remove();
 
-    if(document.querySelectorAll('.user-application').length === 0) {
+  function declineUser(userId) {
+    console.log("declined " + userId);
+    let userElement = document.getElementById(userId);
+    let nextUser = userElement.nextElementSibling || userElement.previousElementSibling;
+    userElement.remove();
+
+    if (nextUser) {
+      nextUser.click();
+    } else {
       hideUserContent();
     }
   }
