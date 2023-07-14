@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { User } from '@interfaces/users.interface';
-import { UserService } from '@services/users.service';
 import { Log } from '@/interfaces/logs.interface';
 import { LogService } from '@/services/logs.service';
 import { OkPacket } from 'mysql2';
@@ -42,28 +40,16 @@ export class LogController {
       next(error);
     }
   };
-/*
-  public updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userId = Number(req.params.id);
-      const userData: User = req.body;
-      const updateUserData: User = await this.user.updateUser(userId, userData);
 
-      res.status(200).json({ data: updateUserData, message: 'updated' });
+  public deleteLog = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const logId = Number(req.params.id);
+      const deleteLogData: Log = await this.log.deleteLog(logId);
+
+      res.status(200).json({ data: deleteLogData, message: 'deleted' });
     } catch (error) {
       next(error);
     }
   };
-
-  public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userId = Number(req.params.id);
-      const deleteUserData: User = await this.user.deleteUser(userId);
-
-      res.status(200).json({ data: deleteUserData, message: 'deleted' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  */
+  
 }

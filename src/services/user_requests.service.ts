@@ -34,10 +34,10 @@ export class User_requestService {
 
   public async createUser_request(user_requestData: User_request): Promise<User_request> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO user_request(email,access_reason,filepath,first_name,last_name) VALUE(?,?,?,?,?)', 
+      connection.query<OkPacket>('INSERT INTO user_request(email,access_reason,image,first_name,last_name) VALUE(?,?,?,?,?)', 
       [ user_requestData.email,
         user_requestData.access_reason,
-        user_requestData.filepath,
+        user_requestData.image,
         user_requestData.first_name,
         user_requestData.last_name],
       (err,res)=>{

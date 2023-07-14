@@ -7,4 +7,5 @@ export interface User extends RowDataPacket{
   first_name:string;
   last_name:string;
   id_role:number;
+  image:string;
 }

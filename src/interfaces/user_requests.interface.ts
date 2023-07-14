@@ -7,5 +7,5 @@ export interface User_request extends RowDataPacket{
   is_approve: boolean;
   first_name:string;
   last_name:string;
-  filepath:string;
+  image:string;
 }

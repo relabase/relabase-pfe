@@ -18,7 +18,7 @@ export class CreateUser_requestDto {
 
   @IsString()
   @IsNotEmpty()
-  public filepath:string;
+  public image:string;
 
 }
 

@@ -21,6 +21,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   public last_name: string;
 
+  @IsString()
+  public image:string;
+
 }
 
 export class UpdateUserDto {

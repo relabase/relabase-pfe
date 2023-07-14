@@ -41,11 +41,16 @@ export class User_requestController {
   public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestData: User_request = req.body;
+      console.log(req.body);
+
+      
+
+      
       const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
 
       res.status(201).json({ data: createUser_requestData, message: 'created' });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       next(error);
     }
   };

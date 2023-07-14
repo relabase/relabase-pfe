@@ -38,12 +38,13 @@ export class UserService {
       hash(userData.password, 10).then(
         (hashedPass)=>{
           console.log(hashedPass);
-          connection.query<OkPacket>('INSERT INTO user(email,password,first_name,last_name,id_role) VALUE(?,?,?,?,?)', 
+          connection.query<OkPacket>('INSERT INTO user(email,password,first_name,last_name,id_role,image) VALUE(?,?,?,?,?,?)', 
           [ userData.email,
             hashedPass,
             userData.first_name,
             userData.last_name,
-            userData.id_role],
+            userData.id_role,
+            userData.image ],
           (err,res)=>{
             if (err) reject(err);
             else

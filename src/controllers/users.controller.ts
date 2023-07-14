@@ -40,6 +40,7 @@ export class UserController {
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
+
       const createUserData: User = await this.user.createUser(userData);
 
       res.status(201).json({ data: createUserData, message: 'created' });
