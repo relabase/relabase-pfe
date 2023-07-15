@@ -25,7 +25,7 @@ export class AnalyzeController {
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.html`,"TODO name author", `Error executing R script: ${error}`)
+          this.log.createLog(`src/input/${filename}.Rmd`,``,"TODO name author", `Error executing R script: ${error}`)
           return;
         }
         else
