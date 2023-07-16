@@ -77,6 +77,30 @@ export class User_requestController {
       next(error);
     }
   };
+
+  public rejectUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const user_requestId = Number(req.params.id);
+      const User_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
+
+      if(User_requestData === undefined)
+      {
+        res.status(409).json({ data: "User_request doesn't exist", message: 'reject' });
+      }
+      else if (User_requestData.is_approve == false)
+      {
+        res.status(409).json({ data: "already reject", message: 'reject' });
+      }
+
+      const updateUser_requestData: OkPacket = await this.user_request.rejectUser_request(user_requestId);
+
+
+
+      res.status(200).json({ data: updateUser_requestData, message: 'updated' });
+    } catch (error) {
+      next(error);
+    }
+  };
   public deleteUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);

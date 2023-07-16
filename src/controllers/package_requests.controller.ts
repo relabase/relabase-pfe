@@ -80,11 +80,11 @@ export class Package_requestController {
 
       if(Package_requestData === undefined)
       {
-        res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
+        res.status(409).json({ data: "Package_request doesn't exist", message: 'reject' });
       }
       else if (Package_requestData.is_approve == false)
       {
-        res.status(409).json({ data: "already reject", message: 'approve' });
+        res.status(409).json({ data: "already reject", message: 'reject' });
       }
 
       const updatePackage_requestData: OkPacket = await this.package_request.rejectPackageRequest(package_requestId);

@@ -9,8 +9,8 @@ insert user(email,password,id_role,image) value('example4@email.com','$2b$10$2YC
 
 INSERT INTO user(email,password,id_role) VALUE('test@test.com','sdasaasda',1);
 
-INSERT INTO user_request(email,access_reason,image,first_name,last_name,id_user) VALUE("dan@dan.com","hello","da/e.png","uuu","dada",1);
-INSERT INTO package_request(name_package,reason,id_user) VALUE("a package","lllllll",100);
+INSERT INTO user_request(email,access_reason,image,first_name,last_name) VALUE("dan@dan.com","hello","da/e.png","uuu","dada");
+INSERT INTO package_request(name_package,reason,id_user) VALUE("a package","lllllll",1);
 
 
 

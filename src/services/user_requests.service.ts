@@ -67,6 +67,20 @@ export class User_requestService {
     })
   }
 
+  public async rejectUser_request(user_requestId: number): Promise<OkPacket> {
+    return new Promise((resolve,reject)=>{
+        connection.query<OkPacket>('UPDATE user_request SET is_approve = 0 WHERE id_user_request = ?', 
+        [user_requestId],
+        (err,res)=>{
+          if (err) reject(err);
+          else
+          {
+            resolve(res);
+          }
+        });
+    })
+  }
+
   public async deleteUser_request(user_requestId: number): Promise<User_request> {
     return new Promise((resolve,reject)=>{
 
