@@ -1,1 +1,69 @@
-hello
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Analyze</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <div id="navbar">
+        <div class="navbar-item-group-left">
+            <a href="home.html"><img id="navbar-logo" src="img/navbar_logo.svg" /></a>
+            <a class="navbar-link" href="home">Home</a>
+            <a class="navbar-link" href="analyze">Analyze</a>
+            <a class="navbar-link" href="history">History</a>
+            <a class="navbar-link active" href="admin">Admin</a>
+            <a class="navbar-link" href="help">Help</a>
+        </div>
+        <div class="navbar-item-group-right">
+            <img id="navbar-user-icon" src="img/person.svg" />
+            <div id="navbar-user">John Doe</div>
+            <img class="down-arrow-icon" src="img/arrow_drop_down.svg" />
+        </div>
+    </div>
+
+    <div id="admin-content">
+        <div class="tabs">
+            <div class="tab" id="tab-user-application">User Applications</div>
+            <div class="tab" id="tab-package-request">Package Requests</div>
+            <div class="tab" id="tab-user-management">User Management</div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane" id="pane1">
+                <div class="admin-header">User Applications</div>
+                <div class="user-section">
+                    <div class="user-list">
+                        <!-- Users will be generated here -->
+                    </div>
+                    <div class="user-content">
+                        <div class="content-header">
+                            <div class="large-header"><!-- set name in js--></div>
+                            <div class="action-buttons">
+                                <button id="approve-button">Approve</button>
+                                <button id="decline-button">Decline</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="smaller-header">Email</div>
+                        <a id="email-link"></a>
+                        <!-- set email in js-->
+                        <div class="spacing"></div>
+                        <div class="smaller-header">Application message</div>
+                        <p id="application-message"><!-- set application mesage in js --></p>
+                        <div class="image-container">
+                            <img id="user-id-image" src="" /><!-- set image in js -->
+                            <button class="unblur-button">Show ID Photo</button>
+                        </div>                        
+                    </div>
+                    <div id="no-content-selected" class="large-thin-header show-content">No user selected</div>
+                </div>
+            </div>
+            <div class="tab-pane" id="pane2">Content for Tab 2</div>
+            <div class="tab-pane" id="pane3">Content for Tab 3</div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="js/admin.js"></script>

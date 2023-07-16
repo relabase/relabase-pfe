@@ -1,0 +1,36 @@
+// Text styles
+%header {
+  @include flex-center(space-between);
+  @include font-style($weight: 400, $size: 1.25rem);
+
+  padding: $header-padding $content-padding;
+  color: $primary-font-color;
+  letter-spacing: -0.0375rem;
+}
+
+.large-header {
+  @include font-style($weight: 300, $size: $header-large-size);
+
+  color: $main-font-color;
+}
+
+.large-thin-header {
+  @include font-style($weight: 200, $size: $header-large-thin-size);
+
+  color: $background-color;
+  letter-spacing: -0.077rem;
+}
+
+.small-header {
+  @include font-style($size: $header-small-size);
+
+  color: $main-font-color;
+  text-align: left;
+}
+
+.smaller-header {
+  @include font-style($size: $header-smaller-size);
+
+  color: $secondary-font-color;
+  text-align: left;
+}
