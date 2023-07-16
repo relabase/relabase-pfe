@@ -32,7 +32,7 @@ export class LogController {
     try {
 
       const logData: Log = req.body;
-      const createLogData: OkPacket = await this.log.createLog(logData.file_path_input,logData.file_path_result,logData.author,logData.text);
+      const createLogData: OkPacket = await this.log.createLog(logData.file_path_input,logData.file_path_result,logData.id_user,logData.text);
 
       res.status(201).json({ data: "createLogData", message: 'created' });
 

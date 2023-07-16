@@ -141,7 +141,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n \"text\":\"FA\",\r\n \"author\":\"someone\"\r\n}\r\n",
+							"raw": "\r\n{\r\n \"text\":\"FA\",\r\n \"id_user\": 1\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -414,13 +414,13 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/user_requests/1 (update)",
+					"name": "localhost:3000/user_requests/approve/1 (update)",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"is_approve\": 1\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -428,14 +428,44 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/user_requests/2",
+							"raw": "localhost:3000/user_requests/approve/1",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"user_requests",
-								"2"
+								"approve",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/user_requests/reject/1 (update)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user_requests/reject/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user_requests",
+								"reject",
+								"1"
 							]
 						}
 					},
@@ -511,7 +541,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/user_requests/1 (delete) Copy",
+					"name": "localhost:3000/user_requests/1 (delete)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -545,7 +575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"is_approve\": 1\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -568,13 +598,13 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/package_requests/reject/1 (update) Copy",
+					"name": "localhost:3000/package_requests/reject/1 (update)",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"is_approve\": 1\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"

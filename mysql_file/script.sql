@@ -14,12 +14,12 @@ INSERT INTO package_request(name_package,reason,id_user) VALUE("a package","llll
 
 
 
-INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+INSERT INTO log(text,id_user,file_path_input,file_path_result) value('dnn',1,'yu/yu','tu/ih');
 
-INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
-INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
-INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
-INSERT INTO log(text,author,file_path_input,file_path_result) value('dnn','mathing y','yu/yu','tu/ih');
+INSERT INTO log(text,id_user,file_path_input,file_path_result) value('dnn',1,'yu/yu','tu/ih');
+INSERT INTO log(text,id_user,file_path_input,file_path_result) value('dnn',1,'yu/yu','tu/ih');
+INSERT INTO log(text,id_user,file_path_input,file_path_result) value('dnn',1,'yu/yu','tu/ih');
+INSERT INTO log(text,id_user,file_path_input,file_path_result) value('dnn',1,'yu/yu','tu/ih');
 
 
 -- UPDATE user SET password = 'dwqwddqwd' WHERE id_user = 4;

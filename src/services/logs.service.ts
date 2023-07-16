@@ -31,11 +31,11 @@ export class LogService {
     })
   }
 
-  public async createLog(file_path_input:string,file_path_result:string,author:string, text:string): Promise<OkPacket> {
+  public async createLog(file_path_input:string,file_path_result:string,id_user:number, text:string): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO log(text,author,file_path_input,file_path_result) value(?,?,?,?)', 
+      connection.query<OkPacket>('INSERT INTO log(text,id_user,file_path_input,file_path_result) value(?,?,?,?)', 
       [ text,
-        author,
+        id_user,
         file_path_input,
         file_path_result ],
       (err,res)=>{

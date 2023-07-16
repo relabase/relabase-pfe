@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, IsNumber } from 'class-validator';
 
 export class CreateLogDto {
   @IsString()
@@ -6,10 +6,10 @@ export class CreateLogDto {
   @MaxLength(255)
   public text: string;
 
-  @IsString()
+  
   @IsNotEmpty()
-  @MaxLength(100)
-  public author: string;
+  @IsNumber()
+  public id_user: number;
 }
 
 export class UpdateLogDto {
