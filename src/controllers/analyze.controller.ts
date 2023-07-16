@@ -21,7 +21,7 @@ export class AnalyzeController {
     try {
       let filename: string = this.getTimestamp();
       this.generateRFileFromString(String(req.body.script), filename, next);
-      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.html\')"`;
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
@@ -30,9 +30,9 @@ export class AnalyzeController {
         }
         else
         {
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.html`,"TODO name author", `Success`)
+          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,"TODO name author", `Success`)
         }
-        fs.readFile('src/output/' + filename + '.html', 'utf8', (err, data) => {
+        fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
           if (error) {
             console.error(`Error reading .htm file: ${error}`);
 
