@@ -73,6 +73,29 @@ export class Package_requestController {
       next(error);
     }
   };
+  public rejectPackageRequest = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const package_requestId = Number(req.params.id);
+      const Package_requestData: Package_request = await this.package_request.findPackage_requestById(package_requestId);
+
+      if(Package_requestData === undefined)
+      {
+        res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
+      }
+      else if (Package_requestData.is_approve == false)
+      {
+        res.status(409).json({ data: "already reject", message: 'approve' });
+      }
+
+      const updatePackage_requestData: OkPacket = await this.package_request.rejectPackageRequest(package_requestId);
+
+
+
+      res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   public deletePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

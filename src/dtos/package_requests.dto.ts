@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, isNotEmpty, IsOptional } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, isNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 export class CreatePackage_requestDto {
 
@@ -10,7 +10,8 @@ export class CreatePackage_requestDto {
   @IsNotEmpty()
   public reason:string;
 
-  @IsOptional()
+  @IsNotEmpty()
+  @IsNumber()
   public id_user:number;
 
 }

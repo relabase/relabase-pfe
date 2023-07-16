@@ -539,7 +539,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/package_requests/1 (update)",
+					"name": "localhost:3000/package_requests/approve/1 (update)",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -553,13 +553,43 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/package_requests/1",
+							"raw": "localhost:3000/package_requests/approve/1",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"package_requests",
+								"approve",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/package_requests/reject/1 (update) Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_approve\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/package_requests/reject/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"package_requests",
+								"reject",
 								"1"
 							]
 						}
