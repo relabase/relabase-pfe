@@ -6,4 +6,5 @@ export interface Package_request extends RowDataPacket{
   reason:string;
   is_approve:boolean;
   id_user:number;
+  link:string;
 }

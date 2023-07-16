@@ -13,6 +13,10 @@ export class CreatePackage_requestDto {
   @IsNotEmpty()
   @IsNumber()
   public id_user:number;
+  
+  @IsString()
+  @IsNotEmpty()
+  public link:string;
 
 }
 

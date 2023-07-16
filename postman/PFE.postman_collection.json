@@ -520,7 +520,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name_package\":\"inexistant p\",\r\n    \"reason\": \"i hate apple\",\r\n    \"id_user\":1\r\n}",
+							"raw": "{\r\n    \"name_package\":\"inexistant p\",\r\n    \"reason\": \"i hate apple\",\r\n    \"id_user\":1,\r\n    \"link\":\"httpexist\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
