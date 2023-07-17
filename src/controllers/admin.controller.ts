@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 export class AdminController {
   public getAdminPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.sendFile('admin.html', { root: './src/views' });
+      res.render('admin');
     } catch (error) {
       next(error);
     }

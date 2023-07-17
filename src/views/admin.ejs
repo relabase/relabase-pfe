@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Analyze</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs', {page: 'admin' , username: 'John Doe' }); %>
+
+  <div id="admin-content">
+    <div class="tabs">
+      <div class="tab" id="tab-user-application">User Applications</div>
+      <div class="tab" id="tab-package-request">Package Requests</div>
+      <div class="tab" id="tab-user-management">User Management</div>
+    </div>
+    <div class="tab-content">
+      <%- include('partials/admin/tab-user-applications.ejs'); %>
+      <%- include('partials/admin/tab-package-requests.ejs'); %>
+      <%- include('partials/admin/tab-user-management.ejs'); %>
+    </div>
+  </div>
+
+  <script src="js/admin-script.js"></script>
+  <script src="js/admin/user-application.js"></script>
+  <script src="js/admin/package-request.js"></script>
+  <script src="js/admin/user-management.js"></script>
+</body>
+
+</html>
