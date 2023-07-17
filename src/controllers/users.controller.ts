@@ -20,8 +20,18 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.user.findUserById(userId);
+      if(findOneUserData === undefined)
+      {
+        
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
+      
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
+
+
+
+
     } catch (error) {
       next(error);
     }
@@ -30,6 +40,7 @@ export class UserController {
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
+
       const createUserData: User = await this.user.createUser(userData);
 
       res.status(201).json({ data: createUserData, message: 'created' });
@@ -42,7 +53,12 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const userData: User = req.body;
-      const updateUserData: User[] = await this.user.updateUser(userId, userData);
+      const updateUserData: User = await this.user.updateUser(userId, userData);
+
+      if(updateUserData === undefined)
+      {
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
 
       res.status(200).json({ data: updateUserData, message: 'updated' });
     } catch (error) {
@@ -53,7 +69,12 @@ export class UserController {
   public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = Number(req.params.id);
-      const deleteUserData: User[] = await this.user.deleteUser(userId);
+      const deleteUserData: User = await this.user.deleteUser(userId);
+      if(deleteUserData === undefined)
+      {
+        
+        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+      }
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });
     } catch (error) {

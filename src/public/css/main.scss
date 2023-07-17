@@ -1,3 +1,6 @@
+// Import Google font
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap';
+
 // Import partials
 @import 'partials/mixin';
 @import 'partials/variables';
@@ -5,10 +8,13 @@
 // Import components
 @import 'components/navbar';
 @import 'components/buttons';
+@import 'components/scrollbar';
+@import 'components/text';
 
 // Import page-specific styles
 @import 'pages/login';
 @import 'pages/analyze';
+@import 'pages/admin';
 
 // This file should contain all global CSS
 
@@ -18,6 +24,7 @@ body {
   height: 100vh;
   margin: 0;
   color: $main-font-color;
+  background-color: $background-color;
 }
 
 input {
@@ -32,4 +39,19 @@ input {
 textarea:focus,
 input:focus {
   outline: none;
+}
+
+hr {
+  flex-shrink: 0;
+  padding-bottom: $content-padding;
+  border: 0;
+  border-top: $hr-height solid $primary-background-color;
+}
+
+p {
+  font-size: $paragraph-font-size;
+}
+
+.spacing {
+  margin-bottom: $spacing;
 }

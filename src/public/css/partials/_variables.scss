@@ -1,22 +1,81 @@
 // Reused variables throughout the CSS
-$main-font: 'Roboto', sans-serif;
+
+// Fonts
+$main-font: 'Inter', sans-serif;
 $script-font: 'Courier New', monospace;
+
+// Font sizes
+$standard-font-size: 0.95rem;
+$paragraph-font-size: 0.8125rem;
+
+// Font colors
 $main-font-color: #130214;
 $primary-font-color: #926296;
 $secondary-font-color: #7e6d80;
 $button-font-color: #fff;
-$background-color: #fff;
-$main-shadow: 0 2px 10px 0 rgb(142 118 157 / 22%);
-$btn-shadow: 0 6px 16px 0 rgb(251 164 206 / 30%);
+
+// Font properties
+$standard-font-weight: 600;
 $standard-line-height: normal;
 $standard-letter-spacing: -0.39px;
-$standard-border-radius: 10px;
-$standard-font-size: 0.95rem;
-$standard-font-weight: 600;
+
+// Header properties
+$header-padding: 0.9375rem;
+$header-smaller-size: 0.6875rem;
+$header-small-size: 0.9375rem;
+$header-large-thin-size: 2.5625rem;
+$header-large-size: 2rem;
+
+// Background colors
+$background-color: #fff;
 $primary-background-color: #fce5f1;
-$primary-border-color: #f1d7e6;
-$light-outline-color: #e3e1e3;
+
+// Gradient colors
 $gradient-color-start: #b287ae;
 $gradient-color-mid: #df98c3;
 $gradient-color-end: #fda4cf;
+
+// Borders and outlines
+$standard-border-radius: 10px;
+$primary-border-color: #f1d7e6;
+$light-outline-color: #e3e1e3;
+$tab-border: 2px;
+
+// Shadows
+$main-shadow: 0 2px 10px 0 rgb(142 118 157 / 22%);
+$btn-shadow: 0 6px 16px 0 rgb(251 164 206 / 30%);
+
+// Hover
 $hover-color: #f5bdd8;
+
+// Scrollbar
+$scrollbar-border-radius: 2.5rem;
+$scrollbar-color: #f0c2d8;
+
+// Tab
+$tab-gap: 0.25rem;
+$tab-height: 3rem;
+$tab-content-padding: 1.25rem;
+
+// Content
+$content-padding: 0.625rem;
+$content-outline-padding: 1.25rem;
+$spacing: 1.5rem;
+
+// Navbar
+$navbar-height: 4.375rem;
+
+// Buttons
+$button-height: 3.125rem;
+$button-padding-y: 0.5625rem;
+$button-padding-x: 1.1875rem;
+$button-gap: 0.625rem;
+$button-border-radius: 3.0625rem;
+$button-margin-top: 1.25rem;
+$button-svg-size: 1.0625rem;
+$button-approve-color: #26c7b4;
+$button-decline-color: #e5467f;
+$button-visibility-color: #926296;
+
+// Hr
+$hr-height: 0.0625rem;
