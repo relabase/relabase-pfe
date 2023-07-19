@@ -1,7 +1,8 @@
+import { DB_SERVER } from '@/config';
 import{ createConnection } from 'mysql2'
 
 export const connection = createConnection({
-  host: "localhost",
+  host: DB_SERVER,
   port: 3306,
   user: "root",
   password: "root",
