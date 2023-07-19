@@ -49,6 +49,9 @@
 }
 
 .unblur-button, .decline-button, .approve-button, .google-sign-in-btn, .large-button, .primary-button {
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: "Inter", sans-serif;
   justify-content: center;
   color: #fff;
 }

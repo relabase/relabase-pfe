@@ -1,5 +1,7 @@
 // Buttons styles
 %shared-button {
+  @include font-style;
+
   justify-content: center;
   color: $button-font-color;
 }
