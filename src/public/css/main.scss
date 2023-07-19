@@ -60,3 +60,9 @@ p {
 .hide-content {
   display: none !important;
 }
+
+.flex-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: $content-gap;
+}
