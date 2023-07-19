@@ -5,21 +5,7 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div id="navbar">
-      <div class="navbar-item-group-left">
-        <a href="home.html"><img id="navbar-logo" src="img/navbar_logo.svg" /></a>
-        <a class="navbar-link" href="home">Home</a>
-        <a class="navbar-link active" href="analyze">Analyze</a>
-        <a class="navbar-link" href="history">History</a>
-        <a class="navbar-link" href="admin">Admin</a>
-        <a class="navbar-link" href="help">Help</a>
-      </div>
-      <div class="navbar-item-group-right">
-        <img id="navbar-user-icon" src="img/person.svg" />
-        <div id="navbar-user">John Doe</div>
-        <img class="down-arrow-icon" src="img/arrow_drop_down.svg" />
-      </div>
-    </div>
+    <%- include('partials/navbar.ejs', {page: 'analyze' , username: 'John Doe' }); %>
 
     <div class="content-wrapper">
     <div class="content-left">

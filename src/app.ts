@@ -64,6 +64,9 @@ export class App {
     this.app.get('/admin', function (req, res) {
       res.render('admin');
     });
+    this.app.get('/analyze', function (req, res) {
+      res.render('analyze');
+    });
   }
 
   private initializeSwagger() {
