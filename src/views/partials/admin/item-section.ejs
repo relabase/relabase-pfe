@@ -1,0 +1,13 @@
+<div class="item-section">
+  <div class="<%= type === 'user' ? 'item-list user-list' : 'item-list package-list' %>">
+      <!-- Users/Package Requests will be generated here -->
+  </div>
+    <div id="<%= type === 'user' ? 'user-content' : 'package-content' %>" class="item-content">
+        <% if (type === 'user') { %>
+            <%- include('user-application.ejs'); %>
+        <% } else if (type === 'package') { %>
+            <%- include('package-request.ejs'); %>
+        <% } %>
+    </div>
+    <div id="<%= type === 'user' ? 'user-no-content-selected' : 'package-no-content-selected' %>" class="no-content-selected large-thin-header show-content"></div>
+</div>
