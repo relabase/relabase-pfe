@@ -17,7 +17,6 @@
 @import 'pages/admin';
 
 // This file should contain all global CSS
-// lint: npx stylelint "src/**/*.scss" --fix
 
 body {
   @include font-style(bold);
