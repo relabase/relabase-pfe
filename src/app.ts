@@ -61,12 +61,6 @@ export class App {
     routes.forEach(route => {
       this.app.use('/', route.router);
     });
-    this.app.get('/admin', function (req, res) {
-      res.render('admin');
-    });
-    this.app.get('/analyze', function (req, res) {
-      res.render('analyze');
-    });
   }
 
   private initializeSwagger() {
