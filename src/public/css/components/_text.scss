@@ -34,3 +34,30 @@
   color: $secondary-font-color;
   text-align: left;
 }
+
+
+// Links
+%link {
+  @include font-style;
+
+  color: $primary-font-color;
+}
+
+.email-link{
+  @extend %link;
+}
+
+.external-link{
+  @extend %link;
+
+  &::after {
+    @include svg-icon(1.1875rem, 1.1875rem);
+
+    display: inline-block;
+    margin-bottom: 0.15rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    background-image: url('../img/open_in_new.svg');
+    content: '';
+  }
+}

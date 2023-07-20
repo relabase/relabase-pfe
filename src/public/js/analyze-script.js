@@ -5,7 +5,7 @@
   const lineNumbers = document.getElementById('line-numbers');
   const iframeResults = document.getElementById('results-iframe');
   const iframeDocumentResults = iframeResults.contentDocument || iframeResults.contentWindow.document;
-  filename = "";
+  filename = '';
 
   runScriptButton.addEventListener('click', event => {
     let script = textbox.value;
@@ -31,7 +31,7 @@
   });
 
   async function sendScript(script) {
-    iframeDocumentResults.body.innerHTML = "Loading...";
+    iframeDocumentResults.body.innerHTML = 'Loading...';
     const response = await fetch(window.location.href, {
       method: 'POST',
       headers: {
@@ -50,19 +50,19 @@
   async function downloadHtmlFile(filename) {
     try {
       const response = await fetch(`/download/${encodeURIComponent(filename)}`, {
-        method: 'GET'
+        method: 'GET',
       });
-  
+
       if (!response.ok) {
         throw new Error('Error downloading file');
       }
-  
+
       const link = document.createElement('a');
       const objectURL = URL.createObjectURL(await response.blob());
       link.href = objectURL;
       link.download = filename;
       link.style.display = 'none';
-  
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

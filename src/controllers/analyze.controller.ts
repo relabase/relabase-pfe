@@ -11,7 +11,7 @@ export class AnalyzeController {
 
   public getView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.sendFile('analyze.html', { root: './src/views' });
+      res.render('analyze');
     } catch (error) {
       next(error);
     }
@@ -57,7 +57,7 @@ export class AnalyzeController {
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
       //TODO: add date and author's name
-      let prepend: string = "```{r}\n";
+      let prepend: string = '```{r}\n';
       fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
       next(error);
@@ -79,4 +79,3 @@ export class AnalyzeController {
     return timestamp;
   }
 }
-
