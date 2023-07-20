@@ -1,8 +1,14 @@
+import { LogService } from '@/services/logs.service';
 import { exec } from 'child_process';
 import { NextFunction, Request, Response } from 'express';
+import { Container } from 'typedi';
 import fs from 'fs';
 
+
+
 export class AnalyzeController {
+  public log = Container.get(LogService);
+
   public getView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       res.render('analyze');
@@ -15,15 +21,29 @@ export class AnalyzeController {
     try {
       let filename: string = this.getTimestamp();
       this.generateRFileFromString(String(req.body.script), filename, next);
-      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.html\')"`;
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing R script: ${error}`);
+          //TODO switch id user to current user id
+          this.log.createLog(`src/input/${filename}.Rmd`,``,1, `Error executing R script: ${error}`).catch((rej) =>
+          {
+            console.log(rej);
+          });
           return;
         }
-        fs.readFile('src/output/' + filename + '.html', 'utf8', (err, data) => {
+        else
+        {
+          //TODO switch id user to current user id
+          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,1, `Success`).catch((rej) =>
+          {
+            console.log(rej);
+          });
+        }
+        fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
           if (error) {
             console.error(`Error reading .htm file: ${error}`);
+
             return;
           }
           res.status(200).json({ data: data, filename: filename, message: 'sent' });
