@@ -26,4 +26,12 @@ const app = new App([
         new Package_requestRoute()
     ]);
 
+    process.on('uncaughtException', (err) => {
+    console.error('Unhandled Exception', err);
+    });
+
+    process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection', err);
+    });
+
 app.listen();
