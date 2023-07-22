@@ -41,6 +41,7 @@ export class Package_requestController {
   public createPackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const package_requestData: Package_request = req.body;
+      package_requestData.id_status = 1;
       const createPackage_requestData: Package_request = await this.package_request.createPackage_request(package_requestData);
 
       res.status(201).json({ data: createPackage_requestData, message: 'created' });
@@ -59,7 +60,7 @@ export class Package_requestController {
       {
         res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
       }
-      else if (Package_requestData.is_approve == true)
+      else if (Package_requestData.id_status == 2)
       {
         res.status(409).json({ data: "already approve", message: 'approve' });
       }
@@ -82,7 +83,7 @@ export class Package_requestController {
       {
         res.status(409).json({ data: "Package_request doesn't exist", message: 'reject' });
       }
-      else if (Package_requestData.is_approve == false)
+      else if (Package_requestData.id_status == 3)
       {
         res.status(409).json({ data: "already reject", message: 'reject' });
       }

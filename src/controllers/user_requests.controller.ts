@@ -41,11 +41,7 @@ export class User_requestController {
   public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestData: User_request = req.body;
-      console.log(req.body);
-
-      
-
-      
+      user_requestData.id_status = 1;      
       const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
 
       res.status(201).json({ data: createUser_requestData, message: 'created' });
@@ -63,7 +59,7 @@ export class User_requestController {
       {
         res.status(409).json({ data: "User_request doesn't exist", message: 'approve' });
       }
-      else if (User_requestData.is_approve == true)
+      else if (User_requestData.id_status == 2)
       {
         res.status(409).json({ data: "already approve", message: 'approve' });
       }
@@ -87,7 +83,7 @@ export class User_requestController {
       {
         res.status(409).json({ data: "User_request doesn't exist", message: 'reject' });
       }
-      else if (User_requestData.is_approve == false)
+      else if (User_requestData.id_status == 3)
       {
         res.status(409).json({ data: "already reject", message: 'reject' });
       }

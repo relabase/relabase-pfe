@@ -34,12 +34,13 @@ export class User_requestService {
 
   public async createUser_request(user_requestData: User_request): Promise<User_request> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO user_request(email,access_reason,image,first_name,last_name) VALUE(?,?,?,?,?)', 
+      connection.query<OkPacket>('INSERT INTO user_request(email,access_reason,image,first_name,last_name,id_status) VALUE(?,?,?,?,?,?)', 
       [ user_requestData.email,
         user_requestData.access_reason,
         user_requestData.image,
         user_requestData.first_name,
-        user_requestData.last_name],
+        user_requestData.last_name,
+        user_requestData.id_status],
       (err,res)=>{
         if (err) reject(err);
         else
@@ -55,7 +56,7 @@ export class User_requestService {
 
   public async approveUser_request(user_requestId: number): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET is_approve = 1 WHERE id = ?', 
+        connection.query<OkPacket>('UPDATE user_request SET id_status = 2 WHERE id = ?', 
         [user_requestId],
         (err,res)=>{
           if (err) reject(err);
@@ -69,7 +70,7 @@ export class User_requestService {
 
   public async rejectUser_request(user_requestId: number): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET is_approve = 0 WHERE id = ?', 
+        connection.query<OkPacket>('UPDATE user_request SET id_status = 3 WHERE id = ?', 
         [user_requestId],
         (err,res)=>{
           if (err) reject(err);
