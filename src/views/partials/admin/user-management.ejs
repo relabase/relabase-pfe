@@ -1,29 +1,28 @@
-<table>
+<table id="userTable" class="user-management-table">
   <thead>
     <tr>
-      <th><a href="#">Name &#9660;</a></th>
-      <th><a href="#">Email &#9660;</a></th>
-      <th><a href="#">Last login &#9660;</a></th>
-      <th><a href="#">Role &#9660;</a></th>
+      <th><a href="#" class="light-text">Name</a></th>
+      <th><a href="#" class="light-text">Email</a></th>
+      <th><a href="#" class="light-text">Last login</a></th>
+      <th><a href="#" class="light-text">Role</a></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-body">
     <% users.forEach(user=> { %>
-      <tr>
-        <td>
-          <%= user.first_name %>
-            <%= user.last_name %>
+      <tr class="table-row">
+        <td class="table-cell">
+          <%= user.first_name %> <%= user.last_name %>
         </td>
-        <td>
-          <%= user.email %>
+        <td class="table-cell">
+          <a class="email-link" href="mailto: <%= user.email %>"><%= user.email %></a>
         </td>
-        <td>
+        <td class="table-cell light-text">
           <%= user.last_login ? user.last_login.toLocaleDateString('en-US') : 'N/A' %>
         </td>
-        <td>
-          <%= user.id_role===0 ? 'admin' : 'user' %>
+        <td class="table-cell light-text">
+          <%= user.id_role===0 ? 'Admin' : 'User' %>
         </td>
       </tr>
-      <% }) %>
+    <% }) %>
   </tbody>
 </table>
