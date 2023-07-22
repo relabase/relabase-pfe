@@ -51,16 +51,16 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   }
 
   // Show the content of the package request
-  function showPackageContent(packageId, packageName, packageEmail, packageLink, userOverlay, packageApplicationMessage) {
+  function showPackageContent(packageId, packageName, userEmail, packageLink, userName, packageApplicationMessage) {
     UI.packageContent.classList.remove('hide-content');
     UI.noPackageSelectedMessage.classList.add('hide-content');
 
     UI.contentTitle.textContent = packageName;
+    UI.emailLink.href = `mailto:${userEmail}`;
+    UI.emailLink.textContent = userEmail;
     UI.packageLink.href = packageLink;
     UI.packageLink.textContent = packageLink;
-    UI.userOverlay.textContent = userOverlay;
-    UI.emailLink.href = `mailto:${packageEmail}`;
-    UI.emailLink.textContent = packageEmail;
+    UI.userOverlay.textContent = userName; //TODO: change to userOverlay
     UI.applicationMessage.textContent = packageApplicationMessage;
 
     UI.approveButton.onclick = () => approvePackage(packageId);
@@ -84,11 +84,9 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
           target.dataset.name,
           target.dataset.email,
           target.dataset.packageLink,
-          target.dataset.userOverlay,
+          target.dataset.userName,
           target.dataset.applicationMessage,
         );
-        UI.approveButton.onclick = () => approvePackage(target.id);
-        UI.declineButton.onclick = () => declinePackage(target.id);
         return;
       }
       target = target.parentNode;

@@ -1,13 +1,49 @@
 <div class="item-section">
   <div class="<%= type === 'user' ? 'item-list user-list' : 'item-list package-list' %>">
-      <!-- Users/Package Requests will be generated here -->
+    <% let items=type==='user' ? userRequests : packageRequests; %>
+      <% items.forEach((item)=> { %>
+        <% if (type==='user' ) { %>
+          <div class="user-application" id="<%= item.id_user_request %>"
+            data-name="<%= item.first_name + ' ' + item.last_name %>" data-email="<%= item.email %>"
+            data-application-message="<%= item.access_reason %>">
+            <div class="user-info">
+              <div class="small-header">
+                <%= item.first_name + ' ' + item.last_name %>
+              </div>
+              <div class="smaller-header">
+                <%= item.email %>
+              </div>
+            </div>
+            <div class="arrow"></div>
+          </div>
+          <% } else if (type==='package' ) { %>
+            <div class="package-request" id="package-<%= item.id_package_request %>"
+              data-name="<%= item.name_package %>"
+              data-email="<%= (users.find(user => user.id === item.id_user))?.email %>"
+              data-package-link="<%= item.link %>"
+              data-user-name="<%= (users.find(user => user.id === item.id_user))?.first_name + " " + (users.find(user => user.id === item.id_user))?.last_name  %>"
+              data-application-message="<%= item.reason %>">
+              <div class="package-info">
+                <div class="small-header">
+                  <%= item.name_package %>
+                </div>
+                <div class="smaller-header">
+                  <%= (users.find(user=> user.id === item.id_user))?.first_name + " " + (users.find(user => user.id ===
+                    item.id_user))?.last_name %>
+                </div>
+              </div>
+              <div class="arrow"></div>
+            </div>
+            <% } %>
+              <% }); %>
   </div>
-    <div id="<%= type === 'user' ? 'user-content' : 'package-content' %>" class="item-content">
-        <% if (type === 'user') { %>
-            <%- include('user-application.ejs'); %>
-        <% } else if (type === 'package') { %>
-            <%- include('package-request.ejs'); %>
-        <% } %>
-    </div>
-    <div id="<%= type === 'user' ? 'user-no-content-selected' : 'package-no-content-selected' %>" class="no-content-selected large-thin-header show-content"></div>
+  <div id="<%= type === 'user' ? 'user-content' : 'package-content' %>" class="item-content">
+    <% if (type === 'user') { %>
+      <%- include('user-application.ejs'); %>
+    <% } else if (type === 'package') { %>
+      <%- include('package-request.ejs'); %>
+    <% } %>
+  </div>
+  <div id="<%= type === 'user' ? 'user-no-content-selected' : 'package-no-content-selected' %>"
+    class="no-content-selected large-thin-header show-content"></div>
 </div>
