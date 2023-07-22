@@ -21,7 +21,7 @@ export class LogService {
 
     return new Promise((resolve,reject) => {
       connection.query<Log[]>(
-        'SELECT * FROM `log` where id_log = ?',
+        'SELECT * FROM `log` where id = ?',
         [ logId ],
         (err,res) => {
           if (err) reject(err);

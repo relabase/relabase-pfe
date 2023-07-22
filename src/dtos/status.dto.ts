@@ -1,15 +1,15 @@
 import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, Max } from 'class-validator';
 
-export class CreateRoleDto {
+export class CreateStatusDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(32)
-  public name_role: string;
+  public name_status: string;
 }
 
-export class UpdateRoleDto {
+export class UpdateStatusDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(32)
-  public name_role: string;
+  public name_status: string;
 }

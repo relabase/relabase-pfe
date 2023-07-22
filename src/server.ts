@@ -10,6 +10,7 @@ import { LogRoute } from '@routes/logs.route';
 import { RoleRoute } from '@routes/roles.route';
 import { User_requestRoute } from '@routes/user_requests.route';
 import { Package_requestRoute } from '@routes/package_requests.route';
+import { StatusRoute } from './routes/status.route';
 
 ValidateEnv();
 
@@ -23,7 +24,8 @@ const app = new App([
         new LogRoute(),
         new RoleRoute(),
         new User_requestRoute(),
-        new Package_requestRoute()
+        new Package_requestRoute(),
+        new StatusRoute()
     ]);
 
     process.on('uncaughtException', (err) => {
