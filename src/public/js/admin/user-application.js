@@ -1,4 +1,4 @@
-import { hideContent, remove, checkEmptyList } from './admin-utilities.js';
+import { hideContent, removeElement, updateEmptyListMessage } from './admin-utilities.js';
 
 (function () {
   const UI = {
@@ -13,42 +13,6 @@ import { hideContent, remove, checkEmptyList } from './admin-utilities.js';
     declineButton: document.querySelector('#user-content .decline-button'),
     idImage: document.querySelector('#user-id-image'),
   };
-
-  // Generate dummy user data for testing
-  function generateDummyUsers(count) {
-    const users = [];
-    for (let i = 1; i <= count; i++) {
-      const user = {
-        id: 'user-' + i,
-        name: 'Test ' + i,
-        email: 'email' + i + '@example.com',
-        applicationMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-      };
-      users.push(user);
-    }
-    return users;
-  }
-
-  // TODO: best way to do this?
-  // Create HTML string for a single user-application
-  function createUserHtml(user) {
-    return `
-      <div class="user-application" id="${user.id}" data-name="${user.name}" data-email="${user.email}" data-application-message="${user.applicationMessage}">
-        <div class="user-info">
-          <div class="small-header">${user.name}</div>
-          <div class="smaller-header">${user.email}</div>
-        </div>
-        <div class="arrow"></div>
-      </div>
-    `;
-  }
-
-  // Add users to the user applications list
-  function addUsers(users) {
-    const userHtml = users.map(createUserHtml).join('');
-    UI.userApplications.innerHTML += userHtml;
-    checkEmptyList(UI.userApplications, UI.noUserSelectedMessage, 'No user to select', 'No user selected');
-  }
 
   // Approve user application
   function approveUser(userId) {
@@ -66,7 +30,7 @@ import { hideContent, remove, checkEmptyList } from './admin-utilities.js';
 
   // Remove user application from list
   function removeUser(userId) {
-    remove(
+    removeElement(
       userId,
       UI.userApplications,
       clearUserContent,
@@ -117,7 +81,7 @@ import { hideContent, remove, checkEmptyList } from './admin-utilities.js';
   // Initial setup
   document.addEventListener('DOMContentLoaded', () => {
     UI.userContent.classList.add('hide-content');
-    addUsers(generateDummyUsers(2));
+    updateEmptyListMessage(UI.userApplications, UI.noUserSelectedMessage, 'No user to select', 'No user selected');
   });
 
   // Event listener for unblurring user ID image
