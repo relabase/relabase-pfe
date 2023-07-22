@@ -4,6 +4,7 @@ import { UserRoute } from '@routes/users.route';
 import { AnalyzeRoute } from '@/routes/analyze.route';
 import { LoginRoute } from '@routes/login.route';
 import { AdminRoute } from '@routes/admin.route';
+import { HistoryRoute } from '@routes/history.route';
 import { DownloadRoute } from '@routes/download.route';
 import { ValidateEnv } from '@utils/validateEnv';
 import { LogRoute } from '@routes/logs.route';
@@ -20,6 +21,7 @@ const app = new App([
         new AnalyzeRoute(), 
         new LoginRoute(), 
         new AdminRoute(),
+        new HistoryRoute(),
         new DownloadRoute(),
         new LogRoute(),
         new RoleRoute(),
