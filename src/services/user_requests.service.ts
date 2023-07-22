@@ -34,9 +34,9 @@ export class User_requestService {
 
   public async createUser_request(user_requestData: User_request): Promise<User_request> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO user_request(email,access_reason,image,first_name,last_name,id_status) VALUE(?,?,?,?,?,?)', 
+      connection.query<OkPacket>('INSERT INTO user_request(email,message,image,first_name,last_name,id_status) VALUE(?,?,?,?,?,?)', 
       [ user_requestData.email,
-        user_requestData.access_reason,
+        user_requestData.message,
         user_requestData.image,
         user_requestData.first_name,
         user_requestData.last_name,

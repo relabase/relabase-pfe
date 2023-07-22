@@ -34,9 +34,9 @@ export class Package_requestService {
 
   public async createPackage_request(package_requestData: Package_request): Promise<Package_request> {
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO package_request(name_package,reason,id_user,link,id_status) VALUE(?,?,?,?,?)', 
+      connection.query<OkPacket>('INSERT INTO package_request(name_package,message,id_user,link,id_status) VALUE(?,?,?,?,?)', 
       [ package_requestData.name_package,
-        package_requestData.reason,
+        package_requestData.message,
         package_requestData.id_user,
         package_requestData.link,
         package_requestData.id_status ],
@@ -71,7 +71,7 @@ export class Package_requestService {
   public async rejectPackageRequest(package_requestId: number): Promise<OkPacket> {
 
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE package_request SET id_status = 3 WHERE id = ?', 
+      connection.query<OkPacket>('UPDATE package_request SET id = 3 WHERE id = ?', 
       [package_requestId],
       (err,res)=>{
         if (err) reject(err);
