@@ -71,6 +71,7 @@
   margin: 0 $content-padding $content-padding $content-padding;
   background: rgb(255 255 255 / 60%);
   border-radius: 0.75rem;
+  cursor: pointer; 
 
   &.active {
     background-color: $background-color;

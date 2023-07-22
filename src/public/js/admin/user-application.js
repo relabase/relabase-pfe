@@ -71,6 +71,13 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
     let target = e.target;
     while (target != this) {
       if (target.classList.contains('user-application')) {
+        let activeElement = this.querySelector('.active');
+        if (activeElement) {
+          activeElement.classList.remove('active');
+        }
+
+        target.classList.add('active');
+
         showUserContent(target.id, target.dataset.name, target.dataset.email, target.dataset.applicationMessage);
         return;
       }
