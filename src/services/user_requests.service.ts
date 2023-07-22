@@ -54,32 +54,20 @@ export class User_requestService {
     
   }
 
-  public async approveUser_request(user_requestId: number): Promise<OkPacket> {
-    return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET id_status = 2 WHERE id = ?', 
-        [user_requestId],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            resolve(res);
-          }
-        });
-    })
-  }
+  public async updateUser_request_status(user_requestId: number,id_status:number): Promise<OkPacket> {
 
-  public async rejectUser_request(user_requestId: number): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET id_status = 3 WHERE id = ?', 
-        [user_requestId],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            resolve(res);
-          }
-        });
-    })
+      connection.query<OkPacket>('UPDATE user_request SET id_status = ? WHERE id = ?', 
+      [ id_status,
+        user_requestId ],
+      (err,res)=>{
+        if (err) reject(err);
+        else
+        {
+          resolve(res);
+        }
+      });
+  })
   }
 
   public async deleteUser_request(user_requestId: number): Promise<User_request> {

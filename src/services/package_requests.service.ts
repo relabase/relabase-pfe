@@ -54,25 +54,12 @@ export class Package_requestService {
     
   }
 
-  public async approvePackage_request(package_requestId: number): Promise<OkPacket> {
+  public async updatePackage_request_status(package_requestId: number,id_status:number): Promise<OkPacket> {
 
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE package_request SET id_status = 2 WHERE id = ?', 
-      [package_requestId],
-      (err,res)=>{
-        if (err) reject(err);
-        else
-        {
-          resolve(res);
-        }
-      });
-  })
-  }
-  public async rejectPackageRequest(package_requestId: number): Promise<OkPacket> {
-
-    return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE package_request SET id = 3 WHERE id = ?', 
-      [package_requestId],
+      connection.query<OkPacket>('UPDATE package_request SET id_status = ? WHERE id = ?', 
+      [ id_status,
+        package_requestId ],
       (err,res)=>{
         if (err) reject(err);
         else

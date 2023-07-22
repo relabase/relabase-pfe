@@ -2,10 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { Package_request } from '@interfaces/package_requests.interface';
 import { Package_requestService } from '@services/package_requests.service';
+import { StatusService } from '@services/status.service';
 import { OkPacket } from 'mysql2';
+import { Status } from '@/interfaces/status.interface';
 
 export class Package_requestController {
   public package_request = Container.get(Package_requestService);
+  public status = Container.get(StatusService);
 
   public getPackage_requests = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -59,14 +62,27 @@ export class Package_requestController {
       if(Package_requestData === undefined)
       {
         res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
+        return;
       }
-      else if (Package_requestData.id_status == 2)
+
+      const statusData:Status = await this.status.findStatusById(Package_requestData.id_status);
+
+      if (statusData.name_status === "approve")
       {
+        
         res.status(409).json({ data: "already approve", message: 'approve' });
+        return;
       }
 
-      const updatePackage_requestData: OkPacket = await this.package_request.approvePackage_request(package_requestId);
+      const approve:Status = await this.status.findStatusByName("approve");
 
+      if(approve === undefined)
+      {
+        res.status(409).json({ data: "can't find status id for approve", message: 'approve' });
+        return;
+      }
+      
+      const updatePackage_requestData: OkPacket = await this.package_request.updatePackage_request_status(package_requestId,approve.id);
 
 
       res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
@@ -74,6 +90,7 @@ export class Package_requestController {
       next(error);
     }
   };
+  
   public rejectPackageRequest = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const package_requestId = Number(req.params.id);
@@ -83,12 +100,25 @@ export class Package_requestController {
       {
         res.status(409).json({ data: "Package_request doesn't exist", message: 'reject' });
       }
-      else if (Package_requestData.id_status == 3)
+
+      const statusData:Status = await this.status.findStatusById(Package_requestData.id_status);
+
+      if (statusData.name_status === "rejected")
       {
+        
         res.status(409).json({ data: "already reject", message: 'reject' });
+        return;
       }
 
-      const updatePackage_requestData: OkPacket = await this.package_request.rejectPackageRequest(package_requestId);
+      const reject:Status = await this.status.findStatusByName("rejected");
+
+      if(reject === undefined)
+      {
+        res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
+        return;
+      }
+      
+      const updatePackage_requestData: OkPacket = await this.package_request.updatePackage_request_status(package_requestId,reject.id);
 
 
 

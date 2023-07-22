@@ -30,6 +30,19 @@ export class StatusService {
     })
   }
 
+  public async findStatusByName(name: string): Promise<Status> {
+    return new Promise((resolve,reject) => {
+      connection.query<Status[]>(
+        'SELECT * FROM `status` where name_status LIKE (?)',
+        [ name ],
+        (err,res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]);
+        }
+        )
+    })
+  }
+
   public async createStatus(statusData: Status): Promise<Status> {
     return new Promise((resolve,reject)=>{
 
