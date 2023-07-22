@@ -1,7 +1,7 @@
 import { RowDataPacket } from "mysql2";
 
 export interface Log extends RowDataPacket{
-  id_log?: number;
+  id?: number;
   create_time?: string;
   text: string;
   id_user:number;

@@ -3,9 +3,12 @@ import { Container } from 'typedi';
 import { User_request } from '@interfaces/user_requests.interface';
 import { User_requestService } from '@services/user_requests.service';
 import { OkPacket } from 'mysql2';
+import { Status } from '@/interfaces/status.interface';
+import { StatusService } from '@/services/status.service';
 
 export class User_requestController {
   public user_request = Container.get(User_requestService);
+  public status = Container.get(StatusService);
 
   public getUser_requests = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -41,11 +44,7 @@ export class User_requestController {
   public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestData: User_request = req.body;
-      console.log(req.body);
-
-      
-
-      
+      user_requestData.id_status = 1;      
       const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
 
       res.status(201).json({ data: createUser_requestData, message: 'created' });
@@ -62,15 +61,27 @@ export class User_requestController {
       if(User_requestData === undefined)
       {
         res.status(409).json({ data: "User_request doesn't exist", message: 'approve' });
+        return;
       }
-      else if (User_requestData.is_approve == true)
+
+      const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
+
+      if (statusData.name_status === "approved")
       {
-        res.status(409).json({ data: "already approve", message: 'approve' });
+        
+        res.status(409).json({ data: "already approved", message: 'approve' });
+        return;
       }
 
-      const updateUser_requestData: OkPacket = await this.user_request.approveUser_request(user_requestId);
-
-
+      const approved:Status = await this.status.findStatusByName("approved");
+      
+      if(approved === undefined)
+      {
+        res.status(409).json({ data: "can't find status id for approved", message: 'approve' });
+        return;
+      }
+      
+      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,approved.id);
 
       res.status(200).json({ data: updateUser_requestData, message: 'updated' });
     } catch (error) {
@@ -86,13 +97,26 @@ export class User_requestController {
       if(User_requestData === undefined)
       {
         res.status(409).json({ data: "User_request doesn't exist", message: 'reject' });
-      }
-      else if (User_requestData.is_approve == false)
-      {
-        res.status(409).json({ data: "already reject", message: 'reject' });
+        return;
       }
 
-      const updateUser_requestData: OkPacket = await this.user_request.rejectUser_request(user_requestId);
+      const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
+      if (statusData.name_status === "rejected")
+      {
+        
+        res.status(409).json({ data: "already rejected", message: 'reject' });
+        return;
+      }
+
+      const reject:Status = await this.status.findStatusByName("rejected");
+
+      if(reject === undefined)
+      {
+        res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
+        return;
+      }
+
+      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,reject.id);
 
 
 
@@ -116,4 +140,5 @@ export class User_requestController {
       next(error);
     }
   };
+  status: any;
 }
