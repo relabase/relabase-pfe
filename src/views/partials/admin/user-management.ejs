@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th><a href="#">Name &#9660;</a></th>
+      <th><a href="#">Email &#9660;</a></th>
+      <th><a href="#">Last login &#9660;</a></th>
+      <th><a href="#">Role &#9660;</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user=> { %>
+      <tr>
+        <td>
+          <%= user.first_name %>
+            <%= user.last_name %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+        <td>
+          <%= user.last_login ? user.last_login.toLocaleDateString('en-US') : 'N/A' %>
+        </td>
+        <td>
+          <%= user.id_role===0 ? 'admin' : 'user' %>
+        </td>
+      </tr>
+      <% }) %>
+  </tbody>
+</table>
