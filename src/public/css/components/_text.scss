@@ -35,7 +35,6 @@
   text-align: left;
 }
 
-
 // Links
 %link {
   @include font-style;
@@ -43,11 +42,11 @@
   color: $primary-font-color;
 }
 
-.email-link{
+.email-link {
   @extend %link;
 }
 
-.external-link{
+.external-link {
   @extend %link;
 
   &::after {
@@ -57,7 +56,14 @@
     margin-bottom: 0.15rem;
     margin-left: 0.5rem;
     vertical-align: middle;
-    background-image: url('../img/open_in_new.svg');
-    content: '';
+    background-image: url("../img/open_in_new.svg");
+    content: "";
   }
+}
+
+// other text styles
+.light-text {
+  @include font-style($weight: 500);
+
+  color: $secondary-font-color;
 }
