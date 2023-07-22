@@ -4,7 +4,7 @@ INSERT INTO role(name_role) VALUE('user');
 
 
 INSERT INTO status(name_status) VALUE('in progress');
-INSERT INTO status(name_status) VALUE('approve');
+INSERT INTO status(name_status) VALUE('approved');
 INSERT INTO status(name_status) VALUE('rejected');
 
 

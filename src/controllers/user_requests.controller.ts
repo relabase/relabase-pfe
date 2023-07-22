@@ -66,22 +66,22 @@ export class User_requestController {
 
       const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
 
-      if (statusData.name_status === "approve")
+      if (statusData.name_status === "approved")
       {
         
-        res.status(409).json({ data: "already approve", message: 'approve' });
+        res.status(409).json({ data: "already approved", message: 'approve' });
         return;
       }
 
-      const approve:Status = await this.status.findStatusByName("approve");
+      const approved:Status = await this.status.findStatusByName("approved");
       
-      if(approve === undefined)
+      if(approved === undefined)
       {
-        res.status(409).json({ data: "can't find status id for approve", message: 'approve' });
+        res.status(409).json({ data: "can't find status id for approved", message: 'approve' });
         return;
       }
       
-      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,approve.id);
+      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,approved.id);
 
       res.status(200).json({ data: updateUser_requestData, message: 'updated' });
     } catch (error) {
