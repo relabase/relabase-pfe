@@ -4,12 +4,12 @@ export class CreateRoleDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(32)
-  public nom_role: string;
+  public name_role: string;
 }
 
 export class UpdateRoleDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(32)
-  public nom_role: string;
+  public name_role: string;
 }

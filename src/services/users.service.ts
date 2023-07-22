@@ -22,7 +22,7 @@ export class UserService {
 
     return new Promise((resolve,reject) => {
       connection.query<User[]>(
-        'SELECT * FROM `user` where id_user = ?',
+        'SELECT * FROM `user` where id = ?',
         [ userId ],
         (err,res) => {
           console.log(res);
@@ -66,7 +66,7 @@ export class UserService {
     return new Promise((resolve,reject)=>{
       hash(userData.password, 10).then((val)=>{
 
-        connection.query<OkPacket>('UPDATE user SET password = ? WHERE id_user = ?', 
+        connection.query<OkPacket>('UPDATE user SET password = ? WHERE id = ?', 
         [ val,
           userId],
         (err,res)=>{
@@ -95,7 +95,7 @@ export class UserService {
       this.findUserById(userId)
       .then((users) => {
 
-        connection.query<OkPacket>('DELETE FROM user WHERE id_user = ?', 
+        connection.query<OkPacket>('DELETE FROM user WHERE id = ?', 
         [ userId ],
         (err,res)=>{
           if (err) reject(err);

@@ -21,7 +21,7 @@ export class User_requestService {
 
     return new Promise((resolve,reject) => {
       connection.query<User_request[]>(
-        'SELECT * FROM `user_request` where id_user_request = ?',
+        'SELECT * FROM `user_request` where id = ?',
         [ user_requestId ],
         (err,res) => {
           console.log(res);
@@ -55,7 +55,7 @@ export class User_requestService {
 
   public async approveUser_request(user_requestId: number): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET is_approve = 1 WHERE id_user_request = ?', 
+        connection.query<OkPacket>('UPDATE user_request SET is_approve = 1 WHERE id = ?', 
         [user_requestId],
         (err,res)=>{
           if (err) reject(err);
@@ -69,7 +69,7 @@ export class User_requestService {
 
   public async rejectUser_request(user_requestId: number): Promise<OkPacket> {
     return new Promise((resolve,reject)=>{
-        connection.query<OkPacket>('UPDATE user_request SET is_approve = 0 WHERE id_user_request = ?', 
+        connection.query<OkPacket>('UPDATE user_request SET is_approve = 0 WHERE id = ?', 
         [user_requestId],
         (err,res)=>{
           if (err) reject(err);
@@ -87,7 +87,7 @@ export class User_requestService {
       this.findUser_requestById(user_requestId)
       .then((user_requests) => {
 
-        connection.query<OkPacket>('DELETE FROM user_request WHERE id_user_request = ?', 
+        connection.query<OkPacket>('DELETE FROM user_request WHERE id = ?', 
         [ user_requestId ],
         (err,res)=>{
           if (err) reject(err);

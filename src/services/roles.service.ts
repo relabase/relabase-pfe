@@ -20,7 +20,7 @@ export class RoleService {
 
     return new Promise((resolve,reject) => {
       connection.query<Role[]>(
-        'SELECT * FROM `role` where id_role = ?',
+        'SELECT * FROM `role` where id = ?',
         [ roleId ],
         (err,res) => {
           if (err) reject(err);
@@ -33,8 +33,8 @@ export class RoleService {
   public async createRole(roleData: Role): Promise<Role> {
     return new Promise((resolve,reject)=>{
 
-      connection.query<OkPacket>('INSERT INTO role(nom_role) VALUES(?)', 
-      [ roleData.nom_role ],
+      connection.query<OkPacket>('INSERT INTO role(name_role) VALUES(?)', 
+      [ roleData.name_role ],
       (err,res)=>{
         if (err) reject(err);
         else
@@ -52,8 +52,8 @@ export class RoleService {
 
     return new Promise((resolve,reject)=>{
 
-      connection.query<OkPacket>('UPDATE role SET nom_role = ? WHERE id_role = ?', 
-      [ roleData.nom_role, roleId],
+      connection.query<OkPacket>('UPDATE role SET name_role = ? WHERE id = ?', 
+      [ roleData.name_role, roleId],
       (err,res)=>{
         if (err) reject(err);
         else
@@ -75,7 +75,7 @@ export class RoleService {
       this.findRoleById(roleId)
       .then((roles) => {
 
-        connection.query<OkPacket>('DELETE FROM role WHERE id_role = ?', 
+        connection.query<OkPacket>('DELETE FROM role WHERE id = ?', 
         [ roleId ],
         (err,res)=>{
           if (err) reject(err);

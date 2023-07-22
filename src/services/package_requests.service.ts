@@ -21,7 +21,7 @@ export class Package_requestService {
 
     return new Promise((resolve,reject) => {
       connection.query<Package_request[]>(
-        'SELECT * FROM `package_request` where id_package_request = ?',
+        'SELECT * FROM `package_request` where id = ?',
         [ package_requestId ],
         (err,res) => {
           console.log(res);
@@ -56,7 +56,7 @@ export class Package_requestService {
   public async approvePackage_request(package_requestId: number): Promise<OkPacket> {
 
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE package_request SET is_approve = 1 WHERE id_package_request = ?', 
+      connection.query<OkPacket>('UPDATE package_request SET is_approve = 1 WHERE id = ?', 
       [package_requestId],
       (err,res)=>{
         if (err) reject(err);
@@ -70,7 +70,7 @@ export class Package_requestService {
   public async rejectPackageRequest(package_requestId: number): Promise<OkPacket> {
 
     return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE package_request SET is_approve = 0 WHERE id_package_request = ?', 
+      connection.query<OkPacket>('UPDATE package_request SET is_approve = 0 WHERE id = ?', 
       [package_requestId],
       (err,res)=>{
         if (err) reject(err);
@@ -88,7 +88,7 @@ export class Package_requestService {
       this.findPackage_requestById(package_requestId)
       .then((package_requests) => {
 
-        connection.query<OkPacket>('DELETE FROM package_request WHERE id_package_request = ?', 
+        connection.query<OkPacket>('DELETE FROM package_request WHERE id = ?', 
         [ package_requestId ],
         (err,res)=>{
           if (err) reject(err);
