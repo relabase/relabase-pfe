@@ -26,10 +26,10 @@ export class User_requestController {
       const findOneUser_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
       if(findOneUser_requestData === undefined)
       {
-        
+
         res.status(409).json({ data: "User_request doesn't exist", message: 'findOne' });
       }
-      
+
 
       res.status(200).json({ data: findOneUser_requestData, message: 'findOne' });
 
@@ -44,7 +44,7 @@ export class User_requestController {
   public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestData: User_request = req.body;
-      user_requestData.id_status = 1;      
+      user_requestData.id_status = 1;
       const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
 
       res.status(201).json({ data: createUser_requestData, message: 'created' });
@@ -68,19 +68,19 @@ export class User_requestController {
 
       if (statusData.name_status === "approved")
       {
-        
+
         res.status(409).json({ data: "already approved", message: 'approve' });
         return;
       }
 
       const approved:Status = await this.status.findStatusByName("approved");
-      
+
       if(approved === undefined)
       {
         res.status(409).json({ data: "can't find status id for approved", message: 'approve' });
         return;
       }
-      
+
       const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,approved.id);
 
       res.status(200).json({ data: updateUser_requestData, message: 'updated' });
@@ -103,7 +103,7 @@ export class User_requestController {
       const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
       if (statusData.name_status === "rejected")
       {
-        
+
         res.status(409).json({ data: "already rejected", message: 'reject' });
         return;
       }
@@ -131,7 +131,7 @@ export class User_requestController {
       const deleteUser_requestData: User_request = await this.user_request.deleteUser_request(user_requestId);
       if(deleteUser_requestData === undefined)
       {
-        
+
         res.status(409).json({ data: "User_request doesn't exist", message: 'findOne' });
       }
 
@@ -140,5 +140,4 @@ export class User_requestController {
       next(error);
     }
   };
-  status: any;
 }
