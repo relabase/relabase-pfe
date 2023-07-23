@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody class="table-body">
-    <% users.forEach(user=> { %>
+    <% users.forEach(user => { %>
       <tr class="table-row">
         <td class="table-cell">
           <%= user.first_name %> <%= user.last_name %>
@@ -17,10 +17,16 @@
           <a class="email-link" href="mailto: <%= user.email %>"><%= user.email %></a>
         </td>
         <td class="table-cell light-text">
-          <%= user.last_login ? user.last_login.toLocaleDateString('en-US') : 'N/A' %>
+          <% if (user.last_login) { %>
+            <% const lastLoginDate = new Date(user.last_login); %>
+            <% const formattedDate = `${lastLoginDate.getFullYear()}/${(lastLoginDate.getMonth() + 1).toString().padStart(2, '0')}/${lastLoginDate.getDate().toString().padStart(2, '0')}`; %>
+            <%= formattedDate %>
+          <% } else { %>
+            N/A
+          <% } %>
         </td>
         <td class="table-cell light-text">
-          <%= user.id_role===0 ? 'Admin' : 'User' %>
+          <%= user.id_role === 0 ? 'Admin' : 'User' %>
         </td>
       </tr>
     <% }) %>
