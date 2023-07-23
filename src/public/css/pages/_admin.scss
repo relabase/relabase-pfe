@@ -52,18 +52,19 @@
 }
 
 #admin-content .tab-pane {
-  display: none;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 
   &.active {
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    visibility: visible;
   }
 }
 
-#admin-content .user-application {
+.user-application, .package-request {
   @include flex-center(space-between);
 
   height: 4.8125rem;
@@ -80,7 +81,7 @@
     background-color: lighten($primary-background-color, 10%);
   }
 
-  .user-info {
+  .user-info,  .package-info{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -103,15 +104,14 @@
 }
 
 // User Section
-#admin-content .user-section {
+#admin-content .item-section {
   display: flex;
-  flex: 1;
   flex-direction: row;
-  height: 100%;
+  flex-grow: 1;
   overflow: hidden;
 }
 
-#admin-content .user-list {
+#admin-content .item-list {
   @extend %scrollbar;
 
   flex: 0.8;
@@ -125,10 +125,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $content-padding;
+  padding: $content-padding 0;
 }
 
-#admin-content .user-content {
+.item-content {
   @extend %scrollbar;
 
   flex: 3.5;
@@ -137,6 +137,7 @@
   padding: $content-outline-padding;
   overflow-y: auto;
   background: $background-color;
+  border: 2px solid transparent;
   border-radius: 0.75rem;
 }
 
@@ -145,43 +146,32 @@
   gap: 10px;
 }
 
-#email-link {
-  color: $primary-font-color;
-}
-
-#no-content-selected {
+#package-no-content-selected, #user-no-content-selected  {
   display: flex;
   flex: 3.5;
   align-items: center;
   justify-content: center;
   min-height: 0;
   margin: 0 $content-padding $content-padding $content-padding;
+  padding: 20px;
   overflow-y: auto;
   text-align: center;
   background-color: $primary-background-color;
   border: 2px solid $background-color;
   border-radius: 0.75rem;
-
-  &.hide-content {
-    display: none;
-  }
-}
-
-.hide-content {
-  display: none;
 }
 
 // image
 .image-container {
-  padding-top: 2.5rem;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 37.5rem;
   height: 25rem;
-  border-radius: 0.75rem;
+  padding-top: 2.5rem;
   overflow: hidden;
+  border-radius: 0.75rem;
 }
 
 #user-id-image {

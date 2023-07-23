@@ -1,3 +1,4 @@
+import path from 'path';
 import 'reflect-metadata';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -43,6 +44,8 @@ export class App {
   }
 
   private initializeMiddlewares() {
+    this.app.set('view engine', 'ejs');
+    this.app.set('views', path.join(__dirname, '/views'));
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(hpp());

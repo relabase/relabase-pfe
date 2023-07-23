@@ -6,7 +6,7 @@ export class CreateUser_requestDto {
 
   @IsString()
   @IsNotEmpty()
-  public access_reason:string;
+  public message:string;
 
   @IsString()
   @IsNotEmpty()

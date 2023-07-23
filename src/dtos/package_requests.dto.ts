@@ -8,7 +8,7 @@ export class CreatePackage_requestDto {
 
   @IsString()
   @IsNotEmpty()
-  public reason:string;
+  public message:string;
 
   @IsNotEmpty()
   @IsNumber()
