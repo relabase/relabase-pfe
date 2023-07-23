@@ -118,43 +118,7 @@
   }
 }
 
-.user-management-table {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-height: 0;
-  overflow-y: auto;
-
-  thead,
-  tbody {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  thead tr {
-    display: grid;
-    flex: 0 0 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    width: 100%;
-  }
-
-  th a {
-    position: relative;
-    display: flex;
-    padding: 1rem;
-    text-align: left;
-    text-decoration: none;
-
-    &::after {
-      width: 0.75rem;
-      height: 1.25rem;
-      margin-left: $content-padding;
-      background-image: url("../img/arrow_drop_down_purple.svg");
-      background-size: 100% 100%;
-      content: "";
-    }
-  }
-
+#user-table {
   th:first-child {
     margin-right: -0.35rem;
     margin-left: $content-padding;
@@ -172,26 +136,6 @@
     margin-right: $content-padding;
     margin-left: -0.35rem;
   }
-
-  .table-row {
-    @extend %content-tabs;
-
-    width: 100%;
-  }
-
-  .table-cell {
-    flex: 1;
-    padding: 1rem;
-    text-align: left;
-    word-wrap: break-word;
-  }
-}
-
-.table-body {
-  @extend %scrollbar;
-
-  min-height: 0;
-  overflow-y: auto;
 }
 
 #admin-content .admin-header {

@@ -1,21 +1,22 @@
 // Import Google font
-@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap';
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
 
 // Import partials
-@import 'partials/mixin';
-@import 'partials/variables';
+@import "partials/mixin";
+@import "partials/variables";
 
 // Import components
-@import 'components/navbar';
-@import 'components/buttons';
-@import 'components/scrollbar';
-@import 'components/text';
-@import 'components/input';
+@import "components/navbar";
+@import "components/buttons";
+@import "components/input";
+@import "components/scrollbar";
+@import "components/table";
+@import "components/text";
 
 // Import page-specific styles
-@import 'pages/login';
-@import 'pages/analyze';
-@import 'pages/admin';
+@import "pages/login";
+@import "pages/analyze";
+@import "pages/admin";
 
 // This file should contain all global CSS
 

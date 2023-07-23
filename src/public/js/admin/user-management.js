@@ -2,7 +2,7 @@ window.onload = function() {
 
     document.getElementById("user-management-search").addEventListener("keyup", searchFunction);
   
-    var headers = document.querySelectorAll("#userTable th");
+    var headers = document.querySelectorAll("#user-table th");
     headers.forEach(function(header, index) {
       header.addEventListener("click", function() { sortTable(index) });
     });
@@ -11,7 +11,7 @@ function searchFunction() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("searchInput");
     filter = input.value.toUpperCase();
-    table = document.getElementById("userTable");
+    table = document.getElementById("user-table");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
@@ -28,7 +28,7 @@ function searchFunction() {
   
   function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("userTable");
+    table = document.getElementById("user-table");
     switching = true;
     dir = "asc"; 
     while (switching) {
