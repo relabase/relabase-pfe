@@ -49,7 +49,22 @@ export class App {
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(hpp());
-    this.app.use(helmet());
+    this.app.use(helmet({
+      contentSecurityPolicy: {
+        directives: {
+          scriptSrc: ["'self'", "https://accounts.google.com"],
+          frameSrc: ["'self'", "https://accounts.google.com"],
+          connectSrc: ["'self'", "https://accounts.google.com"],
+        },
+      },
+      crossOriginEmbedderPolicy: false,
+      referrerPolicy: {
+        policy: 'no-referrer-when-downgrade',
+      },
+      crossOriginOpenerPolicy: {
+        policy: 'same-origin-allow-popups'
+      }
+    }));
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
