@@ -28,4 +28,12 @@ const app = new App([
         new StatusRoute()
     ]);
 
+    process.on('uncaughtException', (err) => {
+    console.error('Unhandled Exception', err);
+    });
+
+    process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection', err);
+    });
+
 app.listen();

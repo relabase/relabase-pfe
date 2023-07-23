@@ -1,0 +1,28 @@
+<table id="userTable" class="user-management-table">
+  <thead>
+    <tr>
+      <th><a href="#" class="light-text">Name</a></th>
+      <th><a href="#" class="light-text">Email</a></th>
+      <th><a href="#" class="light-text">Last login</a></th>
+      <th><a href="#" class="light-text">Role</a></th>
+    </tr>
+  </thead>
+  <tbody class="table-body">
+    <% users.forEach(user=> { %>
+      <tr class="table-row">
+        <td class="table-cell">
+          <%= user.first_name %> <%= user.last_name %>
+        </td>
+        <td class="table-cell">
+          <a class="email-link" href="mailto: <%= user.email %>"><%= user.email %></a>
+        </td>
+        <td class="table-cell light-text">
+          <%= user.last_login ? user.last_login.toLocaleDateString('en-US') : 'N/A' %>
+        </td>
+        <td class="table-cell light-text">
+          <%= user.id_role===0 ? 'Admin' : 'User' %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
