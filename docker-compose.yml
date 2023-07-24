@@ -33,12 +33,11 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
       - '3306:3306'
-    expose:
-      - '3306'
     networks:
       - backend
     volumes:
-      - /var/lib/mysql
+      - ./mysql_file/init.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./mysql_file/script.sql:/docker-entrypoint-initdb.d/2.sql
 
 networks:
   backend:
