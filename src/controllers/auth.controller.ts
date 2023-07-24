@@ -5,6 +5,7 @@ import { User } from '@interfaces/users.interface';
 import { AuthService } from '@services/auth.service';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { UserService } from '@/services/users.service';
+import { CLIENT_ID } from '@config';
 
 const userService = Container.get(UserService);
 
@@ -13,7 +14,7 @@ export class AuthController {
     const idToken: string = String(req.body.credential);
     const ticket = await new OAuth2Client().verifyIdToken({
       idToken,
-      audience: 'clientid'
+      audience: CLIENT_ID
     });
     return ticket.getPayload();
   };
@@ -36,6 +37,10 @@ export class AuthController {
     } catch (error) {
       res.status(401).json({ msg: 'error' });
     }
+  }
+
+  public getClientId = (req: RequestWithUser, res: Response, next: NextFunction) => {
+    res.status(302).json({id: CLIENT_ID});
   }
 
 

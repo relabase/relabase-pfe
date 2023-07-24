@@ -2,15 +2,24 @@ window.onload = function () {
     initGoogleButton();
 }
 
-function initGoogleButton() {
-    google.accounts.id.initialize({
-        client_id: "clientid",
-        callback: handleCredentialResponse
+async function initGoogleButton() {
+    const res = await fetch('/authenticate/client-id', {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
     });
-    google.accounts.id.renderButton(
-        document.getElementById("google-sign-in-div"),
-        { theme: "outline", size: "large", text: "signup_with" }  // customization attributes
-    );
+    res.json().then(data => {
+        google.accounts.id.initialize({
+            client_id: data.id,
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("google-sign-in-div"),
+            { theme: "outline", size: "large", text: "signup_with" }  // customization attributes
+        );
+    });
 }
 
 async function handleCredentialResponse(response) {
