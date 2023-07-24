@@ -1,13 +1,7 @@
 // Search input
-.search-input {
-    @include font-style($size: $paragraph-font-size, $weight: 400);
-
-    width: $input-width;
-    padding: 0.75rem 0.875rem;
-    color: $secondary-font-color;
-    letter-spacing: $input-letter-spacing;
-    border-radius: $input-border-radius;
-  }
+.search-inputs{
+  padding-right: $content-padding;
+}
   
   .search-input-container {
     position: relative;
@@ -25,4 +19,14 @@
     background-size: 100% 100%;
     transform: translateY(-50%);
     content: "";
+  }
+
+  .search-input {
+    @include font-style($size: $paragraph-font-size, $weight: 400);
+
+    width: $input-width;
+    padding: 0.75rem 0.875rem;
+    color: $secondary-font-color;
+    letter-spacing: $input-letter-spacing;
+    border-radius: $input-border-radius;
   }

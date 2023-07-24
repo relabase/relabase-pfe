@@ -1,3 +1,5 @@
+// History page-specific styles
+// TODO: create general page layout 
 #history-content{
     @include content-container; 
 }
@@ -8,8 +10,4 @@
 
 #history-content .history-header {
     @extend %header;
-}
-
-.search-inputs{
-    padding-right: $content-padding;
 }

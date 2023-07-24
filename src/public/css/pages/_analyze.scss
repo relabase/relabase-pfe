@@ -15,7 +15,6 @@
   height: 100%;
   padding-top: 0;
   padding-left: 1.875rem;
-  overflow-y: auto;
   line-height: 1.5;
   background: linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%), $primary-background-color;
   border: 0;
@@ -40,9 +39,8 @@
 
 #line-numbers {
   @include font-style($family: $script-font);
+  @include flex-direction;
 
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
   padding: 0 0.4375rem;
   overflow: hidden;
@@ -65,9 +63,9 @@
 
 .content-left,
 .content-right {
-  display: flex;
+  @include flex-direction;
+  
   flex: 1;
-  flex-direction: column;
   background: linear-gradient(0deg, $primary-background-color 0%, $primary-background-color 100%),
     linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%);
 }

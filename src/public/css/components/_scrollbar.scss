@@ -1,5 +1,7 @@
 // Scrollbar styles
 %scrollbar {
+  @include content-overflow;
+  
   &::-webkit-scrollbar {
     width: $content-padding;
   }

@@ -1,9 +1,6 @@
 // Table style
 .table-body {
     @extend %scrollbar;
-
-    min-height: 0;
-    overflow-y: auto;
 }
 
 .table-row {
@@ -32,15 +29,13 @@
 }
 
 .table {
-    display: flex;
-    flex-direction: column;
+    @include content-overflow;
+    @include flex-direction;
+
     flex-grow: 1;
-    min-height: 0;
-    overflow-y: auto;
 
     tbody {
-        display: flex;
-        flex-direction: column;
+        @include flex-direction;
     }
 
     tr {
