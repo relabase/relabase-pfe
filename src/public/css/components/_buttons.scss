@@ -1,5 +1,7 @@
 // Buttons styles
 %shared-button {
+  @include font-style;
+
   justify-content: center;
   color: $button-font-color;
 }
@@ -61,11 +63,11 @@
   }
 }
 
-#approve-button {
+.approve-button {
   @include svg-icon-button($button-approve-color, '../img/check_circle.svg', $hover-color: darken($button-approve-color, 10%));
 }
 
-#decline-button {
+.decline-button {
   @include svg-icon-button($button-decline-color, '../img/cancel.svg', $hover-color: darken($button-decline-color, 10%));
 }
 

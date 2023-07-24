@@ -6,7 +6,8 @@
   height: calc(100% - #{$navbar-height} - #{$content-padding});
   min-height: 0;
   margin: 0 $content-padding;
-  background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%), $primary-background-color;
+  background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%),
+    $primary-background-color;
 }
 
 // Tabs Styles
@@ -23,7 +24,7 @@
     bottom: 0;
     left: $content-padding;
     border-bottom: $tab-border solid $button-font-color;
-    content: '';
+    content: "";
   }
 }
 
@@ -52,24 +53,33 @@
 }
 
 #admin-content .tab-pane {
-  display: none;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 
   &.active {
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    visibility: visible;
   }
 }
 
-#admin-content .user-application {
+.admin-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $header-padding;
+}
+
+%content-tabs {
   @include flex-center(space-between);
 
-  height: 4.8125rem;
+  position: relative;
   margin: 0 $content-padding $content-padding $content-padding;
   background: rgb(255 255 255 / 60%);
   border-radius: 0.75rem;
+  cursor: pointer;
 
   &.active {
     background-color: $background-color;
@@ -80,20 +90,108 @@
     background-color: lighten($primary-background-color, 10%);
   }
 
-  .user-info {
+  &::after {
+    position: absolute;
+    top: 50%;
+    right: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url("../img/arrow_right_alt.svg") no-repeat center;
+    background-size: contain;
+    transform: translateY(-50%);
+    content: "";
+  }
+}
+
+.user-application,
+.package-request {
+  @extend %content-tabs;
+
+  height: 4.8125rem;
+
+  .user-info,
+  .package-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 1.25rem;
   }
+}
 
-  .arrow {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 1.25rem;
-    background: url('../img/arrow_right_alt.svg') no-repeat center;
-    background-size: contain;
+.user-management-table {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+
+  thead,
+  tbody {
+    display: flex;
+    flex-wrap: wrap;
   }
+
+  thead tr {
+    display: grid;
+    flex: 0 0 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+  }
+
+  th a {
+    position: relative;
+    display: flex;
+    padding: 1rem;
+    text-align: left;
+    text-decoration: none;
+
+    &::after {
+      width: 0.75rem;
+      height: 1.25rem;
+      margin-left: $content-padding;
+      background-image: url("../img/arrow_drop_down_purple.svg");
+      background-size: 100% 100%;
+      content: "";
+    }
+  }
+
+  th:first-child {
+    margin-right: -0.35rem;
+    margin-left: $content-padding;
+  }
+
+  th:nth-child(2) {
+    margin-left: 0.35rem;
+  }
+
+  th:nth-child(3) {
+    margin-right: 0.35rem;
+  }
+
+  th:last-child {
+    margin-right: $content-padding;
+    margin-left: -0.35rem;
+  }
+
+  .table-row {
+    @extend %content-tabs;
+
+    width: 100%;
+  }
+
+  .table-cell {
+    flex: 1;
+    padding: 1rem;
+    text-align: left;
+    word-wrap: break-word;
+  }
+}
+
+.table-body {
+  @extend %scrollbar;
+
+  min-height: 0;
+  overflow-y: auto;
 }
 
 #admin-content .admin-header {
@@ -103,15 +201,14 @@
 }
 
 // User Section
-#admin-content .user-section {
+#admin-content .item-section {
   display: flex;
-  flex: 1;
   flex-direction: row;
-  height: 100%;
+  flex-grow: 1;
   overflow: hidden;
 }
 
-#admin-content .user-list {
+#admin-content .item-list {
   @extend %scrollbar;
 
   flex: 0.8;
@@ -125,10 +222,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $content-padding;
+  padding: $content-padding 0;
 }
 
-#admin-content .user-content {
+.item-content {
   @extend %scrollbar;
 
   flex: 3.5;
@@ -137,6 +234,7 @@
   padding: $content-outline-padding;
   overflow-y: auto;
   background: $background-color;
+  border: 2px solid transparent;
   border-radius: 0.75rem;
 }
 
@@ -145,43 +243,33 @@
   gap: 10px;
 }
 
-#email-link {
-  color: $primary-font-color;
-}
-
-#no-content-selected {
+#package-no-content-selected,
+#user-no-content-selected {
   display: flex;
   flex: 3.5;
   align-items: center;
   justify-content: center;
   min-height: 0;
   margin: 0 $content-padding $content-padding $content-padding;
+  padding: 20px;
   overflow-y: auto;
   text-align: center;
   background-color: $primary-background-color;
   border: 2px solid $background-color;
   border-radius: 0.75rem;
-
-  &.hide-content {
-    display: none;
-  }
-}
-
-.hide-content {
-  display: none;
 }
 
 // image
 .image-container {
-  padding-top: 2.5rem;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 37.5rem;
   height: 25rem;
-  border-radius: 0.75rem;
+  padding-top: 2.5rem;
   overflow: hidden;
+  border-radius: 0.75rem;
 }
 
 #user-id-image {

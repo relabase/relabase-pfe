@@ -25,10 +25,24 @@ services:
     restart: 'unless-stopped'
     networks:
       - backend
+  db-server:
+    image: mysql:latest
+    container_name: db-server
+    restart: 'unless-stopped'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    networks:
+      - backend
+    volumes:
+      - ./mysql_file/init.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./mysql_file/script.sql:/docker-entrypoint-initdb.d/2.sql
 
 networks:
   backend:
     driver: bridge
+
 
 volumes:
   data:

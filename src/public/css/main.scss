@@ -10,6 +10,7 @@
 @import 'components/buttons';
 @import 'components/scrollbar';
 @import 'components/text';
+@import 'components/input';
 
 // Import page-specific styles
 @import 'pages/login';
@@ -54,4 +55,14 @@ p {
 
 .spacing {
   margin-bottom: $spacing;
+}
+
+.hide-content {
+  display: none !important;
+}
+
+.flex-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: $content-gap;
 }
