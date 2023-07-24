@@ -1,4 +1,4 @@
-// table style
+// Table style
 .table-body {
     @extend %scrollbar;
 
@@ -9,14 +9,26 @@
 .table-row {
     @extend %content-tabs;
 
-    width: 100%;
+    box-sizing: border-box;
 }
 
 .table-cell {
     flex: 1;
-    padding: 1rem;
+    box-sizing: border-box;
+    padding: $tab-content-padding;
     text-align: left;
-    word-wrap: break-word;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 0 $content-padding;
+    background: $primary-background-color;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 }
 
 .table {
@@ -26,23 +38,24 @@
     min-height: 0;
     overflow-y: auto;
 
-    thead,
     tbody {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
     }
 
-    thead tr {
+    tr {
         display: grid;
-        flex: 0 0 100%;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        width: 100%;
+        grid-template-columns: $tab-grid-template-columns
+    }
+
+    th a,
+    td {
+        word-wrap: break-word;
     }
 
     th a {
-        position: relative;
         display: flex;
-        padding: 1rem;
+        padding: $tab-content-padding;
         text-align: left;
         text-decoration: none;
 

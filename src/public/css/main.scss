@@ -68,3 +68,9 @@ p {
   gap: 1rem;
   margin-bottom: $content-gap;
 }
+
+table, th, td {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
