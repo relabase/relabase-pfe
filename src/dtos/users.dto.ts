@@ -24,6 +24,11 @@ export class CreateUserDto {
   @IsString()
   public image:string;
 
+  @IsString()
+  @IsNotEmpty()
+  public google_id:string;
+
+
 }
 
 export class UpdateUserDto {
