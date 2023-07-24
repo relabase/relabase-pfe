@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Analyze</title>
-    <link rel="stylesheet" href="css/main.css" />
-  </head>
-  <body>
-    <%- include('partials/navbar.ejs', {page: 'analyze' , username: 'John Doe' }); %>
+
+<head>
+  <title>Analyze</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+  <%- include('partials/navbar.ejs', {page: 'analyze' , username: 'John Doe' }); %>
 
     <div class="content-wrapper">
-    <div class="content-left">
-      <div class="analyze-header"> R Script
-        <button id="run-script-button" class="primary-button">Run Script</button>
-      </div>
-      <div class="editor">
-        <div id="line-numbers"></div>
-        <textarea id="script-textbox" class="script" spellcheck="false"></textarea>
-      </div>
+      <div class="script-content">
+        <div class="script-header"> R Script
+          <button id="run-script-button" class="primary-button">Run Script</button>
+        </div>
+        <div class="editor">
+          <div class="line-numbers"></div>
+          <textarea class="script-textbox" spellcheck="false"></textarea>
+        </div>
 
-    </div>
-    <div class="content-right">
-      <div class="analyze-header"> Results
-        <button id="download-button" class="primary-button">Download .HTML</button>
       </div>
-      <div id="results" class="script"><iframe id="results-iframe"></iframe></div>
+      <div class="script-content">
+        <div class="script-header"> Results
+          <button id="download-button" class="primary-button">Download .HTML</button>
+        </div>
+        <div id="results" class="script"><iframe id="results-iframe"></iframe></div>
+      </div>
     </div>
-  </div>
-  </body>
+</body>
+
 </html>
 <script src="js/analyze-script.js"></script>
