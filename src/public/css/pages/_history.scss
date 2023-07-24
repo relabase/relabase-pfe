@@ -1,0 +1,15 @@
+#history-content{
+    @include content-container; 
+}
+
+.history-header-container{
+    @include header-container;
+}
+
+#history-content .history-header {
+    @extend %header;
+}
+
+.search-inputs{
+    padding-right: $content-padding;
+}
