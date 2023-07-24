@@ -55,6 +55,7 @@ export class App {
           scriptSrc: ["'self'", "https://accounts.google.com"],
           frameSrc: ["'self'", "https://accounts.google.com"],
           connectSrc: ["'self'", "https://accounts.google.com"],
+          upgradeInsecureRequests: null
         },
       },
       crossOriginEmbedderPolicy: false,
