@@ -1,0 +1,66 @@
+// Table style
+.table-body {
+    @extend %scrollbar;
+}
+
+.table-row {
+    @extend %content-tabs;
+
+    box-sizing: border-box;
+}
+
+.table-cell {
+    flex: 1;
+    box-sizing: border-box;
+    padding: $tab-content-padding;
+    text-align: left;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 0 $content-padding;
+    background: $primary-background-color;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+.table {
+    @include content-overflow;
+    @include flex-direction;
+
+    flex-grow: 1;
+
+    tbody {
+        @include flex-direction;
+    }
+
+    tr {
+        display: grid;
+        grid-template-columns: $tab-grid-template-columns;
+    }
+
+    th a,
+    td {
+        word-wrap: break-word;
+    }
+
+    th a {
+        display: flex;
+        padding: $tab-content-padding;
+        text-align: left;
+        text-decoration: none;
+
+        &::after {
+            width: 0.75rem;
+            height: 1.25rem;
+            margin-left: $content-padding;
+            background-image: url("../img/arrow_drop_down_purple.svg");
+            background-size: 100% 100%;
+            content: "";
+        }
+    }
+}

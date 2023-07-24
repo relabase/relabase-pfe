@@ -1,8 +1,8 @@
 (function () {
   const runScriptButton = document.querySelector('#run-script-button');
   const downloadFileButton = document.querySelector('#download-button');
-  const textbox = document.getElementById('script-textbox');
-  const lineNumbers = document.getElementById('line-numbers');
+  const textbox = document.querySelector('.script-textbox');
+  const lineNumbers = document.querySelector('.line-numbers');
   const iframeResults = document.getElementById('results-iframe');
   const iframeDocumentResults = iframeResults.contentDocument || iframeResults.contentWindow.document;
   filename = '';
