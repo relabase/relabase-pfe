@@ -33,6 +33,21 @@ export class UserService {
     })
   }
 
+  public async findUserByFirstName(firstName: string): Promise<User> {
+
+    return new Promise((resolve,reject) => {
+      connection.query<User[]>(
+        'SELECT * FROM `user` where first_name = ?',
+        [ firstName ],
+        (err,res) => {
+          console.log(res);
+          if (err) reject(err);
+          else resolve(res?.[0]);
+        }
+        )
+    })
+  }
+
   public async createUser(userData: User): Promise<User> {
     return new Promise((resolve,reject)=>{
       hash(userData.password, 10).then(

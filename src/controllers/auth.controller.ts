@@ -3,44 +3,76 @@ import { Container } from 'typedi';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
 import { AuthService } from '@services/auth.service';
-import { OAuth2Client } from 'google-auth-library';
+import { OAuth2Client, TokenPayload } from 'google-auth-library';
+import { UserService } from '@/services/users.service';
+
+const userService = Container.get(UserService);
 
 export class AuthController {
-
-  public auth = Container.get(AuthService);
-
-  public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userData: User = req.body;
-      const signUpUserData: User = await this.auth.signup(userData);
-
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
-    } catch (error) {
-      next(error);
-    }
+  public verifyIdToken = async (req: Request, res: Response): Promise<TokenPayload> => {
+    const idToken: string = String(req.body.credential);
+    const ticket = await new OAuth2Client().verifyIdToken({
+      idToken,
+      audience: 'clientid'
+    });
+    return ticket.getPayload();
   };
 
-  public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public userExists = async (id: string): Promise<User> => {
+    //temporary, should be findUserByGoogleId
+    return await userService.findUserByFirstName(id);
+    //return await userService.findUserById(Number(payload.sub));
+  }
+
+  public redirect = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: User = req.body;
-      const { cookie, findUser } = await this.auth.login(userData);
-
-      res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findUser, message: 'login' });
+      const payload: TokenPayload = await this.verifyIdToken(req, res);
+      if (this.userExists(payload.sub)) {
+        res.cookie('authToken', String(req.body.credential), { httpOnly: true });
+        res.status(200).json({ redirectUrl: 'home' });
+      } else {
+        res.status(200).json({ redirectUrl: 'register' });
+      }
     } catch (error) {
-      next(error);
+      res.status(401).json({ msg: 'error' });
     }
-  };
+  }
 
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.auth.logout(userData);
 
-      res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-      res.status(200).json({ data: logOutUserData, message: 'logout' });
-    } catch (error) {
-      next(error);
-    }
-  };
+  // public auth = Container.get(AuthService);
+
+  // public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  //   try {
+  //     const userData: User = req.body;
+  //     const signUpUserData: User = await this.auth.signup(userData);
+
+  //     res.status(201).json({ data: signUpUserData, message: 'signup' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
+
+  // public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  //   try {
+  //     const userData: User = req.body;
+  //     const { cookie, findUser } = await this.auth.login(userData);
+
+  //     res.setHeader('Set-Cookie', [cookie]);
+  //     res.status(200).json({ data: findUser, message: 'login' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
+
+  // public logOut = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+  //   try {
+  //     const userData: User = req.user;
+  //     const logOutUserData: User = await this.auth.logout(userData);
+
+  //     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
+  //     res.status(200).json({ data: logOutUserData, message: 'logout' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 }

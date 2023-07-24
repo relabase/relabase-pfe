@@ -14,7 +14,7 @@ function initGoogleButton() {
 }
 
 async function handleCredentialResponse(response) {
-    const res = await fetch('/authprocess', {
+    const res = await fetch('/authenticate', {
         method: 'POST',
         headers: {
             Accept: 'application/json',

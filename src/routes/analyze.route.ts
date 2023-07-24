@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AnalyzeController } from '@/controllers/analyze.controller';
 import { Routes } from '@interfaces/routes.interface';
 import { AnalyzeMiddleware } from '@/middlewares/analyze.middleware';
+import { AuthMiddleware } from '@/middlewares/auth.middleware';
 
 export class AnalyzeRoute implements Routes {
   public path = '/analyze';
@@ -13,7 +14,7 @@ export class AnalyzeRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.analyze.getView);
-    this.router.post(`${this.path}`, AnalyzeMiddleware, this.analyze.sendScript);
+    this.router.get(`${this.path}`, AuthMiddleware, this.analyze.getView);
+    this.router.post(`${this.path}`, [AuthMiddleware, AnalyzeMiddleware], this.analyze.sendScript);
   }
 }
