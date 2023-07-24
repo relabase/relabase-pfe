@@ -39,7 +39,6 @@ $gradient-color-end: #fda4cf;
 $standard-border-radius: 10px;
 $primary-border-color: #f1d7e6;
 $light-outline-color: #e3e1e3;
-$tab-border: 2px;
 
 // Shadows
 $main-shadow: 0 2px 10px 0 rgb(142 118 157 / 22%);
@@ -56,6 +55,9 @@ $scrollbar-color: #f0c2d8;
 $tab-gap: 0.25rem;
 $tab-height: 3rem;
 $tab-content-padding: 1.25rem;
+$tab-border-radius: 0.75rem;
+$tab-border: 2px;
+$tab-grid-template-columns: 1fr 1fr 1fr 1fr; // add more if a table with more than four columns is necessary
 
 // Content
 $content-padding: 0.625rem;
