@@ -7,20 +7,21 @@
 </head>
 
 <body>
-    <!-- creates a date in the format of YYYY/MM/dd - hh:mm AM/PM -->
+    <!-- creates a date in the format of YYYY/MM/DD - hh:mm AM/PM -->
     <% const formatDate=(date)=> {
         if (!date) return 'N/A';
+    
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        const dateString = date.toLocaleDateString('en-US', options);
-
+        const dateString = new Date(date).toISOString().split('T')[0].replace(/-/g, '/');
+    
         const hour = date.getHours();
         const minute = date.getMinutes();
         const ampm = hour >= 12 ? 'PM' : 'AM';
         const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
         const timeString = `${formattedHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
-
+    
         return `${dateString} - ${timeString}`;
-        }; %>
+    }; %>
 
         <%- include('partials/navbar.ejs', { page: 'history' , username: 'John Doe' }); %>
             <div id="history-content">
@@ -29,14 +30,15 @@
                     <div class="search-inputs">
                         <div class="search-input-container">
                             <input type="text" class="search-input" id="history-date-from-search"
-                                placeholder="Date from">
+                                placeholder="Date from (YYYY/MM/DD)" pattern="\d{4}/\d{2}/\d{2}">
                         </div>
                         <div class="search-input-container">
-                            <input type="text" class="search-input" id="history-date-to-search" placeholder="Date to">
+                            <input type="text" class="search-input" id="history-date-to-search" placeholder="Date to (YYYY/MM/DD)" pattern="\d{4}/\d{2}/\d{2}">
                         </div>
                         <div class="search-input-container">
                             <input type="text" class="search-input" id="history-search-from" placeholder="Search from">
                         </div>
+                        
                     </div>
                 </div>
                 <table id="history-table" class="table">
@@ -47,9 +49,10 @@
                         </tr>
                         <% logs.forEach(log=> { %>
                             <tr class="table-row">
-                                <td class="table-cell light-text">
+                                <td class="table-cell light-text" data-timestamp="<%= log.create_time.getTime() %>">
                                     <%= formatDate(log.create_time) %>
-                                </td>
+                                  </td>
+                                  
                                 <td class="table-cell">
                                     <%= log.userFullName %>
                                 </td>

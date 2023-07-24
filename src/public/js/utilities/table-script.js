@@ -93,3 +93,71 @@ function multiColumnSearchFunction(inputId, tableId, columnIndexes) {
     }
   });
 }
+
+function dateSearchFunction(fromInputId, toInputId, tableId, columnIndex) {
+  var fromInput = document.getElementById(fromInputId);
+  var toInput = document.getElementById(toInputId);
+  var table = document.getElementById(tableId);
+  var tr = table.getElementsByTagName("tr");
+
+  function filterRows() {
+    var fromDate = fromInput.value ? new Date(fromInput.value).getTime() : null;
+    var toDate = toInput.value ? new Date(toInput.value).getTime() + 24 * 60 * 60 * 1000 : null;
+
+    for (var i = 0; i < tr.length; i++) {
+      if (tr[i].classList.contains('table-header')) continue;
+      var td = tr[i].getElementsByTagName("td")[columnIndex];
+      if (td) {
+        var cellDate = Number(td.dataset.timestamp);
+        if (
+          (!fromDate || cellDate >= fromDate) &&
+          (!toDate || cellDate < toDate)
+        ) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  fromInput.addEventListener("keyup", filterRows);
+  toInput.addEventListener("keyup", filterRows);
+}
+
+function enforceDateFormat(inputElement) {
+  inputElement.addEventListener('keypress', function(event) {
+      var key = event.which || event.keyCode;
+      var charStr = String.fromCharCode(key);
+
+      if (!/[0-9]/.test(charStr) && key !== 8 && key !== 46) {
+          event.preventDefault();
+      }
+
+      if (this.value.length === 4 || this.value.length === 7) {
+          this.value += '/';
+      }
+
+      if (this.value.length >= 10) {
+          event.preventDefault();
+      }
+  });
+
+  inputElement.addEventListener('paste', function(event) {
+      var pasteData = event.clipboardData.getData('text');
+      var validData = pasteData.replace(/[^0-9\/]/g, '');
+      if (validData !== pasteData) {
+          event.preventDefault();
+          inputElement.value = validData;
+      }
+  });
+
+  inputElement.addEventListener('input', function(event) {
+      var pattern = /^\d{4}\/\d{2}\/\d{2}$/;
+      if (this.value.length === 10 && !pattern.test(this.value)) {
+          this.setCustomValidity('Invalid date format. Please use YYYY/MM/DD');
+      } else {
+          this.setCustomValidity('');
+      }
+  });
+}
