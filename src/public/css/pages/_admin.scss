@@ -1,19 +1,10 @@
 // Admin Content
 #admin-content {
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - #{$navbar-height} - #{$content-padding});
-  min-height: 0;
-  margin: 0 $content-padding;
-  background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%),
-    $primary-background-color;
+  @include content-container;
 }
 
 .admin-header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $header-padding;
+  @include header-container;
 }
 
 .user-application,
