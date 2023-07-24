@@ -79,6 +79,14 @@
   );
 }
 
+.close-button {
+  @include svg-icon-button(
+    $button-close-color,
+    "../img/cancel.svg",
+    $hover-color: darken($button-close-color, 10%)
+  );
+}
+
 .unblur-button {
   @include svg-icon-button(
     $button-visibility-color,
