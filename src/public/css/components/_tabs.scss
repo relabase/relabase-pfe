@@ -1,86 +1,86 @@
 // Tabs styles
 .tabs {
-    @include flex-center(flex-start);
-  
-    position: relative;
-    gap: $tab-gap;
-    padding: $content-padding $content-padding 0;
-  
-    &::after {
-      position: absolute;
-      right: $content-padding;
-      bottom: 0;
-      left: $content-padding;
-      border-bottom: $tab-border solid $button-font-color;
-      content: "";
-    }
+  @include flex-center(flex-start);
+
+  position: relative;
+  gap: $tab-gap;
+  padding: $content-padding $content-padding 0;
+
+  &::after {
+    position: absolute;
+    right: $content-padding;
+    bottom: 0;
+    left: $content-padding;
+    border-bottom: $tab-border solid $button-font-color;
+    content: "";
   }
-  
-  .tab {
-    align-items: center;
-    padding: $content-padding $tab-content-padding;
-    color: $secondary-font-color;
-    border-radius: 0.75rem 0.75rem 0 0;
-  
-    &:hover {
-      cursor: pointer;
-    }
-  
-    &.active {
-      color: $main-font-color;
-      background: $background-color;
-      border-color: $button-font-color;
-    }
+}
+
+.tab {
+  align-items: center;
+  padding: $content-padding $tab-content-padding;
+  color: $secondary-font-color;
+  border-radius: 0.75rem 0.75rem 0 0;
+
+  &:hover {
+    cursor: pointer;
   }
+
+  &.active {
+    color: $main-font-color;
+    background: $background-color;
+    border-color: $button-font-color;
+  }
+}
 
 %content-tabs {
-    @include flex-center(space-between);
+  @include flex-center(space-between);
 
-    position: relative;
-    margin: 0 $content-padding $content-padding $content-padding;
-    background: rgb(255 255 255 / 60%);
-    border-radius: $tab-border-radius;
-    cursor: pointer;
+  position: relative;
+  margin: 0 $content-padding $content-padding $content-padding;
+  background: rgb(255 255 255 / 60%);
+  border-radius: $tab-border-radius;
+  cursor: pointer;
 
-    &.active {
-        background-color: $background-color;
-        box-shadow: 0 4px 10px 0 rgb(169 82 113 / 12%);
-    }
+  &.active {
+    background-color: $background-color;
+    box-shadow: 0 4px 10px 0 rgb(169 82 113 / 12%);
+  }
 
-    &:hover {
-        background-color: lighten($primary-background-color, 10%);
-    }
+  &:hover {
+    background-color: lighten($primary-background-color, 10%);
+  }
 
-    &::after {
-        position: absolute;
-        top: 50%;
-        right: 1.25rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        background: url("../img/arrow_right_alt.svg") no-repeat center;
-        background-size: contain;
-        transform: translateY(-50%);
-        content: "";
-    }
+  &::after {
+    position: absolute;
+    top: 50%;
+    right: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url("../img/arrow_right_alt.svg") no-repeat center;
+    background-size: contain;
+    transform: translateY(-50%);
+    content: "";
+  }
 }
 
 // Tab Content
 .tab-content {
-    @extend %scrollbar;
-    @include flex-direction;
+  @extend %scrollbar;
+  @include flex-direction;
 
-    flex-grow: 1;
-  }
-  
-  .tab-pane {
-    @include flex-direction;
+  flex-grow: 1;
+}
 
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-  
-    &.active {
-      height: 100%;
-      visibility: visible;
-    }
+.tab-pane {
+  @include flex-direction;
+
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+
+  &.active {
+    height: 100%;
+    visibility: visible;
   }
+}

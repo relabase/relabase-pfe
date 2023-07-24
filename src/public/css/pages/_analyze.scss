@@ -16,7 +16,8 @@
   padding-top: 0;
   padding-left: 1.875rem;
   line-height: 1.5;
-  background: linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%), $primary-background-color;
+  background: linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%),
+    $primary-background-color;
   border: 0;
   resize: none;
   scroll-behavior: smooth;
@@ -64,7 +65,7 @@
 .content-left,
 .content-right {
   @include flex-direction;
-  
+
   flex: 1;
   background: linear-gradient(0deg, $primary-background-color 0%, $primary-background-color 100%),
     linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%);
