@@ -1,17 +1,18 @@
 // Search input
 .search-input {
-    @include font-style($size: 0.8125rem, $weight: 400);
+    @include font-style($size: $paragraph-font-size, $weight: 400);
 
-    width: 15.25rem;
+    width: $input-width;
     padding: 0.75rem 0.875rem;
     color: $secondary-font-color;
-    letter-spacing: -0.017rem;
-    border-radius: 0.75rem;
+    letter-spacing: $input-letter-spacing;
+    border-radius: $input-border-radius;
   }
   
   .search-input-container {
     position: relative;
     display: inline-block;
+    margin: 0.25rem;
   }
   
   .search-input-container::after {
