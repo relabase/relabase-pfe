@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { RequestWithUser } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { UserService } from '@/services/users.service';
 import { CLIENT_ID } from '@config';
