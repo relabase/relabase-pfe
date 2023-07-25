@@ -1,10 +1,10 @@
 // Script styles
 .script-content {
-  @include flex-direction;
-
   flex: 1;
   background: linear-gradient(0deg, $primary-background-color 0%, $primary-background-color 100%),
     linear-gradient(180deg, $primary-background-color 0%, rgb(254 221 225 / 80%) 100%);
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .script-header {
@@ -23,6 +23,7 @@
     @include font-style($family: $script-font);
     @include flex-direction;
   
+    min-width: 5ch;
     align-items: flex-end;
     padding: 0 0.4375rem;
     overflow: hidden;
@@ -32,7 +33,7 @@
     text-align: right;
     background: rgb(194 166 197 / 20%);
     border-right: 1px solid $primary-border-color;
-}  
+}
 
 .script-textbox {
   @include font-style($family: $script-font);

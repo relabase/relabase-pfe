@@ -9,14 +9,16 @@
 <body>
   <%- include('partials/navbar.ejs', {page: 'analyze' , username: 'John Doe' }); %>
 
-    <div class="content-wrapper">
+    <div id="script-wrapper" class="main-wrapper">
       <div class="script-content">
         <div class="script-header"> R Script
           <button id="run-script-button" class="primary-button">Run Script</button>
         </div>
         <div class="editor">
           <div class="line-numbers"></div>
-          <textarea class="script-textbox" spellcheck="false"></textarea>
+
+            <textarea class="script-textbox" spellcheck="false"></textarea>
+
         </div>
 
       </div>
@@ -24,7 +26,7 @@
         <div class="script-header"> Results
           <button id="download-button" class="primary-button">Download .HTML</button>
         </div>
-        <div id="results" class="script"><iframe id="results-iframe"></iframe></div>
+        <div id="results" class="editor"><iframe id="results-iframe"></iframe></div>
       </div>
     </div>
 </body>
