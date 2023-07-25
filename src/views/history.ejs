@@ -1,23 +1,7 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>History</title>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<body>
-    <%- include('partials/navbar.ejs', { page: 'history' , username: 'John Doe' }); %>
-
-    <div id="history-content">
-        <%- include('partials/history/history-content.ejs') %>
-        <%- include('partials/history/table-logs.ejs'); %>
-        <%- include('partials/history/script-modal.ejs'); %>
-    </div>
-    
-    
-    <script src="js/utilities/table-script.js"></script>
-    <script src="js/history-script.js"></script>
-</body>
-
-</html>
+<%- include('layout.ejs', { 
+    title: 'History', 
+    currentPage: 'history', 
+    currentUsername: 'John Doe',
+    body: ["partials/history/history-content.ejs", "partials/history/table-logs.ejs", "partials/history/script-modal.ejs"],
+    scripts: "<script src='js/utilities/table-script.js'></script><script src='js/history-script.js'></script>"
+}) %>

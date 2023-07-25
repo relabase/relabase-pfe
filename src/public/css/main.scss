@@ -20,7 +20,6 @@
 @import "pages/login";
 @import "pages/analyze";
 @import "pages/admin";
-@import "pages/history";
 
 // This file should contain all global CSS
 
@@ -78,4 +77,16 @@ td {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+.main-content {
+  @include content-container;
+}
+
+.main-header-container {
+  @include header-container;
+}
+
+.main-header {
+  @extend %header;
 }
