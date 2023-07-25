@@ -10,21 +10,17 @@ const getToken = (req: RequestWithUser): string => {
 export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
     let token: string = getToken(req);
-    token = token === undefined ? null : token;
     if (token) {
-      if (requestedPage === 'login') {
+      if (requestedPage === 'login') { // if there IS a token and the requested page is login, redirect to the homepage
         res.redirect('home');
-      } else {
+      } else { // if there IS a token and the requested page isn't login
         next();
       }
-    } else {
+    } else if (requestedPage === 'login') { // if NO token and the requested page is login, 
+      next()
+    } else { // if NO token and the requested page isn't login
       res.redirect('login');
-      //error
-      //you must be logged in to access this page
-      //create an error page that displays a 404 or unauthorized access message
-      //that page will contain none of the navbar options except for the logo and a login button in the corner where john doe usually is
     }
-
   } catch (error) {
     next(new HttpException(401, 'Wrong authentication token'));
   }
