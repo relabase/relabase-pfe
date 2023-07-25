@@ -3,7 +3,7 @@
   display: flex;
   flex: 1;
   gap: $tab-gap;
-  height: calc(100% - #{$navbar-height} - #{$content-padding});
+  height: calc(100vh - #{$navbar-height} - #{$content-padding});
   margin-right: $content-padding;
   margin-left: $content-padding;
 }

@@ -16,7 +16,7 @@
   padding: $button-padding-y $button-padding-x;
   overflow: hidden;
   text-align: center;
-  border-color: transparent;
+  border: none;
   border-radius: $button-border-radius;
 
   &::before {
