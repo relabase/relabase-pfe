@@ -17,7 +17,7 @@ async function initGoogleButton() {
         });
         google.accounts.id.renderButton(
             document.getElementById("google-sign-in-div"),
-            { theme: "outline", size: "large", text: "signup_with" }  // customization attributes
+            { theme: "outline", size: "large", text: "continue_with" } // customization attributes
         );
     });
 }
