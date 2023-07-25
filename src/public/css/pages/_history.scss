@@ -1,0 +1,13 @@
+// History page-specific styles
+// TODO: create general page layout
+#history-content {
+    @include content-container;
+}
+
+.history-header-container {
+    @include header-container;
+}
+
+#history-content .history-header {
+    @extend %header;
+}

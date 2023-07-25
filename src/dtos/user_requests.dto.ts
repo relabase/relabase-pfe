@@ -20,6 +20,10 @@ export class CreateUser_requestDto {
   @IsNotEmpty()
   public image:string;
 
+  @IsString()
+  @IsNotEmpty()
+  public google_id:string;
+
 }
 
 export class UpdateUser_requestDto {

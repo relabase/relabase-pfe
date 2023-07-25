@@ -1,27 +1,32 @@
 // Search input
-.search-input {
-    @include font-style($size: 0.8125rem, $weight: 400);
+.search-inputs {
+  padding-right: $content-padding;
+}
 
-    width: 15.25rem;
-    padding: 0.75rem 0.875rem;
-    color: $secondary-font-color;
-    letter-spacing: -0.017rem;
-    border-radius: 0.75rem;
-  }
-  
-  .search-input-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .search-input-container::after {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 1.0625rem;
-    height: 1.0625rem;
-    background-image: url("../img/search.svg");
-    background-size: 100% 100%;
-    transform: translateY(-50%);
-    content: "";
-  }
+.search-input-container {
+  position: relative;
+  display: inline-block;
+  margin: 0.25rem;
+}
+
+.search-input-container::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 1.0625rem;
+  height: 1.0625rem;
+  background-image: url("../img/search.svg");
+  background-size: 100% 100%;
+  transform: translateY(-50%);
+  content: "";
+}
+
+.search-input {
+  @include font-style($size: $paragraph-font-size, $weight: 400);
+
+  width: $input-width;
+  padding: 0.75rem 0.875rem;
+  color: $secondary-font-color;
+  letter-spacing: $input-letter-spacing;
+  border-radius: $input-border-radius;
+}

@@ -9,7 +9,7 @@ export class UserService {
   public async findAllUser(): Promise<User[]> {
 
     return new Promise((resolve,reject) =>
-    connection.query<User[]>('SELECT * FROM `user`',  
+    connection.query<User[]>('SELECT * FROM `user`',
     (err,res)=>{
       console.log(res);
       if (err) reject(err);
@@ -53,13 +53,14 @@ export class UserService {
       hash(userData.password, 10).then(
         (hashedPass)=>{
           console.log(hashedPass);
-          connection.query<OkPacket>('INSERT INTO user(email,password,first_name,last_name,id_role,image) VALUE(?,?,?,?,?,?)', 
+          connection.query<OkPacket>('INSERT INTO user(email,password,first_name,last_name,id_role,image,google_id) VALUE(?,?,?,?,?,?,?)',
           [ userData.email,
             hashedPass,
             userData.first_name,
             userData.last_name,
             userData.id_role,
-            userData.image ],
+            userData.image,
+            userData.google_id ],
           (err,res)=>{
             if (err) reject(err);
             else
@@ -81,7 +82,7 @@ export class UserService {
     return new Promise((resolve,reject)=>{
       hash(userData.password, 10).then((val)=>{
 
-        connection.query<OkPacket>('UPDATE user SET password = ? WHERE id = ?', 
+        connection.query<OkPacket>('UPDATE user SET password = ? WHERE id = ?',
         [ val,
           userId],
         (err,res)=>{
@@ -110,7 +111,7 @@ export class UserService {
       this.findUserById(userId)
       .then((users) => {
 
-        connection.query<OkPacket>('DELETE FROM user WHERE id = ?', 
+        connection.query<OkPacket>('DELETE FROM user WHERE id = ?',
         [ userId ],
         (err,res)=>{
           if (err) reject(err);
