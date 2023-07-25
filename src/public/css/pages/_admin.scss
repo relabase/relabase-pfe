@@ -1,12 +1,4 @@
 // Admin page-specific styles
-#admin-content {
-  @include content-container;
-}
-
-.admin-header-container {
-  @include header-container;
-}
-
 .user-application,
 .package-request {
   @extend %content-tabs;
@@ -22,21 +14,15 @@
   }
 }
 
-#admin-content .admin-header {
-  @extend %header;
-
-  flex: none;
-}
-
 // User Section
-#admin-content .item-section {
+.item-section {
   @include flex-direction($direction: row);
 
   flex-grow: 1;
   overflow: hidden;
 }
 
-#admin-content .item-list {
+.item-list {
   @extend %scrollbar;
 
   flex: 0.8;
@@ -45,10 +31,6 @@
 }
 
 // User Content
-#admin-content .content-header {
-  @include header-container;
-}
-
 .item-content {
   @extend %scrollbar;
 
@@ -61,7 +43,7 @@
   border-radius: 0.75rem;
 }
 
-#admin-content .action-buttons {
+.action-buttons {
   display: flex;
   gap: 10px;
 }

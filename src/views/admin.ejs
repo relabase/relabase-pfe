@@ -9,7 +9,7 @@
 <body>
   <%- include('partials/navbar.ejs', {page: 'admin' , username: 'John Doe' }); %>
 
-  <div id="admin-content">
+  <div class="main-content">
     <div class="tabs">
       <div class="tab" id="tab-user-application" data-tab="user">User Applications (<%= userRequests.length %>)</div>
       <div class="tab" id="tab-package-request" data-tab="package">Package Requests (<%= packageRequests.length %>)</div>
