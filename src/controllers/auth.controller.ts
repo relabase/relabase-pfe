@@ -48,6 +48,14 @@ export class AuthController {
     res.status(302).json({id: CLIENT_ID});
   }
 
+  public getLoginPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.render('login');
+    } catch (error) {
+      next(error);
+    }
+  };
+
 
   // public auth = Container.get(AuthService);
 
