@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
-import { AuthService } from '@services/auth.service';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { UserService } from '@/services/users.service';
 import { CLIENT_ID } from '@config';
@@ -10,13 +9,16 @@ import { CLIENT_ID } from '@config';
 const userService = Container.get(UserService);
 
 export class AuthController {
-  public verifyIdToken = async (req: Request, res: Response): Promise<TokenPayload> => {
-    const idToken: string = String(req.body.credential);
-    const ticket = await new OAuth2Client().verifyIdToken({
-      idToken,
-      audience: CLIENT_ID
-    });
-    return ticket.getPayload();
+  public verifyIdToken = async (token: string): Promise<TokenPayload> => {
+    try {
+      const ticket = await new OAuth2Client().verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID
+      });
+      return ticket.getPayload();
+    } catch (error) {
+      return null;
+    }
   };
 
   public userExists = async (id: string): Promise<User> => {
@@ -25,12 +27,17 @@ export class AuthController {
 
   public redirect = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const payload: TokenPayload = await this.verifyIdToken(req, res);
-      if (this.userExists(payload.sub)) {
-        res.cookie('authToken', String(req.body.credential), { httpOnly: true });
-        res.status(200).json({ redirectUrl: 'home' });
+      let token: string = String(req.body.credential);
+      const payload: TokenPayload = await this.verifyIdToken(token);
+      if (payload!= null) {
+        if (this.userExists(payload.sub)) {
+          res.cookie('authToken', token, { httpOnly: true });
+          res.status(200).json({ redirectUrl: 'home' });
+        } else {
+          res.status(200).json({ redirectUrl: 'register' });
+        }
       } else {
-        res.status(200).json({ redirectUrl: 'register' });
+        res.status(200).json({ redirectUrl: 'login' });
       }
     } catch (error) {
       res.status(401).json({ msg: 'error' });

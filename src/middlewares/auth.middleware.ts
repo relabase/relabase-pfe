@@ -9,16 +9,18 @@ const getToken = (req: RequestWithUser): string => {
 
 export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
-    let token: string = getToken(req);
-    if (token) {
-      if (requestedPage === 'login') { // if there IS a token and the requested page is login, redirect to the homepage
+    const validToken = (await (new AuthController()).verifyIdToken(getToken(req))) != null;
+    if (validToken) {
+      if (requestedPage === 'login') { // if there IS a valid token and the requested page is login, redirect to the homepage
         res.redirect('home');
-      } else { // if there IS a token and the requested page isn't login
+      }
+      else { // if there IS a valid token and the requested page isn't login, go to the requested page
         next();
       }
-    } else if (requestedPage === 'login') { // if NO token and the requested page is login, 
+    }
+    else if (requestedPage === 'login') { // if there is NO valid token and the requested page is login, go to the requested page
       next()
-    } else { // if NO token and the requested page isn't login
+    } else { // if there is NO valid token and the requested page isn't login, redirect to the login page
       res.redirect('login');
     }
   } catch (error) {
