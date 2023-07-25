@@ -1,30 +1,30 @@
 import { NextFunction, Response } from 'express';
-import { verify } from 'jsonwebtoken';
-import { SECRET_KEY } from '@config';
 import { HttpException } from '@exceptions/httpException';
-import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
-import { UserModel } from '@models/users.model';
+import { RequestWithUser } from '@interfaces/auth.interface';
+import { AuthController } from '@controllers/auth.controller'
 
-const getAuthorization = (req: RequestWithUser): string => {
+const getToken = (req: RequestWithUser): string => {
   return req.cookies.authToken;
 };
 
-export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
-    const Authorization: string = getAuthorization(req);
-    if (Authorization) {
-      const { id } = (await verify(Authorization, SECRET_KEY)) as DataStoredInToken;
-      const findUser = UserModel.find(user => user.id === id);
-
-      if (findUser) {
-        req.user = findUser;
-        next();
+    let token: string = getToken(req);
+    token = token === undefined ? null : token;
+    if (token) {
+      if (requestedPage === 'login') {
+        res.redirect('home');
       } else {
-        next(new HttpException(401, 'Wrong authentication token'));
+        next();
       }
     } else {
-      next(new HttpException(404, 'Authentication token missing'));
+      res.redirect('login');
+      //error
+      //you must be logged in to access this page
+      //create an error page that displays a 404 or unauthorized access message
+      //that page will contain none of the navbar options except for the logo and a login button in the corner where john doe usually is
     }
+
   } catch (error) {
     next(new HttpException(401, 'Wrong authentication token'));
   }
