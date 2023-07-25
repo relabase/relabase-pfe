@@ -17,5 +17,6 @@ export class AuthRoute implements Routes {
     this.router.get('/login', AuthMiddleware('login'), this.auth.getLoginPage);
     this.router.post('/authenticate', this.auth.redirect);
     this.router.get('/authenticate/client-id', this.auth.getClientId);
+    this.router.get('/register', this.auth.getRegisterPage)
   }
 }

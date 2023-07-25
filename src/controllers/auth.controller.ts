@@ -56,6 +56,14 @@ export class AuthController {
     }
   };
 
+  public getRegisterPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.render('register');
+    } catch (error) {
+      next(error);
+    }
+  };
+
 
   // public auth = Container.get(AuthService);
 
