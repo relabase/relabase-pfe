@@ -22,15 +22,15 @@ export class AuthController {
   };
 
   public userExists = async (id: string): Promise<User> => {
-    return await userService.findUserByGoogleId(id);
+    return await userService.findUserByGoogleId(id)[0];
   }
 
   public redirect = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       let token: string = String(req.body.credential);
       const payload: TokenPayload = await this.verifyIdToken(token);
-      if (payload!= null) {
-        if (this.userExists(payload.sub)) {
+      if (payload != null) {
+        if (await this.userExists(payload.sub)) {
           res.cookie('authToken', token, { httpOnly: true });
           res.status(200).json({ redirectUrl: 'home' });
         } else {
