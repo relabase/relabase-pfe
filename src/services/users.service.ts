@@ -33,14 +33,14 @@ export class UserService {
     })
   }
 
-  public async findUserByFirstName(firstName: string): Promise<User> {
+  public async findUserByGoogleId(googleId: string): Promise<User> {
 
     return new Promise((resolve,reject) => {
       connection.query<User[]>(
-        'SELECT * FROM `user` where first_name = ?',
-        [ firstName ],
+        'SELECT * FROM `user` where google_id = ?',
+        [ googleId ],
         (err,res) => {
-          console.log(res);
+          // console.log(res);
           if (err) reject(err);
           else resolve(res?.[0]);
         }

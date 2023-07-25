@@ -20,9 +20,7 @@ export class AuthController {
   };
 
   public userExists = async (id: string): Promise<User> => {
-    //temporary, should be findUserByGoogleId
-    return await userService.findUserByFirstName(id);
-    //return await userService.findUserById(Number(payload.sub));
+    return await userService.findUserByGoogleId(id);
   }
 
   public redirect = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
