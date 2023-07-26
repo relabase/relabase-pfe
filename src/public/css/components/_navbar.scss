@@ -90,7 +90,9 @@
   }
   
   .logout-icon {
-    @include svg-icon(1rem, 1rem, '../img/logout.svg');
+    @include svg-icon(1.05rem, 1.05rem, '../img/logout.svg');
+    float: left;
+    margin-right: 0.5rem;
   }
 
   .dropdown-content {
