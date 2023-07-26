@@ -37,7 +37,7 @@ a.change-account-link:hover {
 }
 
 .register-account-info {
-    margin-bottom: $button-gap;
+    margin-bottom: $content-padding;
 }
 
 .current-account {
@@ -66,6 +66,16 @@ a.change-account-link:hover {
 
 .display-none {
     display: none;
+}
+
+#register-input-reason {
+    @include font-style($weight: 100, $size: $paragraph-font-size);
+    border: 0px;
+    resize: none;
+    width: 100%;
+    border-radius: $standard-border-radius;
+    padding: $content-padding;
+    height: 10rem;
 }
 
 
