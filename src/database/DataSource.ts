@@ -1,4 +1,4 @@
-import { DB_SERVER } from '@/config';
+import { DB_SERVER, DB_DATABASE, DB_PASSWORD, DB_PORT, DB_USERNAME } from '@/config';
 import { Role } from '@/models/role';
 import { User } from '@/models/user';
 import { Log } from '@/models/log';
@@ -10,10 +10,10 @@ import { User_request } from '@/models/user_request';
 export const connection = new DataSource({
   type: "mysql",
   host: DB_SERVER,
-  port: 3306,
-  username: "root",
-  password: "root",//TODO change password
-  database: "db",
+  port: Number(DB_PORT),
+  username: DB_USERNAME,
+  password: DB_PASSWORD,//TODO change password
+  database: DB_DATABASE,
   entities:[Role,User,Log, Package_request, Status, User_request]
 });
 
