@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Home</title>
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<body>
-  <%- include('partials/navbar.ejs', { page: 'home' , username: 'John Doe' }); %>
-</body>
-
-</html>
+<%- include('layout.ejs', { 
+  title: 'Home', 
+  currentPage: 'home', 
+  currentUsername: 'John Doe',
+  body: ["partials/home/home-content.ejs"],
+  scripts: "<script src='js/home-script.js'></script>"
+}) %>
