@@ -1,10 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { User } from '@interfaces/users.interface';
+import { User } from '@models/user';
 import { UserService } from '@services/users.service';
+import { RoleService } from '@/services/roles.service';
+import { Role } from '@/models/role';
+import { DeleteResult } from 'typeorm';
+import { CreateUserDto } from '@/dtos/users.dto';
 
 export class UserController {
   public user = Container.get(UserService);
+  public role = Container.get(RoleService);
 
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -22,10 +27,10 @@ export class UserController {
       const findOneUserData: User = await this.user.findUserById(userId);
       if(findOneUserData === undefined)
       {
-        
+
         res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
       }
-      
+
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
 
@@ -40,6 +45,11 @@ export class UserController {
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
+      const dto:CreateUserDto = req.body
+
+      const role:Role = await this.role.findRoleById(dto.id_role);
+      userData.role = role;
+
 
       const createUserData: User = await this.user.createUser(userData);
 
@@ -53,12 +63,8 @@ export class UserController {
     try {
       const userId = Number(req.params.id);
       const userData: User = req.body;
-      const updateUserData: User = await this.user.updateUser(userId, userData);
-
-      if(updateUserData === undefined)
-      {
-        res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
-      }
+      userData.id = userId;
+      const updateUserData: User = await this.user.updateUser(userData);
 
       res.status(200).json({ data: updateUserData, message: 'updated' });
     } catch (error) {
@@ -69,11 +75,12 @@ export class UserController {
   public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = Number(req.params.id);
-      const deleteUserData: User = await this.user.deleteUser(userId);
-      if(deleteUserData === undefined)
+      const deleteUserData: DeleteResult = await this.user.deleteUser(userId);
+      if(deleteUserData.affected === 0)
       {
-        
+
         res.status(409).json({ data: "User doesn't exist", message: 'findOne' });
+        return;
       }
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });

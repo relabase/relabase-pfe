@@ -50,13 +50,12 @@
   @extend %link;
 
   &::after {
-    @include svg-icon(1.1875rem, 1.1875rem);
+    @include svg-icon(1.1875rem, 1.1875rem, "../img/open_in_new.svg");
 
     display: inline-block;
     margin-bottom: 0.15rem;
     margin-left: 0.5rem;
     vertical-align: middle;
-    background-image: url("../img/open_in_new.svg");
     content: "";
   }
 }

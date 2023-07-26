@@ -1,16 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { Status } from '@interfaces/status.interface';
+import { Status } from '@models/status';
 import { StatusService } from '@services/status.service';
+import { DeleteResult } from 'typeorm';
 
 export class StatusController {
   public status = Container.get(StatusService);
 
   public getStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const findAllStatussData: Status[] = await this.status.findAllStatus();
+      const findAllStatusData: Status[] = await this.status.findAllStatus();
 
-      res.status(200).json({ data: findAllStatussData, message: 'findAll' });
+      res.status(200).json({ data: findAllStatusData, message: 'findAll' });
     } catch (error) {
       next(error);
     }
@@ -20,17 +21,15 @@ export class StatusController {
     try {
       const statusId = Number(req.params.id);
       const findOneStatusData: Status = await this.status.findStatusById(statusId);
-      if(findOneStatusData === undefined)
+      if(findOneStatusData === null)
       {
-        
+
         res.status(409).json({ data: "Status doesn't exist", message: 'findOne' });
+        return;
       }
-      
+
 
       res.status(200).json({ data: findOneStatusData, message: 'findOne' });
-
-
-
 
     } catch (error) {
       next(error);
@@ -55,7 +54,10 @@ export class StatusController {
     try {
       const statusId = Number(req.params.id);
       const statusData: Status = req.body;
-      const updateStatusData: Status = await this.status.updateStatus(statusId, statusData);
+
+      statusData.id = statusId;
+
+      const updateStatusData: Status = await this.status.updateStatus(statusData);
 
       if(updateStatusData === undefined)
       {
@@ -71,11 +73,12 @@ export class StatusController {
   public deleteStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const statusId = Number(req.params.id);
-      const deleteStatusData: Status = await this.status.deleteStatus(statusId);
-      if(deleteStatusData === undefined)
+      const deleteStatusData: DeleteResult = await this.status.deleteStatus(statusId);
+      if(deleteStatusData === null)
       {
-        
+
         res.status(409).json({ data: "Status doesn't exist", message: 'findOne' });
+        return;
       }
 
       res.status(200).json({ data: deleteStatusData, message: 'deleted' });

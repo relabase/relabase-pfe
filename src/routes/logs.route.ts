@@ -17,9 +17,10 @@ export class LogRoute implements Routes {
     this.router.get(`${this.path}`, this.log.getLogs);
     this.router.get(`${this.path}/:id(\\d+)`, this.log.getLogById);
     this.router.post(`${this.path}`,ValidationMiddleware(CreateLogDto),this.log.createLog);
+    this.router.delete(`${this.path}/:id(\\d+)`, this.log.deleteLog);
     /*
     this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateUserDto), this.user.updateUser);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.user.deleteUser);
+
     */
 
   }

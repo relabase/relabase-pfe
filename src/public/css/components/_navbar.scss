@@ -2,22 +2,21 @@
 #navbar {
   @include flex-center(space-between);
 
-  padding-right: $content-padding;
+  padding: 0 $content-padding;
   background: $background-color;
 
   %navbar-item-group {
     @include flex-center;
 
-    gap: 1.25rem;
+    gap: $content-outline-padding;
     height: $navbar-height;
+    padding: 0 $navbar-padding;
     color: $primary-font-color;
     line-height: $standard-line-height;
     letter-spacing: $standard-letter-spacing;
   }
 
-  .navbar-link {
-    @extend %navbar-item-group;
-
+  %navbar-link{
     text-decoration: none;
     cursor: pointer;
 
@@ -26,8 +25,13 @@
     }
   }
 
-  .navbar-link.active {
-    color: $main-font-color;
+  .navbar-link{
+    @extend %navbar-link;
+    @extend %navbar-item-group;
+
+    &.active {
+      color: $main-font-color;
+    }
   }
 
   .navbar-item-group-left {
@@ -37,20 +41,55 @@
   .navbar-item-group-right {
     @extend %navbar-item-group;
 
-    gap: 0.375rem;
+    position: relative;
+    gap: $navbar-padding;
+
+    &.active {
+      box-shadow: $main-shadow;
+    }
   }
 
-  #navbar-logo {
-    @include svg-icon(2.2rem, 1.5rem);
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
+    display: none;
+    width: $navbar-dropdown-width;
+    margin-top: -$content-padding;
+    background-color: $background-color;
+    border: $border-width $primary-border-color solid;
+    border-radius: $input-border-radius;
+    box-shadow: $main-shadow;
 
-    padding: 1.75rem 1.5rem;
+    a {
+      @extend %navbar-link;
+
+      display: flex;
+      gap: $navbar-padding; 
+      align-items: center;
+      padding: $content-padding $content-outline-padding;
+      color: $primary-font-color;
+    }
   }
 
-  #navbar-person-icon {
-    @include svg-icon(1.25rem, 1.25rem);
+  .navbar-item-group-right:hover .dropdown-content {
+    display: block;
   }
 
+  .navbar-logo {
+    @include svg-icon(2.2rem, 1.5rem, '../img/navbar_logo.svg');
+  }
+  
+  .navbar-user-icon {
+    @include svg-icon(1.25rem, 1.25rem, '../img/person.svg');
+  }
+  
   .down-arrow-icon {
-    @include svg-icon(0.75rem, 1.25rem);
+    @include svg-icon(0.75rem, 1.25rem, '../img/arrow_drop_down.svg');
+  }
+  
+  .logout-icon {
+    @include svg-icon(1rem, 1rem, '../img/logout.svg');
   }
 }
