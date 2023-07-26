@@ -1,0 +1,71 @@
+.register-title-text {
+    @include font-style($weight: 600, $size: 2.95rem);
+    margin-bottom: 1.25rem;
+}
+
+.input {
+    @include flex-center;
+
+    width: 100%;
+    margin-top: $content-padding;
+    border-radius: $standard-border-radius;
+    flex-direction: row;
+    box-shadow: $main-shadow;
+
+    &-before {
+        padding: 1rem;
+    }
+
+    &-after {
+        width: 100%;
+        padding-right: 0.938rem;
+        text-align: left;
+    }
+}
+
+.register-google-name {
+    color: $gradient-color-mid;
+}
+
+a.change-account-link {
+    color: $primary-font-color;
+    text-decoration: none;
+}
+
+a.change-account-link:hover {
+    color: $hover-color;
+}
+
+.register-account-info {
+    margin-bottom: $button-gap;
+}
+
+.current-account {
+    font-size: 1rem;
+}
+
+.not-you {
+    font-weight: 100;
+}
+
+.step-button {
+    @include flex-center;
+    width: 100%;
+    border-radius: $standard-border-radius;
+}
+
+.step-button:hover {
+    cursor: pointer;
+}
+
+#step-01-content,
+#step-02-content,
+#step-03-content {
+    width: 100%;
+}
+
+.display-none {
+    display: none;
+}
+
+
