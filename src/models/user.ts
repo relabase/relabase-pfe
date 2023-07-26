@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn} from 'typeorm'
 import { Role } from '@models/role';
 import { Log } from '@models/log';
+import { Package_request } from '@/models/package_request';
 
 @Entity()
 export class User{
@@ -26,5 +27,8 @@ export class User{
   role: Role;
 
   @OneToMany(() => Log, log => log.user)
-  logs: Log;
+  logs: Log[];
+
+  @OneToMany(() => Package_request, package_request => package_request.user)
+  package_requests: Package_request[];
 }

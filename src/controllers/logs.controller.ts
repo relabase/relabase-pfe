@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import { Log } from '@/models/log';
 import { LogService } from '@/services/logs.service';
-import { OkPacket } from 'mysql2';
 import { User } from '@/models/user';
 import { DeleteResult } from 'typeorm';
+import { CreateLogDto } from '@/dtos/logs.dto';
 
 export class LogController {
   public log = Container.get(LogService);
@@ -34,12 +34,10 @@ export class LogController {
     try {
 
       const logData: Log = req.body;
+      const dto: CreateLogDto = req.body;
 
-      if(logData.user === undefined)
-      {
-        logData.user = new User();
-        logData.user.id = 1;
-      }
+      logData.user = new User();
+      logData.user.id = dto.id_user;
 
       const createLogData: Log = await this.log.createLog(logData.file_path_input,logData.file_path_result,logData.user,logData.text);
 

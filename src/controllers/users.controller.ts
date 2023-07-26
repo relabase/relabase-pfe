@@ -5,6 +5,7 @@ import { UserService } from '@services/users.service';
 import { RoleService } from '@/services/roles.service';
 import { Role } from '@/models/role';
 import { DeleteResult } from 'typeorm';
+import { CreateUserDto } from '@/dtos/users.dto';
 
 export class UserController {
   public user = Container.get(UserService);
@@ -44,13 +45,10 @@ export class UserController {
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
+      const dto:CreateUserDto = req.body
 
-
-      if(userData.role === undefined)
-      {
-        const defaultRole:Role = await this.role.findRoleByName("user");
-        userData.role = defaultRole;
-      }
+      const role:Role = await this.role.findRoleById(dto.id_role);
+      userData.role = role;
 
 
       const createUserData: User = await this.user.createUser(userData);
