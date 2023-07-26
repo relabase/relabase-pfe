@@ -39,6 +39,7 @@ $gradient-color-end: #fda4cf;
 $standard-border-radius: 10px;
 $primary-border-color: #f1d7e6;
 $light-outline-color: #e3e1e3;
+$border-width: 0.0313rem;
 
 // Shadows
 $main-shadow: 0 2px 10px 0 rgb(142 118 157 / 22%);
@@ -67,18 +68,21 @@ $spacing: 1.5rem;
 
 // Navbar
 $navbar-height: 4.375rem;
+$navbar-padding: 0.375rem;
+$navbar-dropdown-width: 15rem;
+
 
 // Buttons
 $button-height: 3.125rem;
 $button-height-thin: 2.25rem;
 $button-padding-y: 0.5625rem;
 $button-padding-x: 1.1875rem;
-$button-gap: 0.625rem;
 $button-border-radius: 3.0625rem;
 $button-margin-top: 1.25rem;
 $button-svg-size: 1.0625rem;
 $button-approve-color: #26c7b4;
 $button-decline-color: #e5467f;
+$button-close-color: #947598;
 $button-visibility-color: #926296;
 
 // Hr
@@ -91,3 +95,8 @@ $input-width: 15.25rem;
 
 // Modal
 $modal-background-color: rgb(0 0 0 / 40%);
+
+// Images
+$search-img: "../img/search.svg";
+$date-from-img: "../img/date_from.svg";
+$date-to-img: "../img/date_to.svg";

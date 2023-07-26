@@ -12,11 +12,11 @@
 
   position: relative;
   z-index: 0;
-  gap: $button-gap;
+  gap: $content-padding;
   padding: $button-padding-y $button-padding-x;
   overflow: hidden;
   text-align: center;
-  border-color: transparent;
+  border: 0;
   border-radius: $button-border-radius;
 
   &::before {
@@ -55,7 +55,7 @@
   border: 1px solid $light-outline-color;
 
   img {
-    margin-right: $button-gap;
+    margin-right: $content-padding;
   }
 
   &:hover {
@@ -76,6 +76,14 @@
     $button-decline-color,
     "../img/cancel.svg",
     $hover-color: darken($button-decline-color, 10%)
+  );
+}
+
+.close-button {
+  @include svg-icon-button(
+    $button-close-color,
+    "../img/cancel.svg",
+    $hover-color: darken($button-close-color, 10%)
   );
 }
 
