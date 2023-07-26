@@ -1,11 +1,10 @@
 // Analyze page-specific styles
-#script-wrapper {
+.script-wrapper {
+  @extend %main-content;
+
   display: flex;
   flex: 1;
   gap: $tab-gap;
-  height: calc(100vh - #{$navbar-height} - #{$content-padding});
-  margin-right: $content-padding;
-  margin-left: $content-padding;
 }
 
 #results {

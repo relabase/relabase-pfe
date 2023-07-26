@@ -1,35 +1,8 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Analyze</title>
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<body>
-  <%- include('partials/navbar.ejs', {page: 'analyze' , username: 'John Doe' }); %>
-
-    <div id="script-wrapper" class="main-wrapper">
-      <div class="script-content">
-        <div class="script-header"> R Script
-          <button id="run-script-button" class="primary-button">Run Script</button>
-        </div>
-        <div class="editor">
-          <div class="line-numbers"></div>
-
-            <textarea class="script-textbox" spellcheck="false"></textarea>
-
-        </div>
-
-      </div>
-      <div class="script-content">
-        <div class="script-header"> Results
-          <button id="download-button" class="primary-button">Download .HTML</button>
-        </div>
-        <div id="results" class="editor"><iframe id="results-iframe"></iframe></div>
-      </div>
-    </div>
-</body>
-
-</html>
-<script src="js/analyze-script.js"></script>
+<%- include('layout.ejs', { 
+  title: 'Analyze', 
+  currentPage: 'analyze', 
+  currentUsername: 'John Doe',
+  body: ["partials/analyze/analyze-content.ejs"],
+  scripts: "<script src='js/analyze-script.js'></script>",
+  mainClass: "script-wrapper"
+}) %>
