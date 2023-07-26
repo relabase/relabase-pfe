@@ -77,7 +77,7 @@ export class RoleController {
       if(deleteRoleData.affected === 0)
       {
 
-        res.status(409).json({ data: "Role doesn't exist", message: 'findOne' });
+        res.status(409).json({ data: "Role doesn't exist", message: 'deleted' });
         return;
       }
 

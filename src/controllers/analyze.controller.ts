@@ -3,6 +3,7 @@ import { exec } from 'child_process';
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import fs from 'fs';
+import { User } from '@/models/user';
 
 
 
@@ -23,10 +24,12 @@ export class AnalyzeController {
       this.generateRFileFromString(String(req.body.script), filename, next);
       let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
       exec(command, (error, stdout, stderr) => {
+        const currentUser:User = new User();
+        currentUser.id = 1;
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,``,1, `Error executing R script: ${error}`).catch((rej) =>
+          this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
           {
             console.log(rej);
           });
@@ -35,7 +38,7 @@ export class AnalyzeController {
         else
         {
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,1, `Success`).catch((rej) =>
+          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
           {
             console.log(rej);
           });

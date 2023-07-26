@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn} from 'typeorm'
 import { Role } from '@models/role';
+import { Log } from '@models/log';
 
 @Entity()
 export class User{
@@ -23,4 +24,7 @@ export class User{
   @ManyToOne(() => Role, role => role.users)
   @JoinColumn({ name: 'id_role' })
   role: Role;
+
+  @OneToMany(() => Log, log => log.user)
+  logs: Log;
 }
