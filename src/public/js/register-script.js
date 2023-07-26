@@ -1,6 +1,4 @@
 window.onload = function () {
-    console.log('hi');
-
     const step_01_content = document.getElementById('step-01-content');
     const step_02_content = document.getElementById('step-02-content');
     const step_03_content = document.getElementById('step-03-content');
@@ -21,6 +19,13 @@ window.onload = function () {
         hide(step_01_content);
         hide(step_02_content);
         show(step_03_content);
+    }
+
+    //files
+    document.getElementById('file-upload').onchange = () => {
+        console.log(document.getElementById('file-upload').files[0]);
+        show(document.getElementById('file-name'));
+        document.getElementById('file-name').innerHTML = document.getElementById('file-upload').files[0].name;
     }
 }
 

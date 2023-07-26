@@ -39,12 +39,8 @@
 
   height: $button-height-thin;
   margin-top: $button-margin-top;
-  background: linear-gradient(45deg, $gradient-color-start 0.01%, $gradient-color-mid 49.97%, $gradient-color-end 100%);
+  background: $gradient-color-start;
   box-shadow: $btn-shadow;
-
-  &:hover {
-    background: $gradient-color-start;
-  }
 }
 
 .google-sign-in-btn {
@@ -59,6 +55,19 @@
   }
 
   &:hover {
+    border-color: $hover-color;
+  }
+}
+
+.upload-button {
+  @extend %shared-button;
+  padding: $button-padding-x;
+  color: $primary-font-color;
+  border: 2px solid $gradient-color-mid;
+  border-radius: $standard-border-radius;
+  cursor: pointer;
+  &:hover {
+    color: $gradient-color-start;
     border-color: $hover-color;
   }
 }

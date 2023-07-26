@@ -48,14 +48,11 @@ a.change-account-link:hover {
     font-weight: 100;
 }
 
-.step-button {
+.step-button,
+.submit-button {
     @include flex-center;
     width: 100%;
     border-radius: $standard-border-radius;
-}
-
-.step-button:hover {
-    cursor: pointer;
 }
 
 #step-01-content,
@@ -78,4 +75,23 @@ a.change-account-link:hover {
     height: 10rem;
 }
 
+.file-dropbox {
+    height: 10rem;
+    @include flex-direction;
+    justify-content: space-evenly;
+}
 
+.content-more-info {
+    @include font-style($weight: 100, $size: 0.80rem);
+    margin-top: $content-padding;
+}
+
+.submit-button {
+    padding: $content-padding 0;
+    background: linear-gradient(45deg, $gradient-color-start 0.01%, $gradient-color-mid 49.97%, $gradient-color-end 100%);
+
+    &:hover {
+        background: $gradient-color-start;
+        ;
+    }
+}
