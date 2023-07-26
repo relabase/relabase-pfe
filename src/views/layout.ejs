@@ -9,7 +9,7 @@
 <body>
     <%- include('partials/navbar.ejs', { page: currentPage , username: currentUsername }); %>
 
-    <div class="main-content">
+    <div class="<%= locals.mainClass ? mainClass : 'main-content' %>">
         <% body.forEach(function(bodyPart) { %>
             <%- include(bodyPart) %>
         <% }) %>
