@@ -1,5 +1,6 @@
 import { DB_SERVER } from '@/config';
 import { Role } from '@/models/role';
+import { User } from '@/models/user';
 import{ DataSource } from 'typeorm';
 
 export const connection = new DataSource({
@@ -9,7 +10,7 @@ export const connection = new DataSource({
   username: "root",
   password: "root",
   database: "db",
-  entities:[Role]
+  entities:[Role,User]
 });
 
 connection.initialize().then(() => {

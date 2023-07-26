@@ -7,6 +7,7 @@ const repo = connection.getRepository(Role);
 
 @Service()
 export class RoleService {
+
   public async findAllRole(): Promise<Role[]> {
 
     return repo.find();
@@ -19,6 +20,12 @@ export class RoleService {
     }
     });
 
+  }
+  findRoleByName(name: string): Promise<Role> {
+    return repo.findOne({where : {
+      name_role : name
+    }
+    });
   }
 
   public async createRole(roleData: Role): Promise<Role> {
