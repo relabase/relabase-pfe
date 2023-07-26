@@ -11,7 +11,7 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
   try {
     const validToken: boolean = (await (new AuthController()).verifyIdToken(getToken(req))) != null;
     if (validToken) {
-      if (requestedPage === 'login') { // if there IS a valid token and the requested page is login, redirect to the homepage
+      if (requestedPage === 'login' || requestedPage === 'register') { // if there IS a valid token and the requested page is login or register, redirect to the homepage
         res.redirect('home');
       }
       else { // if there IS a valid token and the requested page isn't login, go to the requested page
