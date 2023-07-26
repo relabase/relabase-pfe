@@ -26,18 +26,13 @@ export class UserService {
   }
 
   public async findUserByGoogleId(googleId: string): Promise<User> {
-
-    return new Promise((resolve,reject) => {
-      connection.query<User[]>(
-        'SELECT * FROM `user` where google_id = ?',
-        [ googleId ],
-        (err,res) => {
-          // console.log(res);
-          if (err) reject(err);
-          else resolve(res?.[0]);
-        }
-        )
-    })
+    return repo.findOne({
+      where:{
+        google_id: googleId
+      },
+      relations: {
+        role:true
+    }});
   }
 
   public async createUser(userData: User): Promise<User> {
