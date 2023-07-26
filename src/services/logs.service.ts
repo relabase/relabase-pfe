@@ -1,79 +1,68 @@
 import { Service } from 'typedi';
+import { Log } from '@models/log';
+import { connection } from '@/database/DataSource';
+import { User } from '@/models/user';
+import { DeleteResult } from 'typeorm';
 
-import { Log } from '@interfaces/logs.interface';
-import { OkPacket } from 'mysql2';
-import { connection } from '@/database/MysqlConnect';
+const repo = connection.getRepository(Log);
 
 @Service()
 export class LogService {
+
   public async findAllLog(): Promise<Log[]> {
-    return new Promise((resolve,reject) =>
-    connection.query<Log[]>('SELECT * FROM `log`',  
-    (err,res)=>{
-      console.log(res);
-      if (err) reject(err);
-      else resolve(res);
-    })
-   )
+    return repo.find({
+      select:{
+        id:true,
+        create_time:true,
+        text:true,
+        file_path_input:true,
+        file_path_result:true,
+        type:true,
+        user:{
+          id:true
+        }
+      },
+      relations:{
+        user:true
+      }
+    });
   }
 
   public async findLogById(logId: number): Promise<Log> {
-
-    return new Promise((resolve,reject) => {
-      connection.query<Log[]>(
-        'SELECT * FROM `log` where id = ?',
-        [ logId ],
-        (err,res) => {
-          if (err) reject(err);
-          else resolve(res?.[0]);
+    return repo.findOne({
+      select:{
+        id:true,
+        create_time:true,
+        text:true,
+        file_path_input:true,
+        file_path_result:true,
+        type:true,
+        user:{
+          id:true
         }
-        )
-    })
+      },
+      where:{
+        id:logId
+      },
+      relations:{
+        user:true
+      }
+    });
   }
 
-  public async createLog(file_path_input:string,file_path_result:string,id_user:number, text:string): Promise<OkPacket> {
-    return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO log(text,id_user,file_path_input,file_path_result) value(?,?,?,?)', 
-      [ text,
-        id_user,
-        file_path_input,
-        file_path_result ],
-      (err,res)=>{
-        if (err) reject(err);
-        else
-        {
-          console.log("log created");
-          resolve(res);
-        }
-      });
-      
+  public async createLog(file_path_input:string,file_path_result:string,user:User, text:string): Promise<Log> {
+    const newLog:Log = new Log();
 
-    })
+    newLog.file_path_input= file_path_input;
+    newLog.file_path_result = file_path_result;
+    newLog.user = user;
+    newLog.text = text;
+    return repo.save(newLog);
+
   }
 
-  public async deleteLog(LogId: number): Promise<Log> {
-    return new Promise((resolve,reject)=>{
-
-      this.findLogById(LogId)
-      .then((Logs) => {
-
-        connection.query<OkPacket>('DELETE FROM Log WHERE id_Log = ?', 
-        [ LogId ],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            this.findLogById(LogId)
-            .then((res)=>{
-              console.log(res);
-              resolve(Logs);
-            })
-            .catch(reject);
-          }
-        });
-      })
-      .catch(reject);
-    })
+  public async deleteLog(LogId: number): Promise<DeleteResult> {
+    return repo.delete(LogId);
   }
-  
+
 }

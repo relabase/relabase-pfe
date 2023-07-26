@@ -1,93 +1,41 @@
 import { Service } from 'typedi';
-import { User_request } from '@interfaces/user_requests.interface';
-import { OkPacket } from 'mysql2';
-import { connection } from '@/database/MysqlConnect';
+import { connection } from '@/database/DataSource';
+import { User_request } from '@/models/user_request';
+import { DeleteResult } from 'typeorm';
+
+const repo = connection.getRepository(User_request)
 
 @Service()
 export class User_requestService {
   public async findAllUser_request(): Promise<User_request[]> {
-
-    return new Promise((resolve,reject) =>
-    connection.query<User_request[]>('SELECT * FROM `user_request`',
-    (err,res)=>{
-      console.log(res);
-      if (err) reject(err);
-      else resolve(res);
-    })
-   )
+    return repo.find({
+      relations:{
+        status:true
+      }
+    });
   }
 
   public async findUser_requestById(user_requestId: number): Promise<User_request> {
-
-    return new Promise((resolve,reject) => {
-      connection.query<User_request[]>(
-        'SELECT * FROM `user_request` where id = ?',
-        [ user_requestId ],
-        (err,res) => {
-          console.log(res);
-          if (err) reject(err);
-          else resolve(res?.[0]);
-        }
-        )
+    return repo.findOne({
+      where:{
+        id: user_requestId
+      },
+      relations:{
+        status:true
+      }
     })
   }
 
   public async createUser_request(user_requestData: User_request): Promise<User_request> {
-    return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('INSERT INTO user_request(email,message,image,first_name,last_name,id_status,google_id) VALUE(?,?,?,?,?,?,?)',
-      [ user_requestData.email,
-        user_requestData.message,
-        user_requestData.image,
-        user_requestData.first_name,
-        user_requestData.last_name,
-        user_requestData.id_status,
-        user_requestData.google_id],
-      (err,res)=>{
-        if (err) reject(err);
-        else
-        {
-          console.log("user_request " + user_requestData.email + " created");
-          resolve(user_requestData);
-        }
-      });
-    }
-      );
+    return repo.save(user_requestData);
 
   }
 
-  public async updateUser_request_status(user_requestId: number,id_status:number): Promise<OkPacket> {
-
-    return new Promise((resolve,reject)=>{
-      connection.query<OkPacket>('UPDATE user_request SET id_status = ? WHERE id = ?',
-      [ id_status,
-        user_requestId ],
-      (err,res)=>{
-        if (err) reject(err);
-        else
-        {
-          resolve(res);
-        }
-      });
-  })
+  public async updateUser_request_status(user_requestData: User_request): Promise<User_request> {
+    return repo.save(user_requestData);
   }
 
-  public async deleteUser_request(user_requestId: number): Promise<User_request> {
-    return new Promise((resolve,reject)=>{
-
-      this.findUser_requestById(user_requestId)
-      .then((user_requests) => {
-
-        connection.query<OkPacket>('DELETE FROM user_request WHERE id = ?',
-        [ user_requestId ],
-        (err,res)=>{
-          if (err) reject(err);
-          else
-          {
-            resolve(user_requests);
-          }
-        });
-      })
-      .catch(reject);
-    })
+  public async deleteUser_request(user_requestId: number): Promise<DeleteResult> {
+    return repo.delete(user_requestId);
   }
 }

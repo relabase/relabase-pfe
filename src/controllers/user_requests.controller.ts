@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { User_request } from '@interfaces/user_requests.interface';
+import { User_request } from '@models/user_request';
 import { User_requestService } from '@services/user_requests.service';
 import { OkPacket } from 'mysql2';
-import { Status } from '@/interfaces/status.interface';
+import { Status } from '@/models/status';
 import { StatusService } from '@/services/status.service';
+import { Package_request } from '@/models/package_request';
+import { DeleteResult } from 'typeorm';
 
 export class User_requestController {
   public user_request = Container.get(User_requestService);
@@ -24,10 +26,11 @@ export class User_requestController {
     try {
       const user_requestId = Number(req.params.id);
       const findOneUser_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
-      if(findOneUser_requestData === undefined)
+      if(findOneUser_requestData === null)
       {
 
         res.status(409).json({ data: "User_request doesn't exist", message: 'findOne' });
+        return;
       }
 
 
@@ -44,12 +47,22 @@ export class User_requestController {
   public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestData: User_request = req.body;
-      user_requestData.id_status = 1;
+
+      const defaultStatus:Status = await this.status.findStatusByName("in progress");
+
+
+      if(defaultStatus === null)
+      {
+        res.status(409).json({ data: "Status 'in progress' doesn't exist", message: 'created' });
+        return;
+      }
+
+      user_requestData.status = defaultStatus;
+
       const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
 
       res.status(201).json({ data: createUser_requestData, message: 'created' });
     } catch (error) {
-      //console.log(error);
       next(error);
     }
   };
@@ -58,13 +71,13 @@ export class User_requestController {
       const user_requestId = Number(req.params.id);
       const User_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
 
-      if(User_requestData === undefined)
+      if(User_requestData === null)
       {
         res.status(409).json({ data: "User_request doesn't exist", message: 'approve' });
         return;
       }
 
-      const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
+      const statusData:Status = await this.status.findStatusById(User_requestData.status.id);
 
       if (statusData.name_status === "approved")
       {
@@ -75,13 +88,15 @@ export class User_requestController {
 
       const approved:Status = await this.status.findStatusByName("approved");
 
-      if(approved === undefined)
+      if(approved === null)
       {
         res.status(409).json({ data: "can't find status id for approved", message: 'approve' });
         return;
       }
 
-      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,approved.id);
+      User_requestData.status = approved;
+
+      const updateUser_requestData: User_request = await this.user_request.updateUser_request_status(User_requestData);
 
       res.status(200).json({ data: updateUser_requestData, message: 'updated' });
     } catch (error) {
@@ -100,7 +115,7 @@ export class User_requestController {
         return;
       }
 
-      const statusData:Status = await this.status.findStatusById(User_requestData.id_status);
+      const statusData:Status = await this.status.findStatusById(User_requestData.status.id);
       if (statusData.name_status === "rejected")
       {
 
@@ -110,13 +125,15 @@ export class User_requestController {
 
       const reject:Status = await this.status.findStatusByName("rejected");
 
-      if(reject === undefined)
+      if(reject === null)
       {
         res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
         return;
       }
 
-      const updateUser_requestData: OkPacket = await this.user_request.updateUser_request_status(user_requestId,reject.id);
+      User_requestData.status = reject;
+
+      const updateUser_requestData: User_request = await this.user_request.updateUser_request_status(User_requestData);
 
 
 
@@ -128,11 +145,12 @@ export class User_requestController {
   public deleteUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);
-      const deleteUser_requestData: User_request = await this.user_request.deleteUser_request(user_requestId);
-      if(deleteUser_requestData === undefined)
+      const deleteUser_requestData: DeleteResult = await this.user_request.deleteUser_request(user_requestId);
+      if(deleteUser_requestData === null)
       {
 
-        res.status(409).json({ data: "User_request doesn't exist", message: 'findOne' });
+        res.status(409).json({ data: "User_request doesn't exist", message: 'delete' });
+        return;
       }
 
       res.status(200).json({ data: deleteUser_requestData, message: 'deleted' });

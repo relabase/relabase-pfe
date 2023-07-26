@@ -221,6 +221,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:3000/logs/1 (delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/logs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"logs",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -417,34 +445,6 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/user_requests/1 (delete)",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/user_requests/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"user_requests",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "localhost:3000/user_requests/approve/1 (update)",
 					"request": {
 						"method": "PUT",
@@ -496,6 +496,34 @@
 							"path": [
 								"user_requests",
 								"reject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/user_requests/1 (delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user_requests/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user_requests",
 								"1"
 							]
 						}
@@ -572,7 +600,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/user_requests/1 (delete)",
+					"name": "localhost:3000/package_requests/1 (delete)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -586,14 +614,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/6",
+							"raw": "localhost:3000/package_requests/1",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"users",
-								"6"
+								"package_requests",
+								"1"
 							]
 						}
 					},
