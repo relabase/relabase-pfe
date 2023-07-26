@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { Role } from '@interfaces/roles.interface';
+import { Role } from '@models/role';
 import { RoleService } from '@services/roles.service';
+import { DeleteResult } from 'typeorm';
 
 export class RoleController {
   public role = Container.get(RoleService);
@@ -22,10 +23,10 @@ export class RoleController {
       const findOneRoleData: Role = await this.role.findRoleById(roleId);
       if(findOneRoleData === undefined)
       {
-        
+
         res.status(409).json({ data: "Role doesn't exist", message: 'findOne' });
       }
-      
+
 
       res.status(200).json({ data: findOneRoleData, message: 'findOne' });
 
@@ -55,7 +56,8 @@ export class RoleController {
     try {
       const roleId = Number(req.params.id);
       const roleData: Role = req.body;
-      const updateRoleData: Role = await this.role.updateRole(roleId, roleData);
+      roleData.id = roleId;
+      const updateRoleData: Role = await this.role.updateRole(roleData);
 
       if(updateRoleData === undefined)
       {
@@ -71,11 +73,12 @@ export class RoleController {
   public deleteRole = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const roleId = Number(req.params.id);
-      const deleteRoleData: Role = await this.role.deleteRole(roleId);
-      if(deleteRoleData === undefined)
+      const deleteRoleData: DeleteResult = await this.role.deleteRole(roleId);
+      if(deleteRoleData.affected === 0)
       {
-        
+
         res.status(409).json({ data: "Role doesn't exist", message: 'findOne' });
+        return;
       }
 
       res.status(200).json({ data: deleteRoleData, message: 'deleted' });
