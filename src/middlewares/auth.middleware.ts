@@ -2,6 +2,8 @@ import { NextFunction, Response } from 'express';
 import { HttpException } from '@exceptions/httpException';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { AuthController } from '@controllers/auth.controller'
+import { TokenPayload } from 'google-auth-library';
+import { User } from '@/interfaces/users.interface';
 
 const getToken = (req: RequestWithUser): string => {
   return req.cookies.authToken;
@@ -9,19 +11,28 @@ const getToken = (req: RequestWithUser): string => {
 
 export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
-    const validToken: boolean = (await (new AuthController()).verifyIdToken(getToken(req))) != null;
-    if (validToken) {
-      if (requestedPage === 'login' || requestedPage === 'register') { // if there IS a valid token and the requested page is login or register, redirect to the homepage
-        res.redirect('home');
-      }
-      else { // if there IS a valid token and the requested page isn't login, go to the requested page
+    const controller = new AuthController();
+    const token: TokenPayload = (await controller.verifyIdToken(getToken(req)));
+    const user: User = (await controller.userExists(token?.sub));
+
+    if (token && user) { // if a user is logged in
+      if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
+        res.redirect('home'); // redirect to homepage
+      } else { // otherwise, let them through
         next();
       }
-    }
-    else if (requestedPage === 'login') { // if there is NO valid token and the requested page is login, go to the requested page
-      next()
-    } else { // if there is NO valid token and the requested page isn't login, redirect to the login page
-      res.redirect('login');
+    } else if (token && user == null) { // if a user has selected a google account but doesn't own a relabase account
+      if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
+        next(); // let them through
+      } else { // otherwise, redirect to login
+        res.redirect('login');
+      }
+    } else if (token == null) { // if a user who has not selected a google account
+      if (requestedPage === 'login') { // tries to log in
+        next(); // let them through
+      } else { // otherwise, redirect to login
+        res.redirect('login');
+      }
     }
   } catch (error) {
     next(new HttpException(401, 'Wrong authentication token'));

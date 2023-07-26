@@ -33,6 +33,7 @@ export class AuthController {
           res.cookie('authToken', token, { httpOnly: true });
           res.status(200).json({ redirectUrl: 'home' });
         } else {
+          res.cookie('authToken', token, { httpOnly: true });
           res.status(200).json({ redirectUrl: 'register' });
         }
       } else {
