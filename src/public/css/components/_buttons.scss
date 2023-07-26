@@ -34,10 +34,10 @@
   }
 }
 
-.large-button {
+.large-button-thin {
   @extend %shared-button;
 
-  height: $button-height;
+  height: $button-height-thin;
   margin-top: $button-margin-top;
   background: linear-gradient(45deg, $gradient-color-start 0.01%, $gradient-color-mid 49.97%, $gradient-color-end 100%);
   box-shadow: $btn-shadow;
