@@ -63,6 +63,15 @@ export class AuthController {
     }
   };
 
+  public logOut = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.cookie('authToken', '', { httpOnly: true });
+      res.status(200).json({ redirectUrl: 'login' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
 
   // public auth = Container.get(AuthService);
 
