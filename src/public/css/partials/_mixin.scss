@@ -16,10 +16,12 @@
   font-family: $family;
 }
 
-@mixin svg-icon($width, $height) {
-  flex-shrink: 0;
+@mixin svg-icon($width, $height, $icon-url) {
   width: $width;
   height: $height;
+  background-image: url($icon-url);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @mixin svg-icon-button(
@@ -33,7 +35,7 @@
   @include font-style;
 
   display: inline-flex;
-  gap: $button-gap;
+  gap: $content-padding;
   align-items: center;
   padding: $button-padding-y $button-padding-x;
   background: $bg-color;
@@ -41,9 +43,8 @@
   border-radius: $button-border-radius;
 
   &::before {
-    @include svg-icon($width, $height);
+    @include svg-icon($width, $height, $icon-url);
 
-    background-image: url($icon-url);
     content: "";
   }
 
@@ -52,6 +53,7 @@
     cursor: pointer;
   }
 }
+
 
 @mixin content-container {
   @include flex-direction($direction: column);

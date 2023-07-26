@@ -55,11 +55,8 @@
         text-decoration: none;
 
         &::after {
-            width: 0.75rem;
-            height: 1.25rem;
-            margin-left: $content-padding;
-            background-image: url("../img/arrow_drop_down_purple.svg");
-            background-size: 100% 100%;
+            @include svg-icon(0.75rem, 1.25rem, "../img/arrow_drop_down_purple.svg");
+            
             content: "";
         }
     }
