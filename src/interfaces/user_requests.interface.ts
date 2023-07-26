@@ -8,4 +8,5 @@ export interface User_request extends RowDataPacket{
   last_name:string;
   image:string;
   id_status:number;
+  google_id:string;
 }

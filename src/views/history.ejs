@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>History</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <%- include('partials/navbar.ejs', { page: 'history' , username: 'John Doe' }); %>
+
+    <div id="history-content">
+        <%- include('partials/history/history-content.ejs') %>
+        <%- include('partials/history/table-logs.ejs'); %>
+        <%- include('partials/history/script-modal.ejs'); %>
+    </div>
+    
+    
+    <script src="js/utilities/table-script.js"></script>
+    <script src="js/history-script.js"></script>
+</body>
+
+</html>
