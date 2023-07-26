@@ -9,6 +9,8 @@
 }
 
 #results {
+  height: 100%;
+  padding-top:  $content-padding;
   padding-left: 0;
   overflow: hidden;
 }
