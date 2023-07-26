@@ -41,4 +41,12 @@ export class AuthController {
       next(error);
     }
   };
+
+  public getRegisterPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.render('register');
+    } catch (error) {
+      next(error);
+    }
+  };
 }

@@ -9,4 +9,5 @@ export interface User extends RowDataPacket{
   id_role:number;
   image?:string;
   last_login?: Date;
+  google_id:string;
 }
