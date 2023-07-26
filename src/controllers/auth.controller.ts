@@ -58,7 +58,9 @@ export class AuthController {
 
   public getRegisterPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.render('register');
+      const token: TokenPayload = (await this.verifyIdToken(req.cookies.authToken));
+      console.log(token);
+      res.render('register', { token });
     } catch (error) {
       next(error);
     }
