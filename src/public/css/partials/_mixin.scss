@@ -54,6 +54,15 @@
   }
 }
 
+@mixin input-container-style($icon-url){
+  @include svg-icon(1.0625rem, 1.0625rem, $icon-url);
+  
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  content: "";
+}
 
 @mixin content-container {
   @include flex-direction($direction: column);

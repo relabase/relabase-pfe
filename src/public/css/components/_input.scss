@@ -1,18 +1,20 @@
 // Search input
-.search-input-container {
+.search-input-container, .date-from-input-container, .date-to-input-container {
   position: relative;
   display: inline-block;
   margin: 0.25rem;
 }
 
 .search-input-container::after {
-  @include svg-icon(1.0625rem, 1.0625rem, "../img/search.svg");
-  
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  content: "";
+  @include input-container-style($search-img);
+}
+
+.date-from-input-container::after {
+  @include input-container-style($date-from-img);
+}
+
+.date-to-input-container::after {
+  @include input-container-style($date-to-img);
 }
 
 .search-input {
