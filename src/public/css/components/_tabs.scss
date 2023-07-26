@@ -69,6 +69,7 @@
   @extend %scrollbar;
   @include flex-direction;
 
+  padding: $content-padding 0;
   flex-grow: 1;
 }
 

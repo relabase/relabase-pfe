@@ -1,7 +1,8 @@
 <div id="navbar">
   <div class="navbar-item-group-left">
-    <a href="home.html" class="<%= page === 'home' ? 'active' : '' %>"><img id="navbar-logo"
-        src="img/navbar_logo.svg" /></a>
+    <a href="home.html" class="<%= page === 'home' ? 'active' : '' %>">
+      <div class="navbar-logo"></div>
+    </a>
     <a class="navbar-link <%= page === 'home' ? 'active' : '' %>" href="home">Home</a>
     <a class="navbar-link <%= page === 'analyze' ? 'active' : '' %>" href="analyze">Analyze</a>
     <a class="navbar-link <%= page === 'history' ? 'active' : '' %>" href="history">History</a>
@@ -9,10 +10,15 @@
     <a class="navbar-link <%= page === 'help' ? 'active' : '' %>" href="help">Help</a>
   </div>
   <div class="navbar-item-group-right">
-    <img id="navbar-user-icon" src="img/person.svg" />
-    <div id="navbar-user">
-      <%= username ? username : 'Guest' %>
+    <div class="navbar-user-icon"></div>
+    <%= username ? username : 'Guest' %>
+    <div class="down-arrow-icon"></div>
+    <div class="dropdown-content">
+      <a href="/logout">
+        <div class="logout-icon"></div> Logout
+      </a>
     </div>
-    <img class="down-arrow-icon" src="img/arrow_drop_down.svg" />
   </div>
 </div>
+
+<script src="js/utilities/navbar-script.js"></script>

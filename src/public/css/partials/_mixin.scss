@@ -16,10 +16,12 @@
   font-family: $family;
 }
 
-@mixin svg-icon($width, $height) {
-  flex-shrink: 0;
+@mixin svg-icon($width, $height, $icon-url) {
   width: $width;
   height: $height;
+  background-image: url($icon-url);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @mixin svg-icon-button(
@@ -33,7 +35,7 @@
   @include font-style;
 
   display: inline-flex;
-  gap: $button-gap;
+  gap: $content-padding;
   align-items: center;
   padding: $button-padding-y $button-padding-x;
   background: $bg-color;
@@ -41,9 +43,8 @@
   border-radius: $button-border-radius;
 
   &::before {
-    @include svg-icon($width, $height);
+    @include svg-icon($width, $height, $icon-url);
 
-    background-image: url($icon-url);
     content: "";
   }
 
@@ -53,12 +54,20 @@
   }
 }
 
+@mixin input-container-style($icon-url){
+  @include svg-icon(1.0625rem, 1.0625rem, $icon-url);
+  
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  content: "";
+}
+
 @mixin content-container {
   @include flex-direction($direction: column);
+  @extend %main-content;
 
-  height: calc(100% - #{$navbar-height} - #{$content-padding});
-  min-height: 0;
-  margin: 0 $content-padding;
   background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%),
     $primary-background-color;
 }
@@ -66,7 +75,7 @@
 @mixin header-container {
   @include flex-center($justify: space-between);
 
-  padding: $content-padding 0;
+  padding: $content-padding;
 }
 
 @mixin content-overflow {

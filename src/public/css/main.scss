@@ -2,8 +2,8 @@
 @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
 
 // Import partials
-@import "partials/mixin";
 @import "partials/variables";
+@import "partials/mixin";
 
 // Import components
 @import "components/navbar";
@@ -20,9 +20,14 @@
 @import "pages/login";
 @import "pages/analyze";
 @import "pages/admin";
-@import "pages/history";
 
 // This file should contain all global CSS
+
+%main-content{
+  height: calc(100vh - #{$navbar-height} - #{$content-padding});
+  min-height: 0;
+  margin: 0 $content-padding;
+}
 
 body {
   @include font-style(bold);
@@ -78,4 +83,16 @@ td {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+.main-content {
+  @include content-container;
+}
+
+.main-header-container {
+  @include header-container;
+}
+
+.main-header {
+  @extend %header;
 }
