@@ -57,7 +57,7 @@ async function submit_user_application(first_name, last_name, email, file, reaso
         body: form_data
     });
     res.json().then(data => {
-        console.log('ok');
+        console.log(data.message);
     });
 }
 
