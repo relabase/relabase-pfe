@@ -7,6 +7,7 @@ import { Status } from '@/models/status';
 import { StatusService } from '@/services/status.service';
 import { Package_request } from '@/models/package_request';
 import { DeleteResult } from 'typeorm';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 export class User_requestController {
   public user_request = Container.get(User_requestService);
@@ -44,8 +45,10 @@ export class User_requestController {
     }
   };
 
-  public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
+      req.body.google_id = req.google_id;
+      req.body.image = req.file.filename;
       const user_requestData: User_request = req.body;
 
       const defaultStatus:Status = await this.status.findStatusByName("in progress");
