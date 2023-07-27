@@ -14,7 +14,7 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
     const controller = new AuthController();
     const token: TokenPayload = (await controller.verifyIdToken(getToken(req)));
     const user: User = (await controller.userExists(token?.sub));
-    req.google_id = token?.sub;
+    req.token_payload = token;
     if (token && user) { // if a user is logged in
       if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
         res.redirect('home'); // redirect to homepage

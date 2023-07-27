@@ -47,7 +47,7 @@ export class User_requestController {
 
   public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      req.body.google_id = req.google_id;
+      req.body.google_id = req.token_payload?.sub;
       req.body.image = req.file.filename;
       const user_requestData: User_request = req.body;
 
