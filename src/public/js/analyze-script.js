@@ -16,6 +16,12 @@
     downloadHtmlFile(filename);
   });
 
+  const requestPackageButton = document.getElementById('request-package-button');
+
+  requestPackageButton.addEventListener('click', () => {
+    document.querySelector('#modal').style.display = 'flex';
+  });
+
   //line numbers
   lineNumbers.innerText = '1.';
 
