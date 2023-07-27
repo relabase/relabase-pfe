@@ -3,7 +3,7 @@ import { HttpException } from '@exceptions/httpException';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { AuthController } from '@controllers/auth.controller'
 import { TokenPayload } from 'google-auth-library';
-import { User } from '@/interfaces/users.interface';
+import { User } from '@/models/user';
 
 const getToken = (req: RequestWithUser): string => {
   return req.cookies.authToken;
