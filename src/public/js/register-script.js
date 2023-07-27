@@ -46,13 +46,14 @@ window.onload = function () {
 
 async function submit_user_application(first_name, last_name, email, file, reason) {
     let form_data = new FormData();
-        form_data.append('firstName', first_name);
-        form_data.append('lastName', last_name);
+        form_data.append('first_name', first_name);
+        form_data.append('last_name', last_name);
         form_data.append('email', email);
-        form_data.append('file', file);
-        form_data.append('reason', reason);
+        form_data.append('image', file);
+        form_data.append('message', reason);
+        form_data.append('google_id', 'google_id');
 
-    const res = await fetch('/register', {
+    const res = await fetch('/user_requests', {
         method: 'POST',
         body: form_data
     });
