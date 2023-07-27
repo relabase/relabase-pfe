@@ -33,16 +33,32 @@ window.onload = function () {
         let email = document.getElementById('register-input-email').value;
         let file = document.getElementById('file-upload').files[0];
         let reason = document.getElementById('register-input-reason').value;
-        if (valid_string(first_name)
-            && valid_string(last_name)
-            && valid_email(email)
-            && valid_file(file)
-            && valid_string(reason)) {
+
+        if (valid_string(first_name) && valid_string(last_name) && valid_email(email)
+            && valid_file(file) && valid_string(reason)) {
                 hide(document.getElementById('register-error-msg'));
+                submit_user_application(first_name, last_name, email, file, reason);
         } else {
             show(document.getElementById('register-error-msg'));
         }
     }
+}
+
+async function submit_user_application(first_name, last_name, email, file, reason) {
+    let form_data = new FormData();
+        form_data.append('firstName', first_name);
+        form_data.append('lastName', last_name);
+        form_data.append('email', email);
+        form_data.append('file', file);
+        form_data.append('reason', reason);
+
+    const res = await fetch('/register', {
+        method: 'POST',
+        body: form_data
+    });
+    res.json().then(data => {
+        console.log('ok');
+    });
 }
 
 function hide(div) {
