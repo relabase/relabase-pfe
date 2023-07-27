@@ -4,6 +4,7 @@ import { RequestWithUser } from '@interfaces/auth.interface';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { UserService } from '@/services/users.service';
 import { CLIENT_ID } from '@config';
+import { User_request } from '@/models/user_request';
 
 const userService = Container.get(UserService);
 
@@ -60,15 +61,6 @@ export class AuthController {
     try {
       const token: TokenPayload = (await this.verifyIdToken(req.cookies.authToken));
       res.render('register', { token });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public submitUserApplication = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const token: TokenPayload = (await this.verifyIdToken(req.cookies.authToken));
-      console.log(req.file);
     } catch (error) {
       next(error);
     }

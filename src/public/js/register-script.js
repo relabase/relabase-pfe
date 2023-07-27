@@ -51,7 +51,6 @@ async function submit_user_application(first_name, last_name, email, file, reaso
         form_data.append('email', email);
         form_data.append('image', file);
         form_data.append('message', reason);
-        form_data.append('google_id', 'google_id');
 
     const res = await fetch('/user_requests', {
         method: 'POST',
