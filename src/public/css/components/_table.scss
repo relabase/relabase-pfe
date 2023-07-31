@@ -61,3 +61,11 @@
         }
     }
 }
+
+.table-single-column{
+    @extend .table;
+    
+    tr{
+        grid-template-columns: 1fr;
+    }
+}

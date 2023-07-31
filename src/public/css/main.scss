@@ -89,6 +89,17 @@ td {
   @include content-container;
 }
 
+.main-content-image {
+  @include content-container;
+  @include background-image("../img/eye_candy.png");
+}
+
+.centered-content{
+  @extend %scrollbar;
+
+  margin: 0 auto;
+}
+
 .main-header-container {
   @include header-container;
 }

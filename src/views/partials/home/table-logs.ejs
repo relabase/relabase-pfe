@@ -1,6 +1,6 @@
 <% const sortedLogs = [...logs].sort((a, b) => b.create_time.getTime() - a.create_time.getTime()); %>
 
-<table id="home-table" class="table">
+<table id="home-table" class="table-single-column">
 <tbody class="table-body">
     <% sortedLogs.forEach(log=> { %>
         <tr class="table-row" data-text="<%= log.text %>">

@@ -8,6 +8,15 @@
   letter-spacing: -0.0375rem;
 }
 
+.larger-header{
+  @include flex-center;
+  @include font-style($weight: 400, $size: 2.0625rem);
+
+  padding: calc($header-padding * 4) $content-padding $header-padding;
+  color: $primary-font-color;
+  letter-spacing: -0.062rem;
+}
+
 .large-header {
   @include font-style($weight: 300, $size: $header-large-size);
 
