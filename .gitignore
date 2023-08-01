@@ -129,3 +129,4 @@ output
 # sass
 *.css.map
 *.css
+src/files/user_applications/
