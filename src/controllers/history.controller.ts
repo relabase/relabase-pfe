@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import { UserModel } from '@models/users.model';
 import { LogModel } from '@models/logs.model';
 
+const { formatDate } = require('../public/js/utilities/date-utils.js');
+
 export class HistoryController {
   public getHistoryPage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -18,7 +20,7 @@ export class HistoryController {
         }
       });
 
-      res.render('history', { users, logs });
+      res.render('history', { users, logs, formatDate });
     } catch (error) {
       next(error);
     }

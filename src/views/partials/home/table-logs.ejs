@@ -1,18 +1,11 @@
 <% const sortedLogs = [...logs].sort((a, b) => b.create_time.getTime() - a.create_time.getTime()); %>
 
-<table id="history-table" class="table">
+<table id="home-table" class="table-single-column">
 <tbody class="table-body">
-    <tr class="table-header">
-        <th><a href="#" class="light-text">Date</a></th>
-        <th><a href="#" class="light-text">Ran by</a></th>
-    </tr>
     <% sortedLogs.forEach(log=> { %>
         <tr class="table-row" data-text="<%= log.text %>">
             <td class="table-cell light-text" data-timestamp="<%= log.create_time.getTime() %>">
                 <%= formatDate(log.create_time) %>
-            </td>
-            <td class="table-cell">
-                <%= log.userFullName %>
             </td>
         </tr>
         <% }) %>
@@ -20,3 +13,4 @@
 </table>
 
 <script src='js/utilities/table-script.js'></script>
+
