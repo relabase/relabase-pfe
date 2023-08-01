@@ -67,7 +67,7 @@
 .approve-button {
   @include svg-icon-button(
     $button-approve-color,
-    "../img/check_circle.svg",
+    $approve-img,
     $hover-color: darken($button-approve-color, 10%)
   );
 }
@@ -75,7 +75,7 @@
 .decline-button {
   @include svg-icon-button(
     $button-decline-color,
-    "../img/cancel.svg",
+    $cancel-img,
     $hover-color: darken($button-decline-color, 10%)
   );
 }
@@ -83,7 +83,7 @@
 .close-button {
   @include svg-icon-button(
     $button-close-color,
-    "../img/cancel.svg",
+    $cancel-img,
     $hover-color: darken($button-close-color, 10%)
   );
 }
@@ -91,7 +91,7 @@
 .unblur-button {
   @include svg-icon-button(
     $button-visibility-color,
-    "../img/visibility.svg",
+    $visibility-img,
     $hover-color: darken($button-visibility-color, 10%),
     $height: 1rem
   );

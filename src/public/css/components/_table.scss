@@ -55,7 +55,7 @@
         text-decoration: none;
 
         &::after {
-            @include svg-icon(0.75rem, 1.25rem, "../img/arrow_drop_down_purple.svg");
+            @include svg-icon(0.75rem, 1.25rem, $arrow-dropdown-alt-img);
             
             content: "";
         }
