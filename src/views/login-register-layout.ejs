@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> <%= title %> </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <link rel="icon" href="/img/logo.svg" type="image/svg+xml" />
+</head>
+
+<body>
+    <div class="login-page-wrapper">
+        <div class="full-container">
+            <div class="half-container">
+                <div class="left-container">
+                    <% body.forEach(function(bodyPart) { %>
+                        <%- include(bodyPart) %>
+                    <% }) %>
+                </div>
+            </div>
+            <div class="half-container fill"><img src="img/eye_candy.png"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<%- scripts %>
