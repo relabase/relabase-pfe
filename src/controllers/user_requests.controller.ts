@@ -47,12 +47,19 @@ export class User_requestController {
 
   public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      req.body.google_id = req.token_payload?.sub;
+      let token: string = req.token_payload?.sub;
+      // if user request for google id exists
+      if (await this.user_request.findUser_requestByGoogleId(token)) {
+        res.status(409).json({ 
+          success: false, 
+          message: "The account you are trying to register already has a pending application. Please wait for the application to be processed or contact support for further assistance." 
+        });
+        return;
+      }
+      req.body.google_id = token;
       req.body.image = req.file.filename;
       const user_requestData: User_request = req.body;
-
       const defaultStatus:Status = await this.status.findStatusByName("in progress");
-
 
       if(defaultStatus === null)
       {
