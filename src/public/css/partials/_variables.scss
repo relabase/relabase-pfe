@@ -36,10 +36,10 @@ $gradient-color-mid: #df98c3;
 $gradient-color-end: #fda4cf;
 
 // Borders and outlines
-$standard-border-radius: 10px;
 $primary-border-color: #f1d7e6;
 $light-outline-color: #e3e1e3;
 $border-width: 0.0313rem;
+$border-radius: 0.75rem;
 
 // Shadows
 $main-shadow: 0 2px 10px 0 rgb(142 118 157 / 22%);
@@ -56,7 +56,6 @@ $scrollbar-color: #f0c2d8;
 $tab-gap: 0.25rem;
 $tab-height: 3rem;
 $tab-content-padding: 1.25rem;
-$tab-border-radius: 0.75rem;
 $tab-border: 2px;
 $tab-grid-template-columns: 1fr 1fr 1fr 1fr; // add more if a table with more than four columns is necessary
 
@@ -88,7 +87,6 @@ $button-visibility-color: #926296;
 $hr-height: 0.0625rem;
 
 // Input
-$input-border-radius: 0.75rem;
 $input-letter-spacing: -0.017rem;
 $input-width: 15.25rem;
 

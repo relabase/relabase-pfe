@@ -20,7 +20,7 @@
   align-items: center;
   padding: $content-padding $tab-content-padding;
   color: $secondary-font-color;
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-radius: $border-radius $border-radius 0 0;
 
   &:hover {
     cursor: pointer;
@@ -39,7 +39,7 @@
   position: relative;
   margin: 0 $content-padding $content-padding $content-padding;
   background: rgb(255 255 255 / 60%);
-  border-radius: $tab-border-radius;
+  border-radius: $border-radius;
   cursor: pointer;
 
   &.active, 
