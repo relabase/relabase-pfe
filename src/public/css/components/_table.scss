@@ -28,7 +28,7 @@
     }
 }
 
-.table {
+%table {
     @include content-overflow;
     @include flex-direction;
 
@@ -40,7 +40,6 @@
 
     tr {
         display: grid;
-        grid-template-columns: $tab-grid-template-columns;
     }
 
     th a,
@@ -62,8 +61,16 @@
     }
 }
 
+.table-four-columns{
+    @extend %table;
+    
+    tr{
+        grid-template-columns: $tab-grid-template-columns;
+    }
+}
+
 .table-single-column{
-    @extend .table;
+    @extend %table;
     
     tr{
         grid-template-columns: 1fr;
