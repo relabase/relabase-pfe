@@ -33,9 +33,10 @@ window.onload = function () {
         let email = document.getElementById('register-input-email').value;
         let file = document.getElementById('file-upload').files[0];
         let reason = document.getElementById('register-input-reason').value;
+        let checkboxIsChecked = document.getElementById('checkbox-confirmation').checked;
 
         if (valid_string(first_name) && valid_string(last_name) && valid_email(email)
-            && valid_file(file) && valid_string(reason)) {
+            && valid_file(file) && valid_string(reason) && checkboxIsChecked) {
                 hide(document.getElementById('register-error-msg'));
                 submit_user_application(first_name, last_name, email, file, reason);
         } else {
@@ -77,22 +78,13 @@ function show(div) {
 }
 
 function valid_email(email) {
-    if (/^\S+@\S+\.\S+$/.test(email)) {
-        return true;
-    }
-    return false;
+    return /^\S+@\S+\.\S+$/.test(email);
 }
 
 function valid_string(str) {
-    if (str === null || str === undefined || str.trim() === '') {
-        return false;
-    }
-    return true;
+    return str !== null && str !== undefined && str.trim() !== '';
 }
 
 function valid_file(file) {
-    if (file === undefined) {
-        return false;
-    }
-    return true;
+    return file !== undefined
 }

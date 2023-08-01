@@ -11,11 +11,12 @@
     border-radius: $standard-border-radius;
     flex-direction: row;
     box-shadow: $main-shadow;
-}
 
-.input > input {
-    border-radius: $standard-border-radius;
-    padding: 1.25rem;
+    input {
+        font-weight: 100;
+        border-radius: $standard-border-radius;
+        padding: 1.25rem;
+    }
 }
 
 .register-google-name {
@@ -93,4 +94,14 @@ a.change-account-link:hover {
 
 .error-msg {
     color: $button-decline-color;
+}
+
+.checkbox-confirmation-div {
+    @include flex-center;
+    margin-top: $button-margin-top;
+    text-align: justify;
+
+    #checkbox-confirmation {
+        width: 15%;
+    }
 }
