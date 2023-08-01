@@ -41,8 +41,8 @@ export class AuthController {
           res.status(200).json({ success : true, redirectUrl: 'home' });
         } else {
           const userRequest: User_request = await this.userRequestExists(payload.sub);
-          const status: string = userRequest.status.name_status;
           if (userRequest) {
+          const status: string = userRequest?.status.name_status;
             if (status == "in progress") {
               res.status(200).json({ success : false, message: 'Your account has a pending application. Please wait for the application to be processed before you can log in.' });
             } else if (status == "rejected") {
@@ -57,7 +57,7 @@ export class AuthController {
         res.status(200).json({ success : true, redirectUrl: 'login' });
       }
     } catch (error) {
-      res.status(401).json({success : false,  msg: 'error' });
+      res.status(401).json({success : false,  message: 'error' });
     }
   }
 
