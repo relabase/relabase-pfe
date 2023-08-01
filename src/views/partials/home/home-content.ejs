@@ -1,16 +1,24 @@
-<div class="main-header-container">
-    <h1>Welcome Back, <%= currentUsername %></h1>
-    <div class="main-header">Your scripts (<%= logs.length %>)</div>
-    <a class="primary-button" href="/Analyze">Run new script</a>
+<div class="larger-header">Welcome Back, <%= currentUsername %>
 </div>
 
-<div class="search-inputs">
-    <div class="date-from-input-container">
-        <input type="text" class="search-input" id="home-date-from-search"
-            placeholder="Date from (YYYY/MM/DD)" pattern="\d{4}/\d{2}/\d{2}">
+
+<div class="centered-content">
+    <div class="main-header-container">
+        <div class="main-header">Your scripts</div>
+        <a class="primary-button" href="/Analyze">Run new script</a>
     </div>
-    <div class="date-to-input-container">
-        <input type="text" class="search-input" id="home-date-to-search"
-            placeholder="Date to (YYYY/MM/DD)" pattern="\d{4}/\d{2}/\d{2}">
+    <div class="main-header-container">
+        <div class="search-inputs">
+            <div class="date-from-input-container">
+                <input type="text" class="search-input" id="home-date-from-search" placeholder="Search from date (YYYY/MM/DD)"
+                    pattern="\d{4}/\d{2}/\d{2}" />
+            </div>
+            <div class="date-to-input-container">
+                <input type="text" class="search-input" id="home-date-to-search" placeholder="Search to date (YYYY/MM/DD)"
+                    pattern="\d{4}/\d{2}/\d{2}" />
+            </div>
+        </div>
     </div>
+
+    <%- include('table-logs.ejs'); %>
 </div>

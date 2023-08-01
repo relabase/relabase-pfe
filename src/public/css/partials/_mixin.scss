@@ -16,12 +16,17 @@
   font-family: $family;
 }
 
-@mixin svg-icon($width, $height, $icon-url) {
-  width: $width;
-  height: $height;
-  background-image: url($icon-url);
+@mixin background-image($image-url) {
+  background-image: url($image-url);
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@mixin svg-icon($width, $height, $icon-url) {
+  @include background-image($icon-url);
+  
+  width: $width;
+  height: $height;
 }
 
 @mixin svg-icon-button(
