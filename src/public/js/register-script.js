@@ -58,6 +58,9 @@ async function submit_user_application(first_name, last_name, email, file, reaso
     });
     res.json().then(data => {
         alert(data.message);
+        if (!data.success) {
+            window.location.href = '/';
+        }
     });
 }
 

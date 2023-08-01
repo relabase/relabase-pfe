@@ -47,12 +47,11 @@ export class User_requestController {
 
   public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      let token: string = req.token_payload?.sub;
-      const userRequest: User_request = await this.user_request.findUser_requestByGoogleId(token);
+      let googleId: string = req.token_payload?.sub;
+      const userRequest: User_request = await this.user_request.findUser_requestByGoogleId(googleId);
       let message: string;
 
-      // if user request for google id exists
-      if (userRequest) {
+      if (userRequest) { // if user request for google id exists
         switch (userRequest.status.name_status) {
           case "in progress":
             message = "The account you are trying to register already has a pending application. Please wait for the application to be processed.";
@@ -68,28 +67,25 @@ export class User_requestController {
             break;
         }
         res.status(409).json({ success: false, message });
-        return;
+      } else { // if user request for google id doesn't exist
+        req.body.google_id = googleId;
+        req.body.image = req.file.filename;
+        const user_requestData: User_request = req.body;
+        const defaultStatus: Status = await this.status.findStatusByName("in progress");
+
+        if (defaultStatus === null) {
+          res.status(409).json({ success: false, message: "The status 'In Progress' does not exist." });
+        } else {
+          user_requestData.status = defaultStatus;
+          const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
+          res.status(201).json({ success: true, data: createUser_requestData, message: "Your account application has been successfully submitted! You will receive an e-mail once it has been processed." });
+        }
       }
-      req.body.google_id = token;
-      req.body.image = req.file.filename;
-      const user_requestData: User_request = req.body;
-      const defaultStatus:Status = await this.status.findStatusByName("in progress");
-
-      if(defaultStatus === null)
-      {
-        res.status(409).json({ data: "Status 'in progress' doesn't exist", message: 'created' });
-        return;
-      }
-
-      user_requestData.status = defaultStatus;
-
-      const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
-
-      res.status(201).json({ data: createUser_requestData, message: 'created' });
     } catch (error) {
       next(error);
     }
   };
+
   public approveUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);

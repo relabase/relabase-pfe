@@ -33,7 +33,7 @@ async function handleCredentialResponse(response) {
     });
     res.json().then(data => {
         if (data.success) {
-            window.location.href = '/' + data.redirectUrl
+            window.location.href = '/' + data.redirectUrl;
         } else {
             alert(data.message);
         }
