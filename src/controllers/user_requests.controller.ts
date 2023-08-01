@@ -48,12 +48,26 @@ export class User_requestController {
   public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       let token: string = req.token_payload?.sub;
+      const userRequest: User_request = await this.user_request.findUser_requestByGoogleId(token);
+      let message: string;
+
       // if user request for google id exists
-      if (await this.user_request.findUser_requestByGoogleId(token)) {
-        res.status(409).json({ 
-          success: false, 
-          message: "The account you are trying to register already has a pending application. Please wait for the application to be processed or contact support for further assistance." 
-        });
+      if (userRequest) {
+        switch (userRequest.status.name_status) {
+          case "in progress":
+            message = "The account you are trying to register already has a pending application. Please wait for the application to be processed.";
+            break;
+          case "approved":
+            message = "The account you are trying to register already exists and has been approved. Please log in using your existing credentials.";
+            break;
+          case "rejected":
+            message = "The account you are trying to register was previously submitted and rejected.";
+            break;
+          default:
+            message = "The account you are trying to register is currently in an unknown status. Please contact support for further assistance.";
+            break;
+        }
+        res.status(409).json({ success: false, message });
         return;
       }
       req.body.google_id = token;

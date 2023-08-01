@@ -4,9 +4,11 @@ import { RequestWithUser } from '@interfaces/auth.interface';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { UserService } from '@/services/users.service';
 import { CLIENT_ID } from '@config';
+import { User_requestService } from '@/services/user_requests.service';
 import { User_request } from '@/models/user_request';
 
 const userService = Container.get(UserService);
+const userRequestService = Container.get(User_requestService);
 
 export class AuthController {
   public verifyIdToken = async (token: string): Promise<TokenPayload> => {
@@ -25,6 +27,10 @@ export class AuthController {
     return await userService.findUserByGoogleId(id);
   }
 
+  public userRequestExists = async (id: string) => {
+    return await userRequestService.findUser_requestByGoogleId(id);
+  }
+
   public redirect = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       let token: string = String(req.body.credential);
@@ -32,16 +38,26 @@ export class AuthController {
       if (payload != null) {
         if (await this.userExists(payload.sub)) {
           res.cookie('authToken', token, { httpOnly: true });
-          res.status(200).json({ redirectUrl: 'home' });
+          res.status(200).json({ success : true, redirectUrl: 'home' });
         } else {
-          res.cookie('authToken', token, { httpOnly: true });
-          res.status(200).json({ redirectUrl: 'register' });
+          const userRequest: User_request = await this.userRequestExists(payload.sub);
+          const status: string = userRequest.status.name_status;
+          if (userRequest) {
+            if (status == "in progress") {
+              res.status(200).json({ success : false, message: 'Your account has a pending application. Please wait for the application to be processed before you can log in.' });
+            } else if (status == "rejected") {
+              res.status(200).json({ success : false, message: 'Your account application was rejected.' });
+            }
+          } else {
+            res.cookie('authToken', token, { httpOnly: true });
+            res.status(200).json({ success : true, redirectUrl: 'register' });
+          }
         }
       } else {
-        res.status(200).json({ redirectUrl: 'login' });
+        res.status(200).json({ success : true, redirectUrl: 'login' });
       }
     } catch (error) {
-      res.status(401).json({ msg: 'error' });
+      res.status(401).json({success : false,  msg: 'error' });
     }
   }
 

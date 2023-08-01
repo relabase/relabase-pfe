@@ -32,6 +32,10 @@ async function handleCredentialResponse(response) {
         body: JSON.stringify({ credential: response.credential }),
     });
     res.json().then(data => {
-        window.location.href = '/' + data.redirectUrl
+        if (data.success) {
+            window.location.href = '/' + data.redirectUrl
+        } else {
+            alert(data.message);
+        }
     });
 }
