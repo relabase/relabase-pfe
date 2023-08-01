@@ -42,7 +42,8 @@
   border-radius: $tab-border-radius;
   cursor: pointer;
 
-  &.active {
+  &.active, 
+  input[type="checkbox"]:checked ~ &  {
     background-color: $background-color;
     box-shadow: 0 4px 10px 0 rgb(169 82 113 / 12%);
   }
