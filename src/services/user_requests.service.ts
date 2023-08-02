@@ -15,6 +15,17 @@ export class User_requestService {
     });
   }
 
+  public async findAllUser_requestByStatus(statusId: number): Promise<User_request[]> {
+    return repo.find({
+      where:{
+        status: { id: statusId }
+      },
+      relations:{
+        status:true
+      }
+    });
+  }
+
   public async findUser_requestById(user_requestId: number): Promise<User_request> {
     return repo.findOne({
       where:{
