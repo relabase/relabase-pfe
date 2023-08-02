@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   closeModalWhenClickedOutside('modal');
-  closeModalWhenCloseClicked('close-modal', 'modal');
+  closeModalWhenCloseClicked('close-modal-button', 'modal');
 });
 
 // Close the modal when anywhere outside the modal content is clicked

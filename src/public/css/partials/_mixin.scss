@@ -73,8 +73,7 @@
   @include flex-direction($direction: column);
   @extend %main-content;
 
-  background: linear-gradient(180deg, $primary-background-color 0%, rgba($primary-background-color, 0.8) 100%),
-    $primary-background-color;
+  background: $background-gradient;
 }
 
 @mixin header-container {
