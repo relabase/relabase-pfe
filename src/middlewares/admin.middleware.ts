@@ -6,7 +6,7 @@ import { User } from '@/models/user';
 export const AdminMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
     const user: User = req.user;
-    if (user.role.name_role === "admin") {
+    if (user.role.name_role.toLowerCase() === "admin") {
         next();
     } else {
         res.redirect('/login');
