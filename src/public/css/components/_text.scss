@@ -49,6 +49,10 @@
   @include font-style;
 
   color: $primary-font-color;
+
+  &:hover {
+    color: $hover-color;
+  }
 }
 
 .email-link {

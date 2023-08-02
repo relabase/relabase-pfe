@@ -41,40 +41,6 @@
   }
 }
 
-.toggle-container {
-  @include flex-center;
-
-  width: 100%;
-  margin-top: $content-padding;
-  border-radius: 0.625rem;
-}
-
-.toggle-container {
-  @include flex-center(space-evenly);
-
-  flex-direction: row;
-  height: 3.125rem;
-  margin-bottom: $content-padding;
-  background-color: $primary-background-color;
-}
-
-.sign-in-toggle,
-.sign-up-toggle {
-  width: 49%;
-  padding: 0.75rem 0;
-  color: $secondary-font-color;
-
-  &.active {
-    color: $main-font-color;
-    background-color: $background-color;
-    border-radius: 0.4375rem;
-  }
-
-  &:hover {
-    background: $primary-background-color;
-  }
-}
-
 .login-logo {
   position: absolute;
   top: 10%;
