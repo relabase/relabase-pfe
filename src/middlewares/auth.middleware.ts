@@ -16,6 +16,7 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
     const user: User = (await controller.userExists(token?.sub));
     req.token_payload = token;
     if (token && user) { // if a user is logged in
+      req.user = user;
       if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
         res.redirect('/home'); // redirect to homepage
       } else { // otherwise, let them through
