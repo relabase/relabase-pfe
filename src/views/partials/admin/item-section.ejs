@@ -5,7 +5,7 @@
         <% if (type==='user' ) { %>
           <div class="user-application" id="<%= item.id %>"
             data-name="<%= item.first_name + ' ' + item.last_name %>" data-email="<%= item.email %>"
-            data-application-message="<%= item.access_reason %>">
+            data-application-message="<%= item.message %>">
             <div class="user-info">
               <div class="small-header">
                 <%= item.first_name + ' ' + item.last_name %>
@@ -18,17 +18,16 @@
           <% } else if (type==='package' ) { %>
             <div class="package-request" id="package-<%= item.id %>"
               data-name="<%= item.name_package %>"
-              data-email="<%= (users.find(user => user.id === item.id_user))?.email %>"
+              data-email="<%= item.user.email %>"
               data-package-link="<%= item.link %>"
-              data-user-name="<%= (users.find(user => user.id === item.id_user))?.first_name + " " + (users.find(user => user.id === item.id_user))?.last_name  %>"
-              data-application-message="<%= item.reason %>">
+              data-user-name="<%= item.user.first_name + " " + item.user.last_name %>"
+              data-application-message="<%= item.message %>">
               <div class="package-info">
                 <div class="small-header">
                   <%= item.name_package %>
                 </div>
                 <div class="smaller-header">
-                  <%= (users.find(user=> user.id === item.id_user))?.first_name + " " + (users.find(user => user.id ===
-                    item.id_user))?.last_name %>
+                  <%= item.user.first_name + " " + item.user.last_name %>
                 </div>
               </div>
             </div>
