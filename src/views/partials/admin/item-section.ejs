@@ -3,7 +3,7 @@
     <% let items=type==='user' ? userRequests : packageRequests; %>
       <% items.forEach((item)=> { %>
         <% if (type==='user' ) { %>
-          <div class="user-application" id="<%= item.id_user_request %>"
+          <div class="user-application" id="<%= item.id %>"
             data-name="<%= item.first_name + ' ' + item.last_name %>" data-email="<%= item.email %>"
             data-application-message="<%= item.access_reason %>">
             <div class="user-info">
@@ -16,7 +16,7 @@
             </div>
           </div>
           <% } else if (type==='package' ) { %>
-            <div class="package-request" id="package-<%= item.id_package_request %>"
+            <div class="package-request" id="package-<%= item.id %>"
               data-name="<%= item.name_package %>"
               data-email="<%= (users.find(user => user.id === item.id_user))?.email %>"
               data-package-link="<%= item.link %>"
