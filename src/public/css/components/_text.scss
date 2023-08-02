@@ -49,6 +49,10 @@
   @include font-style;
 
   color: $primary-font-color;
+
+  &:hover {
+    color: $hover-color;
+  }
 }
 
 .email-link {
@@ -59,7 +63,7 @@
   @extend %link;
 
   &::after {
-    @include svg-icon(1.1875rem, 1.1875rem, "../img/open_in_new.svg");
+    @include svg-icon(1.1875rem, 1.1875rem, $link-open-img);
 
     display: inline-block;
     margin-bottom: 0.15rem;

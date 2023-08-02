@@ -3,22 +3,6 @@
     margin-bottom: 1.25rem;
 }
 
-.input {
-    @include flex-center;
-
-    width: 100%;
-    margin-top: $content-padding;
-    border-radius: $standard-border-radius;
-    flex-direction: row;
-    box-shadow: $main-shadow;
-
-    input {
-        font-weight: 100;
-        border-radius: $standard-border-radius;
-        padding: 1.25rem;
-    }
-}
-
 .register-google-name {
     color: $gradient-color-mid;
 }
@@ -48,7 +32,7 @@ a.change-account-link:hover {
 #submit-button {
     @include flex-center;
     width: 100%;
-    border-radius: $standard-border-radius;
+    border-radius: $border-radius;
 }
 
 #step-01-content,
@@ -66,7 +50,7 @@ a.change-account-link:hover {
     border: 0px;
     resize: none;
     width: 100%;
-    border-radius: $standard-border-radius;
+    border-radius: $border-radius;
     padding: 1rem;
     height: 10rem;
 }

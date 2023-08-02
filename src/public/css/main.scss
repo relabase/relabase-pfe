@@ -8,6 +8,7 @@
 // Import components
 @import "components/navbar";
 @import "components/buttons";
+@import "components/dropdown";
 @import "components/input";
 @import "components/modal";
 @import "components/script";
@@ -62,10 +63,6 @@ hr {
 
 p {
   font-size: $paragraph-font-size;
-}
-
-.cursor-pointer {
-  cursor: pointer;
 }
 
 .spacing {
