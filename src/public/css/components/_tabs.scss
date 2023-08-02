@@ -20,7 +20,7 @@
   align-items: center;
   padding: $content-padding $tab-content-padding;
   color: $secondary-font-color;
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-radius: $border-radius $border-radius 0 0;
 
   &:hover {
     cursor: pointer;
@@ -39,12 +39,13 @@
   position: relative;
   margin: 0 $content-padding $content-padding $content-padding;
   background: rgb(255 255 255 / 60%);
-  border-radius: $tab-border-radius;
+  border-radius: $border-radius;
   cursor: pointer;
 
-  &.active {
+  &.active, 
+  input[type="checkbox"]:checked ~ &  {
     background-color: $background-color;
-    box-shadow: 0 4px 10px 0 rgb(169 82 113 / 12%);
+    box-shadow: $tab-shadow;
   }
 
   &:hover {
@@ -57,7 +58,7 @@
     right: 1.25rem;
     width: 1.5rem;
     height: 1.5rem;
-    background: url("../img/arrow_right_alt.svg") no-repeat center;
+    background: url($arrow-right-img) no-repeat center;
     background-size: contain;
     transform: translateY(-50%);
     content: "";

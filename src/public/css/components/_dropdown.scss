@@ -1,0 +1,47 @@
+.dropdown-container {
+    position: relative;
+    background-color: transparent;
+    border-radius: $border-radius;
+}
+
+.dropdown-container::before {
+    position: absolute;
+    inset: 0 $content-padding $content-padding $content-padding;
+    z-index: 0;
+    background-color: $hover-color;
+    border-radius: $border-radius;
+    content: ""; 
+}
+
+.dropdown-header {
+    @extend %content-tabs;
+
+    position: relative;
+    z-index: 1;  
+}
+
+.dropdown-content {
+    @include flex-center;
+
+    position: relative;
+    z-index: 1;
+    max-height: 0;
+    margin: 0 $content-padding $content-padding $content-padding;
+    padding: 0 $content-padding;
+    overflow: hidden;  
+    background-color: $hover-color;
+    border-radius: $border-radius;
+    transition: max-height 0.05s ease-in-out, padding-bottom 0.05s ease-in-out;
+}
+
+.dropdown-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.dropdown-input:checked ~ .dropdown-content {
+    max-height: 10rem;
+    padding-bottom: $content-padding;
+}
