@@ -19,12 +19,12 @@ export class User_requestRoute implements Routes {
   //TODO: add AdminMiddleware
   private initializeRoutes() {
     const upload = this.initializeMulter();
-    this.router.get(`${this.path}`, AuthMiddleware(), this.user_request.getUser_requests);
-    this.router.get(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.user_request.getUser_requestById);
+    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.user_request.getUser_requests);
+    this.router.get(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.user_request.getUser_requestById);
     this.router.post(`${this.path}`, [AuthMiddleware('register'), upload.single('image'), ValidationMiddleware(CreateUser_requestDto)], this.user_request.createUser_request);
     this.router.put(`${this.path}/approve/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.user_request.approveUser_request);
-    this.router.put(`${this.path}/reject/:id(\\d+)`, AuthMiddleware(), this.user_request.rejectUser_request);
-    this.router.delete(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.user_request.deleteUser_request);
+    this.router.put(`${this.path}/reject/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.user_request.rejectUser_request);
+    this.router.delete(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.user_request.deleteUser_request);
   }
 
   private initializeMulter = (): multer.Multer => {

@@ -14,6 +14,6 @@ export class AdminRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.admin.getAdminPage); //TODO: add with AdminMiddleware
+    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.admin.getAdminPage);
   }
 }

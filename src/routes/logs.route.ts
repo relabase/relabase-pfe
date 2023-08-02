@@ -4,6 +4,7 @@ import { ValidationMiddleware } from '@middlewares/validation.middleware';
 import { LogController } from '@/controllers/logs.controller';
 import { CreateLogDto,UpdateLogDto } from '@dtos/logs.dto';
 import { AuthMiddleware } from '@/middlewares/auth.middleware';
+import { AdminMiddleware } from '@/middlewares/admin.middleware';
 
 export class LogRoute implements Routes {
   public path = '/logs';
@@ -14,12 +15,11 @@ export class LogRoute implements Routes {
     this.initializeRoutes();
   }
 
-  //TODO: add AdminMiddleware
   private initializeRoutes() {
-    this.router.get(`${this.path}`, AuthMiddleware(), this.log.getLogs);
-    this.router.get(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.log.getLogById);
+    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.log.getLogs);
+    this.router.get(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.log.getLogById);
     this.router.post(`${this.path}`,ValidationMiddleware(CreateLogDto),this.log.createLog);
-    this.router.delete(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.log.deleteLog);
+    this.router.delete(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.log.deleteLog);
     /*
     this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateUserDto), this.user.updateUser);
 
