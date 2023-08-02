@@ -17,7 +17,7 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
     req.token_payload = token;
     if (token && user) { // if a user is logged in
       if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
-        res.redirect('home'); // redirect to homepage
+        res.redirect('/home'); // redirect to homepage
       } else { // otherwise, let them through
         next();
       }
@@ -25,13 +25,15 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
       if (requestedPage === 'login' || requestedPage === 'register') { // and they want to access these pages
         next(); // let them through
       } else { // otherwise, redirect to login
-        res.redirect('login');
+        res.redirect('/login');
       }
+    //} else if () { // if a user has selected a google account that has a pending application
+
     } else if (token == null) { // if a user who has not selected a google account
       if (requestedPage === 'login') { // tries to log in
         next(); // let them through
       } else { // otherwise, redirect to login
-        res.redirect('login');
+        res.redirect('/login');
       }
     }
   } catch (error) {

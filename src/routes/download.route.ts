@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { DownloadController } from '@controllers/download.controller';
 import { Routes } from '@interfaces/routes.interface';
+import { AuthMiddleware } from '@/middlewares/auth.middleware';
 
 export class DownloadRoute implements Routes {
   public path = '/download';
@@ -12,6 +13,6 @@ export class DownloadRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/:filename`, this.download.getFile); //TODO: add auth middleware
+    this.router.get(`${this.path}/:filename`, AuthMiddleware(), this.download.getFile);
   }
 }
