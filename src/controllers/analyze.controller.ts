@@ -4,15 +4,16 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import fs from 'fs';
 import { User } from '@/models/user';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 
 
 export class AnalyzeController {
   public log = Container.get(LogService);
 
-  public getView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getView = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.render('analyze');
+      res.render('analyze', { currentUser: `${req.user.first_name} ${req.user.last_name}` });
     } catch (error) {
       next(error);
     }

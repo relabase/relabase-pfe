@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { HelpController } from '@controllers/help.controller';
 import { Routes } from '@interfaces/routes.interface';
+import { AuthMiddleware } from '@/middlewares/auth.middleware';
 
 export class HelpRoute implements Routes {
   public router = Router();
@@ -11,6 +12,6 @@ export class HelpRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get('/help', this.help.getHelpPage);
+    this.router.get('/help', AuthMiddleware(), this.help.getHelpPage);
   }
 }
