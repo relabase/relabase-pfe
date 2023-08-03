@@ -51,9 +51,10 @@
 }
 
 .file-dropbox {
+    @include flex-direction;
+
     justify-content: space-evenly;
     height: 10rem;
-    @include flex-direction;
 }
 
 .content-more-info {

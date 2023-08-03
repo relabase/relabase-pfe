@@ -13,6 +13,7 @@ import { Package_requestRoute } from '@routes/package_requests.route';
 import { StatusRoute } from './routes/status.route';
 import { HomeRoute } from './routes/home.route';
 import { HelpRoute } from './routes/help.route';
+import { StyleGuideRoute } from './routes/styleguide.route';
 
 ValidateEnv();
 
@@ -29,7 +30,8 @@ const app = new App([
         new Package_requestRoute(),
         new StatusRoute(),
         new HomeRoute(),
-        new HelpRoute()
+        new HelpRoute(),
+        new StyleGuideRoute()
     ]);
 
     process.on('uncaughtException', (err) => {
