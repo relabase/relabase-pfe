@@ -247,6 +247,7 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
 get_nonDF_exposition <- function(variables, script)
 {
   print("====get_nonDF_exposition====")
+  print(script)
   all_possible_leaks <- list()
   regex_first_pass_df <- "[[:alnum:]]+<-\\b###\\b(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
   first_pass_leaks <- get_assignment_line_vars(variables, regex_first_pass_df, script)
@@ -336,6 +337,8 @@ validate_multiple_instructions <- function(possible_lines, patterns_collection)
 check_data_leaks <- function(variables, env_user, script)
 {
   all_leaks <- list()
+  print("SCRIPT")
+  print(script)
   # Get blacklist keywords
   keywords <- as.list(read.delim(file.path('C:', 'Users', 'Roach', 'Documents', 'blackListKeywords.txt'), sep = "\n", header = FALSE)$V1)
   print("KEYWORDS!!!!!")
