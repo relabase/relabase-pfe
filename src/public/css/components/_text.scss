@@ -55,6 +55,13 @@
   }
 }
 
+.simple-link {
+  @extend %link;
+
+  font-weight: unset;
+  text-decoration: none;
+}
+
 .email-link {
   @extend %link;
 }
