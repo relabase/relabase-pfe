@@ -43,10 +43,6 @@ a.change-account-link:hover {
     width: 100%;
 }
 
-.display-none {
-    display: none;
-}
-
 #register-input-reason {
     @include font-style($weight: 100, $size: $paragraph-font-size);
 
