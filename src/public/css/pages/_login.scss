@@ -41,13 +41,13 @@
   }
 }
 
-.login-logo {
+.relabase-full-logo {
   position: absolute;
   top: 10%;
   width: 10rem;
 }
 
-.welcome-back {
+.half-title {
   @include font-style($weight: 300, $size: 3rem);
 
   margin-bottom: 1.25rem;
