@@ -63,11 +63,13 @@
 
 .upload-button {
   @extend %shared-button;
+
   padding: $button-padding-x;
   color: $primary-font-color;
   border: 2px solid $gradient-color-mid;
   border-radius: $border-radius;
   cursor: pointer;
+
   &:hover {
     color: $gradient-color-start;
     border-color: $hover-color;
