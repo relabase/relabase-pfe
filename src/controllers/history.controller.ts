@@ -21,7 +21,7 @@ export class HistoryController {
         }
       });
 
-      res.render('history', { users, logs, formatDate, currentUser: `${req.user.first_name} ${req.user.last_name}` });
+      res.render('history', { users, logs, formatDate, currentUser: `${req.user.first_name} ${req.user.last_name}`, isAdmin: req.user.role.id == 1 });
     } catch (error) {
       next(error);
     }

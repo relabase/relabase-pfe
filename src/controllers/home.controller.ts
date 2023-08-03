@@ -14,7 +14,7 @@ export class HomeController {
       // TODO: filter the logs for just the currently signed in user
       logs = logs.filter((log) => log.id_user === 6);
       
-      res.render('home', { logs, formatDate, currentUser: `${req.user.first_name} ${req.user.last_name}` });
+      res.render('home', { logs, formatDate, currentUser: `${req.user.first_name} ${req.user.last_name}`, isAdmin: req.user.role.id == 1 });
     } catch (error) {
       next(error);
     }

@@ -16,7 +16,7 @@ export class AdminController {
       let packageRequests = await packageRequestService.findAllPackage_requestByStatus(1);
       let users = await userService.findAllUser();
 
-      res.render('admin', { userRequests, packageRequests, users, currentUser: `${req.user.first_name} ${req.user.last_name}` });
+      res.render('admin', { userRequests, packageRequests, users, currentUser: `${req.user.first_name} ${req.user.last_name}`, isAdmin: req.user.role.id == 1 });
     } catch (error) {
       next(error);
     }
