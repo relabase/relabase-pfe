@@ -22,31 +22,32 @@ export class AnalyzeController {
     try {
       const analyze_rscript_path = 'src/resources/analyze_rscript.R';
       const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
-      const analyze_user_script = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', String(req.body.script)).
-      replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
-
+      const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', String(req.body.script)).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
+      
+      console.log(analyze_rscript_injected);
       let filename: string = this.getTimestamp();
-      this.generateRFileFromString(String(req.body.script), filename, next);
-      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
+      this.generateRFileFromString(analyze_rscript_injected, filename, next);
+
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
         currentUser.id = 1;
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
-          {
-            console.log(rej);
-          });
+          // this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
+          // {
+          //   console.log(rej);
+          // });
           return;
         }
         else
         {
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
-          {
-            console.log(rej);
-          });
+          // this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
+          // {
+          //   console.log(rej);
+          // });
         }
         fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
           if (error) {
