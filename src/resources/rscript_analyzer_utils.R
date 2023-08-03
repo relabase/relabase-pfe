@@ -7,8 +7,6 @@ format_script <- function(script)
   splitted_script <- str_trim(str_split(script, "\n", simplify = TRUE))
   formatted_script = str_replace_all(splitted_script, "(?<!\n)\\s", "")
   
-  print("FORMATTED TEXT")
-  print(formatted_script)
   return (formatted_script)
 }
 # Setup environment to get variables
@@ -335,8 +333,6 @@ validate_multiple_instructions <- function(possible_lines, patterns_collection)
 check_data_leaks <- function(variables, env_user, script)
 {
   all_leaks <- list()
-  print("SCRIPT")
-  print(script)
   # Get blacklist keywords
   keywords <- as.list(read.delim(file.path('..','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
   print("KEYWORDS!!!!!")

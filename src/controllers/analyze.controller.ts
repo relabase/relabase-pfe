@@ -22,7 +22,7 @@ export class AnalyzeController {
     try {
       const analyze_rscript_path = 'src/resources/analyze_rscript.R';
       const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
-      const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', String(req.body.script)).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
+      const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
       
       console.log(analyze_rscript_injected);
       let filename: string = this.getTimestamp();
@@ -86,5 +86,14 @@ export class AnalyzeController {
     const timestamp = year + month + day + hours + minutes + seconds;
 
     return timestamp;
+  }
+
+  
+  private change_quotes(script: string): string
+  {
+    //change all double quotes to single quotes
+    script = script.replace(/"/g, '\'');
+
+    return script;
   }
 }
