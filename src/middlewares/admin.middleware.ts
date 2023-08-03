@@ -9,7 +9,7 @@ export const AdminMiddleware = async (req: RequestWithUser, res: Response, next:
     if (user.role.name_role.toLowerCase() === "admin") {
         next();
     } else {
-        res.redirect('/login');
+        res.render('403');
     }
   } catch (error) {
     next(new HttpException(401, 'Wrong authentication token'));

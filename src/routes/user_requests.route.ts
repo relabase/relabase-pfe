@@ -16,7 +16,6 @@ export class User_requestRoute implements Routes {
     this.initializeRoutes();
   }
 
-  //TODO: add AdminMiddleware
   private initializeRoutes() {
     const upload = this.initializeMulter();
     this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.user_request.getUser_requests);
