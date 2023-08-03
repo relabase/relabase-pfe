@@ -107,9 +107,4 @@
     $hover-color: darken($button-visibility-color, 10%),
     $height: 1rem
   );
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
