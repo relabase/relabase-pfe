@@ -26,6 +26,17 @@ export class User_requestService {
     })
   }
 
+  public async findUser_requestByGoogleId(google_id: string): Promise<User_request> {
+    return repo.findOne({
+      where:{
+        google_id: google_id
+      },
+      relations:{
+        status:true
+      }
+    })
+  }
+
   public async createUser_request(user_requestData: User_request): Promise<User_request> {
     return repo.save(user_requestData);
 

@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Register</title>
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<body>
-    register
-</body>
-
-</html>
+<%- include('login-register-layout.ejs', { 
+    title: 'Register',
+    body: ["partials/auth/register-content.ejs"],
+    scripts: "<script src='js/register-script.js'></script>"
+}) %>

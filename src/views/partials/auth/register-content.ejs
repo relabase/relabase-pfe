@@ -1,0 +1,58 @@
+<div class="register-title-text">Let's get you started!</div>
+<div class="register-account-info">
+    <div class="current-account">You are currently making an account for <span class="register-google-name">
+            <%= token.name %>
+        </span></div>
+    <div class="not-you">
+        Not you?
+        <a class="change-account-link" href="/login">
+            Register with a different account
+        </a>
+    </div>
+</div>
+<div id="step-01-button" class="step-button large-button-thin">
+    Step 01 - Full name and email
+</div>
+<div id="step-01-content" class="step-content">
+    <div class="content-more-info">Your full name will be used to identify you on the website.</div>
+    <div class="input-container">
+        <input id="register-input-first-name" type="text" placeholder="First name" />
+    </div>
+    <div class="input-container">
+        <input id="register-input-last-name" type="text" placeholder="Last name" />
+    </div>
+    <div class="content-more-info">Please use your <b>academic email address</b> for verification purposes.
+    </div>
+    <div class="input-container">
+        <input id="register-input-email" type="email" placeholder="Email" />
+    </div>
+</div>
+<div id="step-02-button" class="step-button large-button-thin">
+    Step 02 - ID upload for verification
+</div>
+<div id="step-02-content" class="step-content display-none">
+    <div class="content-more-info">Your ID will be used to verify your identity.</div>
+    <div class="input-container file-dropbox">
+        <label id="file-upload-label" for="file-upload" class="upload-button">
+            Select image
+        </label>
+        <input type="file" name="file-upload" id="file-upload" class="display-none" accept="image/png, image/jpeg">
+        <div id="file-name" class="display-none"></div>
+    </div>
+</div>
+<div id="step-03-button" class="step-button large-button-thin">
+    Step 03 - Reason for account creation
+</div>
+<div id="step-03-content" class="step-content display-none">
+    <div class="content-more-info">Please provide a brief explanation of why you'd like access to
+        the website.</div>
+    <div class="input-container">
+        <textarea id="register-input-reason" rows="4" cols="50"></textarea>
+    </div>
+</div>
+<div class="checkbox-confirmation-div">
+    <input id="checkbox-confirmation" name="checkbox-confirmation" type="checkbox">
+    <label for="checkbox-confirmation">I agree not to engage in any activities that may cause harm, disrupt, or compromise the security and integrity of the website or its users' data.</label>
+</div>
+<div id="submit-button" class="large-button-thin">Submit</div>
+<div id="register-error-msg" class="error-msg display-none">Please answer all fields.</div>

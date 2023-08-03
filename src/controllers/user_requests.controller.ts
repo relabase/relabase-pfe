@@ -7,6 +7,7 @@ import { Status } from '@/models/status';
 import { StatusService } from '@/services/status.service';
 import { Package_request } from '@/models/package_request';
 import { DeleteResult } from 'typeorm';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 export class User_requestController {
   public user_request = Container.get(User_requestService);
@@ -44,28 +45,47 @@ export class User_requestController {
     }
   };
 
-  public createUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createUser_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user_requestData: User_request = req.body;
+      let googleId: string = req.token_payload?.sub;
+      const userRequest: User_request = await this.user_request.findUser_requestByGoogleId(googleId);
+      let message: string;
 
-      const defaultStatus:Status = await this.status.findStatusByName("in progress");
+      if (userRequest) { // if user request for google id exists
+        switch (userRequest.status.name_status) {
+          case "in progress":
+            message = "The account you are trying to register already has a pending application. Please wait for the application to be processed.";
+            break;
+          case "approved":
+            message = "The account you are trying to register already exists and has been approved. Please log in using your existing credentials.";
+            break;
+          case "rejected":
+            message = "The account you are trying to register was previously submitted and rejected.";
+            break;
+          default:
+            message = "The account you are trying to register is currently in an unknown status. Please contact support for further assistance.";
+            break;
+        }
+        res.status(409).json({ success: false, message });
+      } else { // if user request for google id doesn't exist
+        req.body.google_id = googleId;
+        req.body.image = req.file.filename;
+        const user_requestData: User_request = req.body;
+        const defaultStatus: Status = await this.status.findStatusByName("in progress");
 
-
-      if(defaultStatus === null)
-      {
-        res.status(409).json({ data: "Status 'in progress' doesn't exist", message: 'created' });
-        return;
+        if (defaultStatus === null) {
+          res.status(409).json({ success: false, message: "The status 'In Progress' does not exist." });
+        } else {
+          user_requestData.status = defaultStatus;
+          const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
+          res.status(201).json({ success: true, data: createUser_requestData, message: "Your account application has been successfully submitted! You will receive an e-mail once it has been processed." });
+        }
       }
-
-      user_requestData.status = defaultStatus;
-
-      const createUser_requestData: User_request = await this.user_request.createUser_request(user_requestData);
-
-      res.status(201).json({ data: createUser_requestData, message: 'created' });
     } catch (error) {
       next(error);
     }
   };
+
   public approveUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user_requestId = Number(req.params.id);
