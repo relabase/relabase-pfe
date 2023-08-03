@@ -17,27 +17,27 @@ import { HelpRoute } from './routes/help.route';
 ValidateEnv();
 
 const app = new App([
-        new UserRoute(), 
-        new AuthRoute(), 
-        new AnalyzeRoute(), 
-        new AdminRoute(),
-        new HistoryRoute(),
-        new DownloadRoute(),
-        new LogRoute(),
-        new RoleRoute(),
-        new User_requestRoute(),
-        new Package_requestRoute(),
-        new StatusRoute(),
-        new HomeRoute(),
-        new HelpRoute()
-    ]);
+    new UserRoute(),
+    new AuthRoute(),
+    new AnalyzeRoute(),
+    new AdminRoute(),
+    new HistoryRoute(),
+    new DownloadRoute(),
+    new LogRoute(),
+    new RoleRoute(),
+    new User_requestRoute(),
+    new Package_requestRoute(),
+    new StatusRoute(),
+    new HomeRoute(),
+    new HelpRoute()
+]);
 
-    process.on('uncaughtException', (err) => {
+process.on('uncaughtException', (err) => {
     console.error('Unhandled Exception', err);
-    });
+});
 
-    process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', (err) => {
     console.error('Unhandled Rejection', err);
-    });
+});
 
 app.listen();
