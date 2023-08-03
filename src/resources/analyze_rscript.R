@@ -1,7 +1,5 @@
-library(stringr)
 
-# the source folder is in resources and called rscript_analyzer_utils.R
-source(file.path('P:','Programming','ETS','ETSETES14','PFE','relabase-pfe','src','resources','rscript_analyzer_utils.R'))
+source(file.path('..','resources','rscript_analyzer_utils.R'))
 
 script <- "##CSV_DATA##
            ##USER_SCRIPT_INJECTED##

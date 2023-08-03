@@ -1,8 +1,6 @@
 # File that contains all necessary functions to analyze an R script.
 library(stringr)
 
-
-
 # Function to format the script, split by \n and remove all spaces in each line
 format_script <- function(script)
 {
@@ -340,7 +338,7 @@ check_data_leaks <- function(variables, env_user, script)
   print("SCRIPT")
   print(script)
   # Get blacklist keywords
-  keywords <- as.list(read.delim(file.path('C:', 'Users', 'Roach', 'Documents', 'blackListKeywords.txt'), sep = "\n", header = FALSE)$V1)
+  keywords <- as.list(read.delim(file.path('..','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
   print("KEYWORDS!!!!!")
   print(keywords)
   # Get all data frame variables
