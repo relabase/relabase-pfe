@@ -37,9 +37,9 @@
   </div>
   <div id="<%= type === 'user' ? 'user-content' : 'package-content' %>" class="item-content">
     <% if (type === 'user') { %>
-      <%- include('user-application.ejs'); %>
+      <%- include('tab-contents/user-application.ejs'); %>
     <% } else if (type === 'package') { %>
-      <%- include('package-request.ejs'); %>
+      <%- include('tab-contents/package-request.ejs'); %>
     <% } %>
   </div>
   <div id="<%= type === 'user' ? 'user-no-content-selected' : 'package-no-content-selected' %>"
