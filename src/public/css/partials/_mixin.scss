@@ -40,15 +40,17 @@
   @include font-style;
 
   display: inline-flex;
-  gap: $content-padding;
   align-items: center;
-  padding: $button-padding-y $button-padding-x;
+  justify-content: space-between;
+  padding: $button-padding-y;
   background: $bg-color;
   border-radius: $border-radius;
 
   &::before {
     @include svg-icon($width, $height, $icon-url);
 
+    flex-shrink: 0;
+    margin-right: $button-padding-y/2;
     content: "";
   }
 
@@ -78,6 +80,7 @@
 @mixin header-container {
   @include flex-center($justify: space-between);
 
+  gap: $content-padding;
   padding: $content-padding;
 }
 

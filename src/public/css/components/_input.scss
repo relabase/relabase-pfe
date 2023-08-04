@@ -16,7 +16,7 @@
 }
 
 .input-textarea {
-  @include font-style($weight: 100, $size: $paragraph-font-size);
+  @include font-style($weight: 100);
   @extend %scrollbar;
 
   width: 100%;
