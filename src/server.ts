@@ -34,12 +34,16 @@ const app = new App([
         new StyleGuideRoute()
     ]);
 
-    process.on('uncaughtException', (err) => {
+process.on('uncaughtException', (err) => {
     console.error('Unhandled Exception', err);
-    });
+});
 
-    process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', (err) => {
     console.error('Unhandled Rejection', err);
-    });
+});
+
+app.app.use(function (req, res) {
+    res.status(404).render('404');
+});
 
 app.listen();

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { User } from '@interfaces/users.interface';
+import { User } from '@models/user';
 import { TokenPayload } from 'google-auth-library';
 
 export interface DataStoredInToken {
