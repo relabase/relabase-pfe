@@ -49,13 +49,14 @@
   @include font-style;
 
   color: $primary-font-color;
+  cursor: pointer;
 
   &:hover {
     color: $hover-color;
   }
 }
 
-.simple-link {
+.link {
   @extend %link;
 
   font-weight: unset;
