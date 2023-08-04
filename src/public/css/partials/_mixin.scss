@@ -1,13 +1,22 @@
 // Mixins
-@mixin flex-center($justify: center) {
-  display: flex;
-  align-items: center;
-  justify-content: $justify;
+@mixin flex($display: flex, $justify: null, $direction: null, $align: null) {
+  display: $display;
+  
+  @if $align{
+    align-items: $align;
+  }
+
+  @if $justify{
+    justify-content: $justify;
+  }
+
+  @if $direction {
+    flex-direction: $direction;
+  }
 }
 
-@mixin flex-direction($direction: column) {
-  display: flex;
-  flex-direction: $direction;
+@mixin flex-center{
+  @include flex($align: center, $justify: center);
 }
 
 @mixin font-style($weight: $standard-font-weight, $size: $standard-font-size, $family: $main-font) {
@@ -38,10 +47,8 @@
 ) {
   @extend %shared-button;
   @include font-style;
+  @include flex($display: inline-flex, $justify: space-between);
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
   padding: $button-padding-y;
   background: $bg-color;
   border-radius: $border-radius;
@@ -71,14 +78,14 @@
 }
 
 @mixin content-container {
-  @include flex-direction($direction: column);
+  @include flex($direction: column);
   @extend %main-content;
 
   background: $background-gradient;
 }
 
 @mixin header-container {
-  @include flex-center($justify: space-between);
+  @include flex($align: center, $justify: space-between);
 
   gap: $content-padding;
   padding: $content-padding;
