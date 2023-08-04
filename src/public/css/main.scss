@@ -6,6 +6,7 @@
 @import "partials/mixin";
 
 // Import components
+@import "components/text";
 @import "components/navbar";
 @import "components/buttons";
 @import "components/dropdown";
@@ -15,7 +16,7 @@
 @import "components/scrollbar";
 @import "components/table";
 @import "components/tabs";
-@import "components/text";
+
 
 // Import page-specific styles
 @import "pages/login";
