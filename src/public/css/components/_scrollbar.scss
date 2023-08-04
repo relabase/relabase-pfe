@@ -19,4 +19,12 @@
   &::-webkit-scrollbar-thumb:active {
     background-color: $gradient-color-end;
   }
+
+  // For firefox
+  scrollbar-width: thin;
+  scrollbar-color: $scrollbar-color transparent;
+
+  &:hover {
+    scrollbar-color: $gradient-color-end transparent;
+  }
 }
