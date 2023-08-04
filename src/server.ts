@@ -13,24 +13,26 @@ import { Package_requestRoute } from '@routes/package_requests.route';
 import { StatusRoute } from './routes/status.route';
 import { HomeRoute } from './routes/home.route';
 import { HelpRoute } from './routes/help.route';
+import { StyleGuideRoute } from './routes/styleguide.route';
 
 ValidateEnv();
 
 const app = new App([
-    new UserRoute(),
-    new AuthRoute(),
-    new AnalyzeRoute(),
-    new AdminRoute(),
-    new HistoryRoute(),
-    new DownloadRoute(),
-    new LogRoute(),
-    new RoleRoute(),
-    new User_requestRoute(),
-    new Package_requestRoute(),
-    new StatusRoute(),
-    new HomeRoute(),
-    new HelpRoute()
-]);
+        new UserRoute(), 
+        new AuthRoute(), 
+        new AnalyzeRoute(), 
+        new AdminRoute(),
+        new HistoryRoute(),
+        new DownloadRoute(),
+        new LogRoute(),
+        new RoleRoute(),
+        new User_requestRoute(),
+        new Package_requestRoute(),
+        new StatusRoute(),
+        new HomeRoute(),
+        new HelpRoute(),
+        new StyleGuideRoute()
+    ]);
 
 process.on('uncaughtException', (err) => {
     console.error('Unhandled Exception', err);

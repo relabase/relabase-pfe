@@ -2,15 +2,15 @@
     position: relative;
     background-color: transparent;
     border-radius: $border-radius;
-}
-
-.dropdown-container::before {
-    position: absolute;
-    inset: 0 $content-padding $content-padding $content-padding;
-    z-index: 0;
-    background-color: $hover-color;
-    border-radius: $border-radius;
-    content: ""; 
+    
+    &::before{
+        position: absolute;
+        inset: 0 $content-padding $content-padding $content-padding;
+        z-index: 0;
+        background-color: $hover-color;
+        border-radius: $border-radius;
+        content: "";
+    }
 }
 
 .dropdown-header {

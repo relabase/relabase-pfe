@@ -1,0 +1,21 @@
+.style-guide {
+  background-color: $primary-background-color;
+
+  .button-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .text-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+
+    * {
+      padding: unset;
+    }
+  }
+}

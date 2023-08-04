@@ -8,6 +8,7 @@
 
 .full-container {
   @include flex-center;
+
   justify-content: center;
   width: 100%; 
   height: 100%; 
@@ -16,6 +17,7 @@
 .half-container {
   box-sizing: border-box;
   width: 50%;
+  max-height: 100%;
   margin: 0 0.313rem;
   padding: 0 0.313rem;
   text-align: center;
@@ -31,13 +33,20 @@
     }
   }
 
+  &:first-of-type{
+    @extend %scrollbar;
+
+    overflow-x: hidden;
+  }
+
   .left-container {
     @include flex-center;
 
     flex-direction: column;
     width: 30.5rem;
     margin: auto;
-    text-align: center;
+    padding: $content-padding;
+    text-align: center
   }
 }
 

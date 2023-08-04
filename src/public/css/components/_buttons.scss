@@ -4,34 +4,21 @@
 
   justify-content: center;
   color: $button-font-color;
+  border: 1px solid transparent;
   cursor: pointer;
 }
 
 .primary-button {
-  @include flex-center;
   @extend %shared-button;
 
-  position: relative;
-  z-index: 0;
-  gap: $content-padding;
   padding: $button-padding-y $button-padding-x;
   overflow: hidden;
-  text-align: center;
   text-decoration: none;
+  background: linear-gradient(45deg, $gradient-color-start 0.01%, $gradient-color-mid 49.97%, $gradient-color-end 100%);
   border: 0;
-  border-radius: $button-border-radius;
+  border-radius: $border-radius;
 
-  &::before {
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(89deg, $gradient-color-start 0%, $gradient-color-mid 50%, $gradient-color-end 100%);
-    box-shadow: $btn-shadow;
-    content: "";
-  }
-
-  &:hover::before {
+  &:hover {
     background: $gradient-color-start;
   }
 }
@@ -40,34 +27,24 @@
   @extend %shared-button;
 
   height: $button-height-thin;
-  margin-top: $button-margin-top;
   background: $gradient-color-start;
+  border-radius: $border-radius;
   box-shadow: $btn-shadow;
-}
-
-.google-sign-in-btn {
-  @extend %shared-button;
-
-  height: $button-height;
-  color: $secondary-font-color;
-  border: 1px solid $light-outline-color;
-
-  img {
-    margin-right: $content-padding;
-  }
 
   &:hover {
-    border-color: $hover-color;
+    background-color: darken($gradient-color-start, 10%);
   }
 }
 
 .upload-button {
   @extend %shared-button;
+
   padding: $button-padding-x;
   color: $primary-font-color;
+  background: $background-color;
   border: 2px solid $gradient-color-mid;
   border-radius: $border-radius;
-  cursor: pointer;
+
   &:hover {
     color: $gradient-color-start;
     border-color: $hover-color;
@@ -105,13 +82,4 @@
     $hover-color: darken($button-visibility-color, 10%),
     $height: 1rem
   );
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.unblur-button.hidden {
-  display: none;
 }

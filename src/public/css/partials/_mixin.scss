@@ -44,8 +44,7 @@
   align-items: center;
   padding: $button-padding-y $button-padding-x;
   background: $bg-color;
-  border: 1px solid transparent;
-  border-radius: $button-border-radius;
+  border-radius: $border-radius;
 
   &::before {
     @include svg-icon($width, $height, $icon-url);
@@ -54,7 +53,7 @@
   }
 
   &:hover {
-    border-color: $hover-color;
+    background-color: $hover-color;
     cursor: pointer;
   }
 }

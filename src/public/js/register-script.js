@@ -66,14 +66,14 @@ async function submit_user_application(first_name, last_name, email, file, reaso
 }
 
 function hide(div) {
-    if (!div.classList.contains('display-none')) {
-        div.classList.add('display-none');
+    if (!div.classList.contains('hide-content')) {
+        div.classList.add('hide-content');
     }
 }
 
 function show(div) {
-    if (div.classList.contains('display-none')) {
-        div.classList.remove('display-none');
+    if (div.classList.contains('hide-content')) {
+        div.classList.remove('hide-content');
     }
 }
 

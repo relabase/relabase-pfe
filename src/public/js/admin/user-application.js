@@ -75,7 +75,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
     UI.approveButton.onclick = () => approveUser(userId);
     UI.declineButton.onclick = () => declineUser(userId);
-    document.querySelector('.unblur-button').classList.remove('hidden');
+    document.querySelector('.unblur-button').classList.remove('hide-content');
   }
 
   // Event listener for clicking on user applications
@@ -105,7 +105,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
   // Event listener for unblurring user ID image
   document.querySelector('.unblur-button').addEventListener('click', function () {
-    this.classList.add('hidden');
+    this.classList.add('hide-content');
     UI.idImage.style.filter = 'none';
   });
 })();
