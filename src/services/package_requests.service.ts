@@ -19,6 +19,19 @@ export class Package_requestService {
     });
   }
 
+  public async findAllPackage_requestByStatus(statusId: number): Promise<Package_request[]> {
+
+    return repo.find({
+      where: {
+        status: { id: statusId }
+      },
+      relations:{
+        status:true,
+        user:true
+      }
+    });
+  }
+
   public async findPackage_requestById(package_requestId: number): Promise<Package_request> {
 
     return repo.findOne({

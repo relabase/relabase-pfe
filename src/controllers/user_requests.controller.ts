@@ -118,7 +118,9 @@ export class User_requestController {
 
       const updateUser_requestData: User_request = await this.user_request.updateUser_request_status(User_requestData);
 
-      res.status(200).json({ data: updateUser_requestData, message: 'updated' });
+      //create new user
+
+      res.status(200).json({ success: true, data: 'updateUser_requestData', message: 'updated' });
     } catch (error) {
       next(error);
     }

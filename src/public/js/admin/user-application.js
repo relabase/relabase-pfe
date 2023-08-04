@@ -15,10 +15,22 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   };
 
   // Approve user application
-  function approveUser(userId) {
-    //TODO: approve user logic
-    console.log("approved " + userId);
-    removeUser(userId);
+  async function approveUser(userId) {
+    const res = await fetch('/user_requests/approve/' + userId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        console.log('success');
+        removeUser(userId);
+      } else {
+        console.log('not success');
+      }
+    });
   }
 
   // Decline user application

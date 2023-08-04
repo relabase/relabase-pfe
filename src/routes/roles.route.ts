@@ -4,6 +4,7 @@ import { CreateRoleDto, UpdateRoleDto } from '@dtos/roles.dto';
 import { Routes } from '@interfaces/routes.interface';
 import { ValidationMiddleware } from '@middlewares/validation.middleware';
 import { AuthMiddleware } from '@/middlewares/auth.middleware';
+import { AdminMiddleware } from '@/middlewares/admin.middleware';
 
 export class RoleRoute implements Routes {
   public path = '/roles';
@@ -14,12 +15,11 @@ export class RoleRoute implements Routes {
     this.initializeRoutes();
   }
 
-  //TODO: add AdminMiddleware
   private initializeRoutes() {
-    this.router.get(`${this.path}`, AuthMiddleware(), this.role.getRoles);
-    this.router.get(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.role.getRoleById);
-    this.router.post(`${this.path}`, ValidationMiddleware(CreateRoleDto), this.role.createRole);
-    this.router.put(`${this.path}/:id(\\d+)`, AuthMiddleware(), ValidationMiddleware(UpdateRoleDto), this.role.updateRole);
-    this.router.delete(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.role.deleteRole);
+    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.role.getRoles);
+    this.router.get(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.role.getRoleById);
+    this.router.post(`${this.path}`, [AuthMiddleware(), AdminMiddleware, ValidationMiddleware(CreateRoleDto)], this.role.createRole);
+    this.router.put(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware, ValidationMiddleware(UpdateRoleDto)], this.role.updateRole);
+    this.router.delete(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.role.deleteRole);
   }
 }
