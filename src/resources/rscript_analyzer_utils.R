@@ -79,7 +79,7 @@ create_df_leaks <- function(all_leaks)
 # Function that gets the data leaks involving keywords and data frame variables
 # Format ex: head(data), head(data$StepCount), head(data[6]), etc
 # Returns a data frame containing the line number and the line of the leak/s
-get_df_kw_direct_exposition <- function(variables, keywords, regex_pattern, script)
+get_df_kw_direct_exposition <- function(variables, keywords, script)
 {
   
   all_leaks <- list()
@@ -226,7 +226,7 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
       # Get the variable that is being assigned to
       # ^[[:graph:]]+(?=<|=) regex explanation:
       # ^[[:graph:]]+ matches 1 or more characters that are alphanumeric ([A-z0-9]) or punctuation characters
-      # (?=<|=) matches the characters < or = but does not include them in the match, known as a positive lookahead
+      # (?=<|=) matches the characters < or = but does not include them in the match, just looks for them after the pattern, known as a positive lookahead
       reassigned <- str_extract(var_assign, "^[[:graph:]]+(?=<|=)")
       print("!!REASSIGNED!!")
       print(reassigned)
@@ -263,7 +263,7 @@ get_nonDF_exposition <- function(variables, script)
   # [[:alnum:]]+ matches 1 or more alphanumeric characters
   # <- matches the characters <- or = matches the character =
   # \\b###\\b matches the word ### where ### is the variable name
-  # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match
+  # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match, just looks for them after the pattern
   # \\$[^;\\)]+ matches the character $ followed by 1 or more characters that are not ; or )
   # \\[\\[?[^;\\)]+\\]\\]? matches the character [, then 0 or 1 of [, followed by 1 or more characters that are not ; or ) followed by 0 or 1 of ] and finally ]
   # | is an or operator so the regex will match any of the patterns separated by |
@@ -367,11 +367,10 @@ check_data_leaks <- function(variables, env_user, script)
     # Regex pattern explanation piece by piece:
     # (?<!<-|=) is a negative lookbehind that matches if the pattern is not preceded by <- or =
     # \\b###\\b matches the word ### where ### is the variable name
-    # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match
+    # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match, just looks for them after the pattern
     # | is an or operator so the regex will match any of the patterns separated by |
     # \\$[^;\\)]+ matches the character $ followed by 1 or more characters that are not ; or )
     # \\[\\[?[^;\\)]+\\]\\]? matches the character [, then 0 or 1 of [, followed by 1 or more characters that are not ; or ) followed by 0 or 1 of ] and finally ]
-    # (?=\\s|;|$) 
 
     regex_pattern_var <- "(?<!<-|=)\\b###\\b(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
     direct_df_leaks <- get_df_direct_exposition(df_vars, regex_pattern_var, script)
@@ -379,8 +378,7 @@ check_data_leaks <- function(variables, env_user, script)
     print("DF EXPOSITION VARS")
     print(direct_df_leaks)
     
-    regex_pattern_kw_var <- "(?<!<-|=)\\b###\\b(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
-    direct_df_kw_leaks <- get_df_kw_direct_exposition(df_vars, keywords, regex_pattern_kw_var, script)
+    direct_df_kw_leaks <- get_df_kw_direct_exposition(df_vars, keywords, script)
     
     print("DF EXPOSITION KWVARS")
     print(direct_df_kw_leaks)
@@ -397,9 +395,7 @@ check_data_leaks <- function(variables, env_user, script)
     print("INDIRECT_VAR_LEAKS")
     print(indirect_var_leaks)
     
-    
-    regex_pattern_indirect_kw_var <- "(?<!<-|=)\\b###\\b(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
-    indirect_var_kw_leaks <- get_df_kw_direct_exposition(nonDF_expo, keywords, regex_pattern_indirect_kw_var, script)
+    indirect_var_kw_leaks <- get_df_kw_direct_exposition(nonDF_expo, keywords, script)
     print(indirect_var_kw_leaks)
     
     all_leaks <- do.call("rbind", list(direct_df_leaks, direct_df_kw_leaks, indirect_var_leaks, indirect_var_kw_leaks))

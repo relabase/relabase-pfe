@@ -24,7 +24,6 @@ export class AnalyzeController {
       const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
       const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
       
-      console.log(analyze_rscript_injected);
       let filename: string = this.getTimestamp();
       this.generateRFileFromString(analyze_rscript_injected, filename, next);
 
