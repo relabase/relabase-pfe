@@ -50,14 +50,9 @@ export class LogService {
     });
   }
 
-  public async createLog(file_path_input:string,file_path_result:string,user:User, text:string): Promise<Log> {
-    const newLog:Log = new Log();
+  public async createLog(log:Log): Promise<Log> {
 
-    newLog.file_path_input= file_path_input;
-    newLog.file_path_result = file_path_result;
-    newLog.user = user;
-    newLog.text = text;
-    return repo.save(newLog);
+    return repo.save(log);
 
   }
 
