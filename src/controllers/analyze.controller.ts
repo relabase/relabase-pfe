@@ -5,11 +5,15 @@ import { Container } from 'typedi';
 import fs from 'fs';
 import { User } from '@/models/user';
 import { RequestWithUser } from '@/interfaces/auth.interface';
+import { Log } from '@/models/log';
+import { TypeService } from '@/services/type.service';
+import { Type } from '@/models/type';
 
 
 
 export class AnalyzeController {
   public log = Container.get(LogService);
+  public type = Container.get(TypeService);
 
   public getView = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -23,6 +27,8 @@ export class AnalyzeController {
     try {
       let filename: string = this.getTimestamp();
       this.generateRFileFromString(String(req.body.script), filename, next);
+      const listtypes:Type[] = await this.type.findAllType();
+
       let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
@@ -30,7 +36,14 @@ export class AnalyzeController {
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
+          const newLog = new Log();
+          newLog.file_path_input = `src/input/${filename}.Rmd`;
+          newLog.text = `Error executing R script: ${error}`;
+          newLog.user = currentUser;
+
+          newLog.type = listtypes.find(type => type.name_type === "failure");
+
+          this.log.createLog(newLog).catch((rej) =>
           {
             console.log(rej);
           });
@@ -39,7 +52,14 @@ export class AnalyzeController {
         else
         {
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
+
+          const newLog = new Log();
+          newLog.file_path_input = `src/input/${filename}.Rmd`;
+          newLog.file_path_result = `../output/${filename}.htm`;
+          newLog.text = `Success`;
+          newLog.user = currentUser;
+          newLog.type = newLog.type = listtypes.find(type => type.name_type === "success");
+          this.log.createLog(newLog).catch((rej) =>
           {
             console.log(rej);
           });
