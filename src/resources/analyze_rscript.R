@@ -10,6 +10,10 @@ cat("Analyzing script... \n")
 
 setup_list <- setup(script)
 
-leaks <- check_data_leaks(setup_list[["vars"]], setup_list[["script_env"]], setup_list[["formatted"]])
+if(is.null(setup_list)){
+    stop("Error: Script setup failed")
+}else{
+    leaks <- check_data_leaks(setup_list[["vars"]], setup_list[["script_env"]], setup_list[["formatted"]])
 
-run_validated_function(leaks, setup_list[["script_env"]], script)
+    run_validated_function(leaks, setup_list[["script_env"]], script)
+}

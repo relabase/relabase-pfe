@@ -18,15 +18,25 @@ setup <- function(script)
   # to get the variables
   script_env <- new.env()
   # Print statements are still outputted within invisible so we need to capture the output, unfortunately, this doesn't work for graphics
-  prevent_output <- capture.output(eval(parse(text = script), script_env))
-  formatted_script <- format_script(script)
-  variables <- ls(envir = script_env)
-  setup_list <- list(
-    "script_env" = script_env, 
-    "vars" = variables,
-    "formatted" = formatted_script)
+  tryCatch(
+    {
+        prevent_output <- capture.output(eval(parse(text = script), script_env))
+        formatted_script <- format_script(script)
+        variables <- ls(envir = script_env)
+        setup_list <- list(
+          "script_env" = script_env, 
+          "vars" = variables,
+          "formatted" = formatted_script)
 
-  return (setup_list)
+        return (setup_list)
+    },
+    error = function(error)
+    {
+      print(paste("There is an error in your script! Please fix it and try again. Your error: ", conditionMessage(error)))
+      return (NULL)
+    }
+
+  )
 }
 
 # Function to find leaks that matches the pattern passed in
