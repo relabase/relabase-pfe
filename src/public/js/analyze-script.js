@@ -23,12 +23,12 @@
   });
 
   //line numbers
-  lineNumbers.innerText = '1.';
+  lineNumbers.innerText = '3.';
 
   // Add code line number to script textbox
   textbox.addEventListener('input', () => {
     const lines = textbox.value.split('\n');
-    lineNumbers.innerText = lines.map((_, i) => i + 1 + '.').join('\n');
+    lineNumbers.innerText = lines.map((_, i) => i + 3 + '.').join('\n');
   });
 
   // Scroll line numbers with text area
