@@ -88,7 +88,7 @@ export class AnalyzeController {
     return timestamp;
   }
 
-  
+  // Need to replace all double quotes with single quotes so that the R script can be executed
   private change_quotes(script: string): string
   {
     //change all double quotes to single quotes

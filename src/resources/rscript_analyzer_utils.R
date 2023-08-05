@@ -1,4 +1,5 @@
 # File that contains all necessary functions to analyze an R script.
+
 library(stringr)
 
 # Function to format the script, split by \n and remove all spaces in each line
@@ -9,13 +10,14 @@ format_script <- function(script)
   
   return (formatted_script)
 }
+
 # Setup environment to get variables
 setup <- function(script)
 {
   # Evaluate the script in a new environment without exposing the results
   # to get the variables
   script_env <- new.env()
-  # Print statements are still outputted within invisible so we need to capture the output
+  # Print statements are still outputted within invisible so we need to capture the output, unfortunately, this doesn't work for graphics
   prevent_output <- capture.output(eval(parse(text = script), script_env))
   formatted_script <- format_script(script)
   variables <- ls(envir = script_env)
@@ -23,6 +25,7 @@ setup <- function(script)
     "script_env" = script_env, 
     "vars" = variables,
     "formatted" = formatted_script)
+
   return (setup_list)
 }
 
@@ -42,7 +45,15 @@ find_data_leaks <- function(pattern, script)
 # Returns the formatted regex pattern
 format_kw_pattern <- function(keyword, var)
 {
-
+  # Pattern explanation with example where @@@ is head and ### is data
+  # \\b@@@\\(\\b###\\b[^;\\)]+\\)|\\b@@@\\(\\b###\\b\\), there are two parts to this pattern separated by | (or)
+  # \\b@@@\\(\\b###\\b[^;\\)]+\\) in this pattern:
+  # \\bhead matches the word head, \\b is a word boundary that matches only at the beginning or end of a word
+  # \\( escapes the ( character so it can be matched
+  # \\bdata\\b matches the word data
+  # [^;\\)]+ matches 1 or more character that is not ; or )
+  # \\) escapes the ) character so it can be matched
+  # \\b@@@\\(\\b###\\b\\) this pattern will only match head(data)
   regex_pattern <- "\\b@@@\\(\\b###\\b[^;\\)]+\\)|\\b@@@\\(\\b###\\b\\)"
   pattern_kw <- str_replace_all(regex_pattern, "@@@", keyword)
   pattern_kw_var <- str_replace_all(pattern_kw, "###", var)
@@ -134,9 +145,8 @@ get_df_vars_list <- function(variables, env_user)
   return(df_list)
 }
 
-# Function to get assignment
-
-# 
+# Function to get assignment lines of data frames that are being reassigned
+# Returns a list of variables that are being reassigned
 get_assignment_line_vars <- function(variables,regex_pattern, script)
 {
   print("************************************************************************")
@@ -148,30 +158,27 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
   patterns_collection <- list()
   inner_line_leaks <- list()
   
-  # Go through variables to find if they are being assigned
+  # Go through variables to find if they are being assigned ex user_variable <- data
   # Note: The first batch to come through this for loop are data frames
   # The next batch are the reassigned variables
   for(var in variables)
   {
-    print("pattern var")
+    # Format the regex pattern with the variable
     pattern_var <- str_replace_all(regex_pattern, "###", var)
     patterns_collection <- append(patterns_collection, pattern_var)
+    print("PATTERN_VAR")
     print(pattern_var)
     
     found_pattern <- grepl(pattern_var, script, perl = TRUE)
-    #print("PATTERN IN NONDF")
-    #print(found_pattern)
-    # If DF matches found
+
     if(any(found_pattern))
     {
-      print("IN IF")
+      print("IN IF found pattern")
       line_nums <- which(found_pattern)
       print(line_nums)
       matched_lines <- script[line_nums]
       print("PRINT MATCHED LINES")
       print(matched_lines)
-      print("CLASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
-      print(class(matched_lines))
       
       var_assignments <- append(var_assignments, matched_lines)
     }
@@ -183,17 +190,17 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
   # It's possible that some lines contain multiple instructions separated by a ";"
   indexes = grep(";",var_assignments)
   
+  # If there are multiple instructions in a line then we need to split them up and check for leaks
   if(length(indexes)>0)
   {
     for(index in indexes)
     {
-      print("INDEX IN FOR")
-      print(index)
       leak <- validate_multiple_instructions(var_assignments[[index]], patterns_collection)
       inner_line_leaks <- append(inner_line_leaks, leak)
     }
   }
   
+  # Remove the lines that contained multiple instructions from the list of assignments
   if(length(inner_line_leaks) > 0)
   {
     print("inside if(length(inner_line_leaks) > 0)")
@@ -208,7 +215,7 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
   
   print("!!!!!!!!!!!!!!! var_assignments !!!!!!!!!!!!!!!!")
   print(var_assignments)
-  # Found assignments of DF
+  # Get the reassigned variables
   if(!(length(var_assignments) == 0))
   {
     # Go through the assignments line we found
@@ -217,10 +224,15 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
       print("VAR_ASSIGN")
       print(var_assign)
       # Get the variable that is being assigned to
+      # ^[[:graph:]]+(?=<|=) regex explanation:
+      # ^[[:graph:]]+ matches 1 or more characters that are alphanumeric ([A-z0-9]) or punctuation characters
+      # (?=<|=) matches the characters < or = but does not include them in the match, known as a positive lookahead
       reassigned <- str_extract(var_assign, "^[[:graph:]]+(?=<|=)")
       print("!!REASSIGNED!!")
       print(reassigned)
-      # Check if that variable is a DF
+      print("!!VARIABLES!!")
+      print(variables)
+      # Check if the reassigned variable is a vector
       if(!(reassigned %in% variables))
       {
         print("IF NOT REASSIGNED IN VARS")
@@ -245,6 +257,17 @@ get_nonDF_exposition <- function(variables, script)
   print("====get_nonDF_exposition====")
   print(script)
   all_possible_leaks <- list()
+
+  # First pass to find leaks
+  # regex explanation for regex_first_pass_df:
+  # [[:alnum:]]+ matches 1 or more alphanumeric characters
+  # <- matches the characters <- or = matches the character =
+  # \\b###\\b matches the word ### where ### is the variable name
+  # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match
+  # \\$[^;\\)]+ matches the character $ followed by 1 or more characters that are not ; or )
+  # \\[\\[?[^;\\)]+\\]\\]? matches the character [, then 0 or 1 of [, followed by 1 or more characters that are not ; or ) followed by 0 or 1 of ] and finally ]
+  # | is an or operator so the regex will match any of the patterns separated by |
+
   regex_first_pass_df <- "[[:alnum:]]+<-\\b###\\b(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
   first_pass_leaks <- get_assignment_line_vars(variables, regex_first_pass_df, script)
   print("FIRST PASS LEAKS!")
@@ -265,6 +288,7 @@ get_nonDF_exposition <- function(variables, script)
 
 # Function to find all leaks by variables that were reassigned
 # Loop until all of them are found
+# Returns a list of variables that were reassigned
 get_reassignment_possible_leaks <- function(possible_leaks, regex_pattern, script)
 {
   print("In get_reassignment_possible_leaks\n")
@@ -278,7 +302,6 @@ get_reassignment_possible_leaks <- function(possible_leaks, regex_pattern, scrip
     print("New leaks")
     print(new_leaks)
     print(length(new_leaks))
-    
     
     if(length(new_leaks) > 0)
     {
@@ -329,21 +352,27 @@ validate_multiple_instructions <- function(possible_lines, patterns_collection)
   return(inner_line_expositions)
 }
 
-# Function to find leaks in the script
+# Function to find leaks in the script, both direct and indirect
 check_data_leaks <- function(variables, env_user, script)
 {
   all_leaks <- list()
   # Get blacklist keywords
   keywords <- as.list(read.delim(file.path('..','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
-  print("KEYWORDS!!!!!")
-  print(keywords)
+
   # Get all data frame variables
   df_vars <- get_df_vars_list(variables, env_user)
-  print("DF VARS")
-  print(df_vars)
+  
   if(length(df_vars) > 0)
   {
-    
+    # Regex pattern explanation piece by piece:
+    # (?<!<-|=) is a negative lookbehind that matches if the pattern is not preceded by <- or =
+    # \\b###\\b matches the word ### where ### is the variable name
+    # (?=\\s|;|$) matches a whitespace character,; or end of line, but they're not included in the match
+    # | is an or operator so the regex will match any of the patterns separated by |
+    # \\$[^;\\)]+ matches the character $ followed by 1 or more characters that are not ; or )
+    # \\[\\[?[^;\\)]+\\]\\]? matches the character [, then 0 or 1 of [, followed by 1 or more characters that are not ; or ) followed by 0 or 1 of ] and finally ]
+    # (?=\\s|;|$) 
+
     regex_pattern_var <- "(?<!<-|=)\\b###\\b(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
     direct_df_leaks <- get_df_direct_exposition(df_vars, regex_pattern_var, script)
     
@@ -378,7 +407,6 @@ check_data_leaks <- function(variables, env_user, script)
     {
       all_leaks <-all_leaks[order(all_leaks$LineNum),]
     }
-    print(unique(all_leaks))
     
   }else
   {
@@ -399,7 +427,7 @@ run_validated_function <- function(leaks, script_env, script)
   {
     cat("Cannot run script! There're data leak issues! \n")
     cat("Here are the issues: \n")
-    print(leaks)
-    stop("Stopped.")
+    print(unique(leaks))
+    stop("The script will not be run.")
   }
 }

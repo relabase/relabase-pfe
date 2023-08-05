@@ -1,4 +1,5 @@
 
+# Analyze user r script process
 source(file.path('..','resources','rscript_analyzer_utils.R'))
 
 script <- "##CSV_DATA##
