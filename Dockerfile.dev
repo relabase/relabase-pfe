@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     pandoc \
   && rm -rf /var/lib/apt/lists/*
 
-RUN Rscript -e "install.packages(c('rmarkdown','stringr'))"
+RUN Rscript -e "install.packages('rmarkdown')"
 
 # Set Env
 ENV NODE_ENV development
