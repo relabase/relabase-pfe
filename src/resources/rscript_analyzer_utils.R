@@ -400,6 +400,6 @@ run_validated_function <- function(leaks, script_env, script)
     cat("Cannot run script! There're data leak issues! \n")
     cat("Here are the issues: \n")
     print(leaks)
-    #stop("Stopped.")
+    stop("Stopped.")
   }
 }
