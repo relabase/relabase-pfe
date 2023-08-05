@@ -49,6 +49,18 @@
   @include font-style;
 
   color: $primary-font-color;
+  cursor: pointer;
+
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.link {
+  @extend %link;
+
+  font-weight: unset;
+  text-decoration: none;
 }
 
 .email-link {
@@ -74,4 +86,8 @@
   @include font-style($weight: 500);
 
   color: $secondary-font-color;
+}
+
+.error-text {
+  color: $button-decline-color;
 }

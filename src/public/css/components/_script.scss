@@ -18,7 +18,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .line-numbers {
@@ -52,4 +52,5 @@
   border: 0;
   resize: none;
   scroll-behavior: smooth;
+  white-space: pre;
 }

@@ -15,10 +15,22 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   };
 
   // Approve user application
-  function approveUser(userId) {
-    //TODO: approve user logic
-    console.log("approved " + userId);
-    removeUser(userId);
+  async function approveUser(userId) {
+    const res = await fetch('/user_requests/approve/' + userId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        console.log('success');
+        removeUser(userId);
+      } else {
+        console.log('not success');
+      }
+    });
   }
 
   // Decline user application
@@ -63,7 +75,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
     UI.approveButton.onclick = () => approveUser(userId);
     UI.declineButton.onclick = () => declineUser(userId);
-    document.querySelector('.unblur-button').classList.remove('hidden');
+    document.querySelector('.unblur-button').classList.remove('hide-content');
   }
 
   // Event listener for clicking on user applications
@@ -93,7 +105,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
   // Event listener for unblurring user ID image
   document.querySelector('.unblur-button').addEventListener('click', function () {
-    this.classList.add('hidden');
+    this.classList.add('hide-content');
     UI.idImage.style.filter = 'none';
   });
 })();

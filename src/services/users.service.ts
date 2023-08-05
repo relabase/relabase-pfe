@@ -25,6 +25,16 @@ export class UserService {
     }});
   }
 
+  public async findUserByGoogleId(googleId: string): Promise<User> {
+    return repo.findOne({
+      where:{
+        google_id: googleId
+      },
+      relations: {
+        role:true
+    }});
+  }
+
   public async createUser(userData: User): Promise<User> {
     return new Promise((resolve)=>{
       hash(userData.password, 10).then((hashedPass)=>{

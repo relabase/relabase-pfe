@@ -4,15 +4,16 @@ import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 import fs from 'fs';
 import { User } from '@/models/user';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 
 
 export class AnalyzeController {
   public log = Container.get(LogService);
 
-  public getView = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getView = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.render('analyze');
+      res.render('analyze', { currentUser: `${req.user.first_name} ${req.user.last_name}`, isAdmin: req.user.role.id == 1 });
     } catch (error) {
       next(error);
     }
@@ -30,7 +31,7 @@ export class AnalyzeController {
       let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
-        currentUser.id = 1;
+        currentUser.id = 1; //TODO: change to real user
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id

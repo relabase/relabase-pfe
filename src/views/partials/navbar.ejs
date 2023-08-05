@@ -3,19 +3,22 @@
     <a href="home" class="<%= page === 'home' ? 'active' : '' %>">
       <div class="navbar-logo"></div>
     </a>
-    <a class="navbar-link <%= page === 'home' ? 'active' : '' %>" href="home">Home</a>
-    <a class="navbar-link <%= page === 'analyze' ? 'active' : '' %>" href="analyze">Analyze</a>
-    <a class="navbar-link <%= page === 'history' ? 'active' : '' %>" href="history">History</a>
-    <a class="navbar-link <%= page === 'admin' ? 'active' : '' %>" href="admin">Admin</a>
-    <a class="navbar-link <%= page === 'help' ? 'active' : '' %>" href="help">Help</a>
+    <a class="link <%= page === 'home' ? 'active' : '' %>" href="home">Home</a>
+    <a class="link <%= page === 'analyze' ? 'active' : '' %>" href="analyze">Analyze</a>
+    <a class="link <%= page === 'history' ? 'active' : '' %>" href="history">History</a>
+    <% if (isAdmin) { %>
+      <a class="link <%= page === 'admin' ? 'active' : '' %>" href="admin">Admin</a>
+    <% } %>
+    <a class="link <%= page === 'help' ? 'active' : '' %>" href="help">Help</a>
   </div>
   <div class="navbar-item-group-right">
     <div class="navbar-user-icon"></div>
     <%= username ? username : 'Guest' %>
     <div class="down-arrow-icon"></div>
     <div class="navbar-dropdown-content">
-      <a href="/logout">
-        <div class="logout-icon"></div> Logout
+      <a id="log-out-button">
+        <div class="logout-icon"></div>
+        <span>Log out</span>
       </a>
     </div>
   </div>

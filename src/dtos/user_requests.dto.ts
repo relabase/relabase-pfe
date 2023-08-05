@@ -1,7 +1,8 @@
 import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, isNotEmpty } from 'class-validator';
 
 export class CreateUser_requestDto {
-  @IsEmail()
+  @IsString()
+  @IsNotEmpty()
   public email: string;
 
   @IsString()

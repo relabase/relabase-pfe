@@ -16,19 +16,7 @@
     letter-spacing: $standard-letter-spacing;
   }
 
-  %navbar-link{
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      color: $hover-color;
-    }
-  }
-
-  .navbar-link{
-    @extend %navbar-link;
-    @extend %navbar-item-group;
-
+  .link{
     &.active {
       color: $main-font-color;
     }
@@ -63,13 +51,12 @@
     box-shadow: $main-shadow;
 
     a {
-      @extend %navbar-link;
+      @extend %link;
 
       display: flex;
       gap: $navbar-padding; 
       align-items: center;
       padding: $content-padding $content-outline-padding;
-      color: $primary-font-color;
     }
   }
 
