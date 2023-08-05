@@ -14,7 +14,6 @@ setup <- function(script)
 {
   # Evaluate the script in a new environment without exposing the results
   # to get the variables
-  print(script)
   script_env <- new.env()
   # Print statements are still outputted within invisible so we need to capture the output
   prevent_output <- capture.output(eval(parse(text = script), script_env))
@@ -25,30 +24,6 @@ setup <- function(script)
     "vars" = variables,
     "formatted" = formatted_script)
   return (setup_list)
-}
-
-get_user_arguments <- function()
-{
-  print("INSIDE OF get_user_arguments!!!!!")
-  user_args <- commandArgs(trailingOnly = TRUE)
-  user_script <- user_args[1]
-  print(user_script)
-  user_data <- user_args[2]
-  print(user_data)
-  first_pass <- user_args[3]
-  print(first_pass)
-
-  return (list("user_script" = user_script, "user_data" = user_data, "first_pass" = first_pass))
-
-}
-
-set_user_script_data <- function(script, user_script, user_data)
-{
-  print("INSIDE OF set_user_script_data!!!!!")
-  script <- str_replace_all(script, "##USER_SCRIPT_INJECTED##", user_script)
-  script <- str_replace_all(script, "##CSV_DATA##", user_data)
-  print(script)
-  return (script)
 }
 
 # Function to find leaks that matches the pattern passed in
@@ -359,8 +334,7 @@ check_data_leaks <- function(variables, env_user, script)
 {
   all_leaks <- list()
   # Get blacklist keywords
-  keywords <- as.list(read.delim(file.path('src','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
-  #keywords <- as.list(read.delim(file.path('src','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
+  keywords <- as.list(read.delim(file.path('..','resources','blacklistKeywords.txt'), sep = "\n", header = FALSE)$V1)
   print("KEYWORDS!!!!!")
   print(keywords)
   # Get all data frame variables
@@ -425,7 +399,7 @@ run_validated_function <- function(leaks, script_env, script)
   {
     cat("Cannot run script! There're data leak issues! \n")
     cat("Here are the issues: \n")
-    print(unique(leaks))
+    print(leaks)
     #stop("Stopped.")
   }
 }

@@ -23,35 +23,12 @@ export class AnalyzeController {
       const analyze_rscript_path = 'src/resources/analyze_rscript.R';
       const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
       const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
-      const csv_data = "data <- read.csv('src/test/WalkTheDogs.csv')\n";
-      console.log(this.change_quotes(String(req.body.script)));
-      console.log("====================================");
+      
+      console.log(analyze_rscript_injected);
       let filename: string = this.getTimestamp();
       this.generateRFileFromString(analyze_rscript_injected, filename, next);
-      
-      const user_script = this.change_quotes(String(req.body.script))
-      let command: string = `Rscript ${analyze_rscript_path} "${user_script}" "${csv_data}" "TRUE"`;
-      exec(command, (error, stdout, stderr) => {
-        const currentUser:User = new User();
-        currentUser.id = 1;
-        if (error|| stderr) {
-          if(error)
-          {
-            console.error(`Error executing R script: ${error}`);
-            return;
-          }
-          if(stderr)
-          {
-            console.error(`Error executing R script stderr: ${stderr}`);
-          }
-        }
-        console.log(`stdout: ${stdout}`);
 
-        console.log(`stderr:`+ typeof(stderr));
-      });
-
-
-      /* let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
         currentUser.id = 1;
@@ -83,10 +60,7 @@ export class AnalyzeController {
       });
     } catch (error) {
       next(error);
-    } */
-  }catch (error) {
-    next(error);
-  }
+    }
   };
 
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
