@@ -157,9 +157,6 @@ get_df_vars_list <- function(variables, env_user)
 # Returns a list of variables that are being reassigned
 get_assignment_line_vars <- function(variables,regex_pattern, script)
 {
-  print("************************************************************************")
-  print("get_assignment_line_vars====")
-  print(variables)
   
   var_assignments <- list()
   vectors <- list()
@@ -174,26 +171,17 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
     # Format the regex pattern with the variable
     pattern_var <- str_replace_all(regex_pattern, "###", var)
     patterns_collection <- append(patterns_collection, pattern_var)
-    print("PATTERN_VAR")
-    print(pattern_var)
     
     found_pattern <- grepl(pattern_var, script, perl = TRUE)
 
     if(any(found_pattern))
     {
-      print("IN IF found pattern")
       line_nums <- which(found_pattern)
-      print(line_nums)
       matched_lines <- script[line_nums]
-      print("PRINT MATCHED LINES")
-      print(matched_lines)
       
       var_assignments <- append(var_assignments, matched_lines)
     }
   }
-  
-  print("VAR ASSIGNMENTS AFTER FIRST FOR LOOOP")
-  print(var_assignments)
   
   # It's possible that some lines contain multiple instructions separated by a ";"
   indexes = grep(";",var_assignments)
@@ -211,39 +199,28 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
   # Remove the lines that contained multiple instructions from the list of assignments
   if(length(inner_line_leaks) > 0)
   {
-    print("inside if(length(inner_line_leaks) > 0)")
-    print(var_assignments)
     var_assignments <- c(var_assignments, inner_line_leaks)
     var_assignments <- var_assignments[-indexes]
-    print("AFTER REMOVAL")
-    print(var_assignments)
   }
   
   var_assignments <- unique(var_assignments)
   
-  print("!!!!!!!!!!!!!!! var_assignments !!!!!!!!!!!!!!!!")
-  print(var_assignments)
   # Get the reassigned variables
   if(!(length(var_assignments) == 0))
   {
     # Go through the assignments line we found
     for(var_assign in var_assignments)
     {
-      print("VAR_ASSIGN")
-      print(var_assign)
+
       # Get the variable that is being assigned to
       # ^[[:graph:]]+(?=<|=) regex explanation:
       # ^[[:graph:]]+ matches 1 or more characters that are alphanumeric ([A-z0-9]) or punctuation characters
       # (?=<|=) matches the characters < or = but does not include them in the match, just looks for them after the pattern, known as a positive lookahead
       reassigned <- str_extract(var_assign, "^[[:graph:]]+(?=<|=)")
-      print("!!REASSIGNED!!")
-      print(reassigned)
-      print("!!VARIABLES!!")
-      print(variables)
+
       # Check if the reassigned variable is a vector
       if(!(reassigned %in% variables))
       {
-        print("IF NOT REASSIGNED IN VARS")
         if(!(reassigned %in% vectors))
         {
           vectors <- append(vectors, reassigned)
@@ -251,8 +228,6 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
       }
     }
   }
-  print("VECTS")
-  print(vectors)
   
   return (vectors)
 }
@@ -262,10 +237,8 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
 # Then it continues checking for reassignments for vectors with the next 
 get_nonDF_exposition <- function(variables, script)
 {
-  print("====get_nonDF_exposition====")
   all_possible_leaks <- list()
 
-  # First pass to find leaks
   # regex explanation for regex_first_pass_df:
   # [[:alnum:]]+ matches 1 or more alphanumeric characters
   # <- matches the characters <- or = matches the character =
@@ -276,16 +249,15 @@ get_nonDF_exposition <- function(variables, script)
   # | is an or operator so the regex will match any of the patterns separated by |
 
   regex_first_pass_df <- "[[:alnum:]]+<-\\b###\\b(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+<-\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\$[^;\\)]+(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
+  # First pass to find leaks
   first_pass_leaks <- get_assignment_line_vars(variables, regex_first_pass_df, script)
-  print("FIRST PASS LEAKS!")
-  print(first_pass_leaks)
+
+  # If there are leaks then we need to check if there are any reassigned variables
   if(length(first_pass_leaks) > 0)
   {
-    print("THERE WERE MORE LEAKS")
     regex_pattern_recursive <- "[[:alnum:]]+<-\\b###\\b(?=\\s|;|$)|[[:alnum:]]+=\\b###\\b(?=\\s|;|$)"
     recursive_leaks <- get_reassignment_possible_leaks(first_pass_leaks, regex_pattern_recursive, script)
-    print("Leaks found after get_reassignment_possible_leaks")
-    print(recursive_leaks)
+
     all_possible_leaks <- append(all_possible_leaks, first_pass_leaks)
     all_possible_leaks <- append(all_possible_leaks, recursive_leaks)
   }
@@ -298,7 +270,6 @@ get_nonDF_exposition <- function(variables, script)
 # Returns a list of variables that were reassigned
 get_reassignment_possible_leaks <- function(possible_leaks, regex_pattern, script)
 {
-  print("In get_reassignment_possible_leaks\n")
   new_leaks <- list()
   
   possible_leak = TRUE
@@ -306,53 +277,36 @@ get_reassignment_possible_leaks <- function(possible_leaks, regex_pattern, scrip
   while(possible_leak)
   {
     new_leaks <- get_assignment_line_vars(possible_leaks, regex_pattern, script)
-    print("New leaks")
-    print(new_leaks)
-    print(length(new_leaks))
     
     if(length(new_leaks) > 0)
     {
       possible_leaks <- append(possible_leaks, new_leaks)
-      print("Possible leaks")
-      print(possible_leaks)
       
     }else{
-      print("No more leaks")
       possible_leak = FALSE
     }
   }
-  print("Found all leaks")
   return(possible_leaks)
 }
 
-# Function to split lines that contain multiple instructions
+# Function to split lines that contain multiple instructions(separated by ;)
 validate_multiple_instructions <- function(possible_lines, patterns_collection)
 {
   inner_line_expositions <- list()
-  print("In validate_multiple_instructions")
   
   splitted_lines <- str_split(possible_lines,";")
   
-  print(splitted_lines)
-  print(class(splitted_lines))
   expo_list <- unlist(splitted_lines)
   # Validate if this list contain any leaks
   for(pattern in patterns_collection )
   {
     for(expo in expo_list)
     {
-      print(pattern)
-      print("LINE_EXPSOED")
-      print(expo)
       exposed <- grepl(pattern, expo, perl = TRUE)
-      print("EXPOSED")
-      print(exposed)
-      print("LINE")
       
       if(exposed)
       {
         inner_line_expositions <- append(inner_line_expositions, expo)
-        print(inner_line_expositions)
       }
     }
   }
@@ -386,18 +340,14 @@ check_data_leaks <- function(variables, env_user, script)
     # Direct leaks with keywords
     direct_df_kw_leaks <- get_df_kw_direct_exposition(df_vars, keywords, script)
     
+    # Get indirect variables that are reassigned
     nonDF_expo <- get_nonDF_exposition(df_vars, script)
     
-    print("NON DF EXPOSITION  VARS")
-    print(nonDF_expo)
-    
+    # Indirect leaks
     regex_pattern_indirect_var <- "(?<!<-|=)\\b###\\b(?=\\s|;|$)|(?<!<-|=)\\b###\\b\\[\\[?[^;\\)]+\\]\\]?(?=\\s|;|$)"
     indirect_var_leaks <- get_df_direct_exposition(nonDF_expo, regex_pattern_indirect_var, script)
-    print("INDIRECT_VAR_LEAKS")
-    print(indirect_var_leaks)
     
     indirect_var_kw_leaks <- get_df_kw_direct_exposition(nonDF_expo, keywords, script)
-    print(indirect_var_kw_leaks)
     
     all_leaks <- do.call("rbind", list(direct_df_leaks, direct_df_kw_leaks, indirect_var_leaks, indirect_var_kw_leaks))
     if(nrow(all_leaks)>0)
