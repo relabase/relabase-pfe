@@ -159,7 +159,7 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
 {
   
   var_assignments <- list()
-  vectors <- list()
+  reassigned_vars <- list()
   patterns_collection <- list()
   inner_line_leaks <- list()
   
@@ -221,20 +221,20 @@ get_assignment_line_vars <- function(variables,regex_pattern, script)
       # Check if the reassigned variable is a vector
       if(!(reassigned %in% variables))
       {
-        if(!(reassigned %in% vectors))
+        if(!(reassigned %in% reassigned_vars))
         {
-          vectors <- append(vectors, reassigned)
+          reassigned_vars <- append(reassigned_vars, reassigned)
         }
       }
     }
   }
   
-  return (vectors)
+  return (reassigned_vars)
 }
 
 # Function that gets all of the indirect leaks meaning variables that were reassigned
 # The first loop starts by checking if data frames are being reassigned
-# Then it continues checking for reassignments for vectors with the next 
+# Then it continues checking for reassignments of reassigned variables
 get_nonDF_exposition <- function(variables, script)
 {
   all_possible_leaks <- list()
