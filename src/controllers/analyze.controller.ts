@@ -35,19 +35,19 @@ export class AnalyzeController {
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id
-          // this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
-          // {
-          //   console.log(rej);
-          // });
+           this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
+           {
+             console.log(rej);
+           });
           return;
         }
         else
         {
           //TODO switch id user to current user id
-          // this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
-          // {
-          //   console.log(rej);
-          // });
+           this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
+           {
+             console.log(rej);
+           });
         }
         fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
           if (error) {
