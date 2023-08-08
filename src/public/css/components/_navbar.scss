@@ -1,6 +1,6 @@
 // Navbar styles
 #navbar {
-  @include flex-center(space-between);
+  @include flex($align: center, $justify: space-between);
 
   padding: 0 $content-padding;
   background: $background-color;
@@ -52,10 +52,9 @@
 
     a {
       @extend %link;
+      @include flex($align: center);
 
-      display: flex;
       gap: $navbar-padding; 
-      align-items: center;
       padding: $content-padding $content-outline-padding;
     }
   }

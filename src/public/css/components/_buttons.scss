@@ -1,8 +1,9 @@
 // Buttons styles
 %shared-button {
   @include font-style;
+  @include flex-center;
 
-  justify-content: center;
+  flex-shrink: 1;
   color: $button-font-color;
   border: 1px solid transparent;
   cursor: pointer;

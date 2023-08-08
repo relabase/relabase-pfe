@@ -1,6 +1,6 @@
 // Text styles
 %header {
-  @include flex-center(space-between);
+  @include flex($align: center, $justify: space-between);
   @include font-style($weight: 400, $size: 1.25rem);
 
   padding: $header-padding $content-padding;
