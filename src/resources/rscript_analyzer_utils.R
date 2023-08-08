@@ -372,7 +372,7 @@ run_validated_function <- function(leaks, script_env, script)
     cat("Ran script successfully.")
   }else
   {
-    cat("Cannot run script! There're data leak issues! \n")
+    cat("Cannot run script, one or more lines may lead to data leaks \n")
     cat("Here are the issues: \n")
     print(unique(leaks))
     stop("The script will not be run.")
