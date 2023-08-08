@@ -5,8 +5,6 @@ source(file.path('..','resources','rscript_analyzer_utils.R'))
 script <- "##CSV_DATA##
             ##USER_SCRIPT_INJECTED##
            "
-           
-cat("Analyzing script... \n")
 
 setup_list <- setup(script)
 
