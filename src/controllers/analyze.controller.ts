@@ -21,28 +21,33 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const analyze_rscript_path = 'src/resources/analyze_rscript.R';
+      const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
+      const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
+      
       let filename: string = this.getTimestamp();
-      this.generateRFileFromString(String(req.body.script), filename, next);
-      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
+      this.generateRFileFromString(analyze_rscript_injected, filename, next);
+
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
         currentUser.id = 1; //TODO: change to real user
         if (error) {
           console.error(`Error executing R script: ${error}`);
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
-          {
-            console.log(rej);
-          });
+           this.log.createLog(`src/input/${filename}.Rmd`,``,currentUser, `Error executing R script: ${error}`).catch((rej) =>
+           {
+             console.log(rej);
+           });
           return;
         }
         else
         {
           //TODO switch id user to current user id
-          this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
-          {
-            console.log(rej);
-          });
+           this.log.createLog(`src/input/${filename}.Rmd`,`../output/${filename}.htm`,currentUser, `Success`).catch((rej) =>
+           {
+             console.log(rej);
+           });
         }
         fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
           if (error) {
@@ -61,7 +66,7 @@ export class AnalyzeController {
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
       //TODO: add date and author's name
-      let prepend: string = '```{r}\n';
+      let prepend: string = '```{r, error=TRUE}\n';
       fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
       next(error);
@@ -81,5 +86,14 @@ export class AnalyzeController {
     const timestamp = year + month + day + hours + minutes + seconds;
 
     return timestamp;
+  }
+
+  // Need to replace all double quotes with single quotes so that the R script can be executed
+  private change_quotes(script: string): string
+  {
+    //change all double quotes to single quotes
+    script = script.replace(/"/g, '\'');
+
+    return script;
   }
 }
