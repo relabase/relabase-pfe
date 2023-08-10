@@ -65,8 +65,8 @@ format_keyword_pattern <- function(keyword, variable)
   # \\) escapes the ) character so it can be matched
   # \\b@@@\\(\\b###\\b\\) this pattern will only match head(data)
   regex_pattern <- "\\b@@@\\(\\b###\\b[^;\\)]+\\)|\\b@@@\\(\\b###\\b\\)"
-  pattern_keywords <- str_replace_all(regex_pattern, "@@@", keyword)
-  pattern_keyword_variable <- str_replace_all(pattern_keywords, "###", variable)
+  pattern_keyword <- str_replace_all(regex_pattern, "@@@", keyword)
+  pattern_keyword_variable <- str_replace_all(pattern_keyword, "###", variable)
   
   return (pattern_keyword_variable)
 }
