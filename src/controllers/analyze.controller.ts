@@ -50,8 +50,8 @@ export class AnalyzeController {
            });
         }
         fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
-          if (error) {
-            console.error(`Error reading .htm file: ${error}`);
+          if (err) {
+            console.error(`Error reading .htm file: ${err}`);
 
             return;
           }
@@ -62,6 +62,16 @@ export class AnalyzeController {
       next(error);
     }
   };
+
+  public getTestOutputFile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    fs.readFile('src/output/' + '20230807213518' + '.htm', 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading .htm file: ${err}`);
+        return;
+      }
+      res.status(200).json({ data: data });
+    });
+  }
 
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {

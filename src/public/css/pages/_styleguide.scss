@@ -2,16 +2,16 @@
   background-color: $primary-background-color;
 
   .button-wrapper {
-    display: flex;
+    @include flex($align: center);
+
     gap: 20px;
-    align-items: center;
     width: 100%;
   }
 
   .text-wrapper {
-    display: flex;
+    @include flex($align: center);
+
     gap: 20px;
-    align-items: center;
     width: 100%;
 
     * {

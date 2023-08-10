@@ -1,15 +1,23 @@
-<div id="modal" style="display: none">
-    <div id="modal-content" class="editor">
-        <div class="script-content">
-            <div id="modal-header" class="script-header-container">
-                <span id="modal-title" class="main-header">Package request form</span>
-                <button id="send-request-button" class="primary-button">Request package</button>
-                <button id="close-modal-button" class="close-button">Close</button>
+<div id="modal" style="display:none;">
+    <div id="modal-content" class="item-content">
+        <div id="modal-header" class="main-header-container">
+            <div id="modal-title">
+                <div class="large-header">Request additional packages</div>
             </div>
-            <div class="editor">
-                <textarea class="script-textbox" spellcheck="false" placeholder="Type your package request here..."></textarea>
-
+            <div class="action-buttons">
+                <button id="save-button" class="approve-button">Send</button>
+                <button id="close-modal-button" class="close-button">Close without sending</button>
             </div>
+        </div>
+        <hr>
+        <div class="input-container spacing">
+            <input id="package-request-input-name" type="text" placeholder="Package name" />
+        </div>
+        <div class="input-container spacing">
+            <input id="package-request-input-url" type="text" placeholder="Url to the package" />
+        </div>
+        <div class="input-container spacing">
+            <textarea id="package-request-input-reason" rows="4" cols="50" class="input-textarea" placeholder="Please provide a brief explanation of why you would like to use this package"></textarea>
         </div>
     </div>
 </div>

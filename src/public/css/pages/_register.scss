@@ -40,9 +40,8 @@
 }
 
 .file-dropbox {
-    @include flex-direction;
+    @include flex($justify: space-evenly, $direction: column);
 
-    justify-content: space-evenly;
     height: 10rem;
 }
 

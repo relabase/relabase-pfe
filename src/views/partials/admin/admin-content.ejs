@@ -2,9 +2,11 @@
     <div class="tab" id="tab-user-application" data-tab="user">User Applications (<%= userRequests.length %>)</div>
     <div class="tab" id="tab-package-request" data-tab="package">Package Requests (<%= packageRequests.length %>)</div>
     <div class="tab" id="tab-user-management">User Management</div>
+    <div class="tab" id="tab-server-settings">Server Management</div>
 </div>
   <div class="tab-content">
     <%- include('tab-user-applications.ejs'); %>
     <%- include('tab-package-requests.ejs'); %>
     <%- include('tab-user-management.ejs'); %>
+    <%- include('tab-server-settings.ejs'); %>
 </div>

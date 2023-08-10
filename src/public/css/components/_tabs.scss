@@ -1,6 +1,6 @@
 // Tabs styles
 .tabs {
-  @include flex-center(flex-start);
+  @include flex($align: center, $justify: flex-start);
 
   position: relative;
   gap: $tab-gap;
@@ -17,7 +17,8 @@
 }
 
 .tab {
-  align-items: center;
+  @include flex($align: center);
+
   padding: $content-padding $tab-content-padding;
   color: $secondary-font-color;
   border-radius: $border-radius $border-radius 0 0;
@@ -34,7 +35,7 @@
 }
 
 %content-tabs {
-  @include flex-center(space-between);
+  @include flex($align: center, $justify: space-between);
 
   position: relative;
   margin: 0 $content-padding $content-padding $content-padding;
@@ -68,14 +69,15 @@
 // Tab Content
 .tab-content {
   @extend %scrollbar;
-  @include flex-direction;
+
+  @include flex($direction: column);
 
   flex-grow: 1;
   padding: $content-padding 0;
 }
 
 .tab-pane {
-  @include flex-direction;
+  @include flex($direction: column);
 
   height: 0;
   overflow: hidden;

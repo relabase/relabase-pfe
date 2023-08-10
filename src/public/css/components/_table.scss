@@ -30,12 +30,12 @@
 
 %table {
     @include content-overflow;
-    @include flex-direction;
+    @include flex($direction: column);
 
     flex-grow: 1;
 
     tbody {
-        @include flex-direction;
+        @include flex($direction: column);
     }
 
     tr {
