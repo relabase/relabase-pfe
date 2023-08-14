@@ -12,6 +12,8 @@ format_script <- function(script)
 }
 
 # Setup environment to get variables
+# Returns a list containing the environment, variables and formatted script.
+# If the user script has an error, it will return NULL.
 setup <- function(script)
 {
   # Evaluate the script in a new environment without exposing the results
