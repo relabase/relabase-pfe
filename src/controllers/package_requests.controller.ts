@@ -151,6 +151,28 @@ export class Package_requestController {
     }
   };
 
+  public resetPackageRequest = async (req: Request, res: Response, next: NextFunction): Promise<boolean> => {
+    try {
+      const package_requestId = Number(req.params.id);
+      const Package_requestData: Package_request = await this.package_request.findPackage_requestById(package_requestId);
+
+      const inprogress:Status = await this.status.findStatusByName("in progress");
+
+      if(inprogress === null)
+      {
+        return false;
+      }
+      Package_requestData.status = inprogress;
+      const updatePackage_requestData: Package_request = await this.package_request.updatePackage_request_status(Package_requestData);
+
+
+
+      return true;
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public deletePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const package_requestId = Number(req.params.id);

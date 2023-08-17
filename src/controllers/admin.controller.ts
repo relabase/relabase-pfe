@@ -10,6 +10,7 @@ import { UserController } from './users.controller';
 import { User } from '@/models/user';
 import { Package_requestController } from './package_requests.controller';
 import { Package_request } from '@/models/package_request';
+import { exec } from 'child_process';
 
 const userService = Container.get(UserService);
 const packageRequestService = Container.get(Package_requestService);
@@ -52,7 +53,16 @@ export class AdminController {
     try {
       let request: Package_request = await packageRequestController.approvePackage_request(req, res, next);
       if (request != null) {
-        res.status(200).json({ success: true, data: request, message: 'The package request has been successfully approved and the package was installed.' });
+
+        let command: string = `Rscript -e "install.packages(${request.name_package})"`;
+        exec (command, async (error, stdout, stderr) => {
+          if (error) {
+            res.status(500).json({ success: false, message: 'An error has occurred while installing the package: ' + error });
+            await packageRequestController.resetPackageRequest(req, res, next);
+          } else {
+            res.status(200).json({ success: true, data: request, message: 'The package request has been successfully approved and the package was installed.' });
+          }
+        });
       } else {
         res.status(500).json({ success: false, message: 'An error has occurred.' });
       }
