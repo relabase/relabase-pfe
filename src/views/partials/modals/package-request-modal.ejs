@@ -10,15 +10,17 @@
             </div>
         </div>
         <hr>
-        <div class="input-container spacing">
-            <input id="package-request-input-name" type="text" placeholder="Package name" />
-        </div>
+        <!-- TODO: clean up text -->
+        <label for="package-request-input-url">
+            The URL must be in the following format: <br/> <a>https://cran.r-project.org/package=name</a> <br> where <i>name</i> is the name of the package you are requesting.
+        </label>
         <div class="input-container spacing">
             <input id="package-request-input-url" type="text" placeholder="Url to the package" />
         </div>
         <div class="input-container spacing">
             <textarea id="package-request-input-reason" rows="4" cols="50" class="input-textarea" placeholder="Please provide a brief explanation of why you would like to use this package"></textarea>
         </div>
+        <div id="package-request-error-msg" class="error-text hide-content">The URL is not in the correct format.</div>
     </div>
 </div>
 
