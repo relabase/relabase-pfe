@@ -16,10 +16,22 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   };
 
   // Approve a package request
-  function approvePackage(packageId) {
-    // TODO: approve package logic
-    console.log('approved ' + packageId);
-    removePackage(packageId);
+  async function approvePackage(packageId) {
+    const res = await fetch('/admin/approve_package_request/' + packageId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        removePackage(packageId);
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    });
   }
 
   // Decline a package request

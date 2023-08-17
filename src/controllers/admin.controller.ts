@@ -41,4 +41,13 @@ export class AdminController {
       next(error);
     }
   };
+
+  public approvePackageRequest = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      
+      // res.status(200).json({success:true, data:user, message:'User successfully created!'});
+    } catch (error) {
+      next(error);
+    }
+  };
 }

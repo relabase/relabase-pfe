@@ -16,5 +16,6 @@ export class AdminRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.admin.getAdminPage);
     this.router.put(`${this.path}/approve_user_application/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.admin.approveUserApplicationAndCreateUser);
+    this.router.put(`${this.path}/approve_package_request/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.admin.approvePackageRequest);
   }
 }
