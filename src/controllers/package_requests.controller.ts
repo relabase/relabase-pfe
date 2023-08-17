@@ -119,7 +119,7 @@ export class Package_requestController {
 
       if(Package_requestData === null)
       {
-        res.status(409).json({ data: "Package_request doesn't exist", message: 'reject' });
+        res.status(409).json({ success: false, message: 'This package request does not exist.' });
       }
 
       const statusData:Status = await this.status.findStatusById(Package_requestData.status.id);
@@ -127,7 +127,7 @@ export class Package_requestController {
       if (statusData.name_status === "rejected")
       {
 
-        res.status(409).json({ data: "already reject", message: 'reject' });
+        res.status(409).json({ success: false, message: 'This package request has already been rejected.' });
         return;
       }
 
@@ -135,7 +135,7 @@ export class Package_requestController {
 
       if(reject === null)
       {
-        res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
+        res.status(409).json({ success: false, message: 'Unable to find the status ID to reject this application.' });
         return;
       }
       Package_requestData.status = reject;
@@ -143,7 +143,7 @@ export class Package_requestController {
 
 
 
-      res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
+      res.status(200).json({ success: true, data: updatePackage_requestData, message: 'Package request has been successfully rejected.' });
     } catch (error) {
       next(error);
     }

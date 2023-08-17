@@ -16,7 +16,7 @@
             </div>
           </div>
           <% } else if (type==='package' ) { %>
-            <div class="package-request" id="package-<%= item.id %>"
+            <div class="package-request" id="<%= item.id %>"
               data-name="<%= item.name_package %>"
               data-email="<%= item.user.email %>"
               data-package-link="<%= item.link %>"
