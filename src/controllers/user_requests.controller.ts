@@ -86,7 +86,7 @@ export class User_requestController {
     }
   };
 
-  public approveUser_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public approveUser_request = async (req: Request, res: Response, next: NextFunction): Promise<User_request> => {
     try {
       const user_requestId = Number(req.params.id);
       const User_requestData: User_request = await this.user_request.findUser_requestById(user_requestId);
@@ -118,9 +118,9 @@ export class User_requestController {
 
       const updateUser_requestData: User_request = await this.user_request.updateUser_request_status(User_requestData);
 
-      //create new user
+      return updateUser_requestData;
 
-      res.status(200).json({ success: true, data: 'updateUser_requestData', message: 'updated' });
+      //res.status(200).json({ success: true, data: updateUser_requestData, message: 'updated' });
     } catch (error) {
       next(error);
     }

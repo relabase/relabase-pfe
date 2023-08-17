@@ -42,18 +42,19 @@ export class UserController {
     }
   };
 
-  public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createUser = async (req: Request, res: Response, next: NextFunction): Promise<User> => {
     try {
       const userData: User = req.body;
       const dto:CreateUserDto = req.body
 
-      const role:Role = await this.role.findRoleById(dto.id_role);
+      //all new accounts are attributed the "user" role by default
+      const role:Role = await this.role.findRoleById(2);
       userData.role = role;
 
 
       const createUserData: User = await this.user.createUser(userData);
-
-      res.status(201).json({ data: createUserData, message: 'created' });
+      return createUserData;
+      //res.status(201).json({ data: createUserData, message: 'created' });
     } catch (error) {
       next(error);
     }

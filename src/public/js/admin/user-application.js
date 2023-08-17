@@ -16,7 +16,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
   // Approve user application
   async function approveUser(userId) {
-    const res = await fetch('/user_requests/approve/' + userId, {
+    const res = await fetch('/admin/approve_user_application/' + userId, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -27,6 +27,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
       if (data.success) {
         console.log('success');
         removeUser(userId);
+        alert(data.message);
       } else {
         console.log('not success');
       }

@@ -36,13 +36,7 @@ export class UserService {
   }
 
   public async createUser(userData: User): Promise<User> {
-    return new Promise((resolve)=>{
-      hash(userData.password, 10).then((hashedPass)=>{
-        userData.password = hashedPass;
-        resolve(repo.save(userData));
-      });
-
-    })
+    return repo.save(userData);
   }
 
   public async updateUser(userData: User): Promise<User> {
