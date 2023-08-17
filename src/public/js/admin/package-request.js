@@ -18,11 +18,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   // Approve a package request
   async function approvePackage(packageId) {
     const res = await fetch('/admin/approve_package_request/' + packageId, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
+      method: 'PUT'
     });
     res.json().then(data => {
       if (data.success) {

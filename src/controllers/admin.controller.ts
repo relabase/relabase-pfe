@@ -8,11 +8,14 @@ import { User_requestController } from './user_requests.controller';
 import { User_request } from '@/models/user_request';
 import { UserController } from './users.controller';
 import { User } from '@/models/user';
+import { Package_requestController } from './package_requests.controller';
+import { Package_request } from '@/models/package_request';
 
 const userService = Container.get(UserService);
 const packageRequestService = Container.get(Package_requestService);
 const userRequestService = Container.get(User_requestService);
 const userRequestController = new User_requestController();
+const packageRequestController = new Package_requestController();
 
 export class AdminController {
   public getAdminPage = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
@@ -31,12 +34,15 @@ export class AdminController {
     try {
       //update the user request row in table
       let request: User_request = await userRequestController.approveUser_request(req, res, next);
-      req.body = request;
-      //create a new user
-      const userController = new UserController();
-      
-      let user: User = await userController.createUser(req, res, next);
-      res.status(200).json({success:true, data:user, message:'User successfully created!'});
+      if (request != null) {
+        req.body = request;
+        //create a new user
+        const userController = new UserController();
+        let user: User = await userController.createUser(req, res, next);
+        res.status(200).json({ success: true, data: user, message: 'User successfully created!' });
+      } else {
+        res.status(500).json({ success: false, message:'An error has occurred.' });
+      }
     } catch (error) {
       next(error);
     }
@@ -44,8 +50,12 @@ export class AdminController {
 
   public approvePackageRequest = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      
-      // res.status(200).json({success:true, data:user, message:'User successfully created!'});
+      let request: Package_request = await packageRequestController.approvePackage_request(req, res, next);
+      if (request != null) {
+        res.status(200).json({ success: true, data: request, message: 'The package request has been successfully approved and the package was installed.' });
+      } else {
+        res.status(500).json({ success: false, message: 'An error has occurred.' });
+      }
     } catch (error) {
       next(error);
     }
