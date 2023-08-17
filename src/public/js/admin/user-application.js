@@ -25,7 +25,6 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
     });
     res.json().then(data => {
       if (data.success) {
-        console.log('success');
         removeUser(userId);
         alert(data.message);
       } else {
@@ -35,10 +34,23 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   }
 
   // Decline user application
-  function declineUser(userId) {
-    //TODO: decline user logic
-    console.log("decline " + userId);
-    removeUser(userId);
+  async function declineUser(userId) {
+    const res = await fetch('/user_requests/reject/' + userId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        removeUser(userId);
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    });
+    
   }
 
   // Remove user application from list

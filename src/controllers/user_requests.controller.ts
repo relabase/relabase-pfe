@@ -133,7 +133,7 @@ export class User_requestController {
 
       if(User_requestData === undefined)
       {
-        res.status(409).json({ data: "User_request doesn't exist", message: 'reject' });
+        res.status(409).json({ success:false, message: "This user application does not exist." });
         return;
       }
 
@@ -141,7 +141,7 @@ export class User_requestController {
       if (statusData.name_status === "rejected")
       {
 
-        res.status(409).json({ data: "already rejected", message: 'reject' });
+        res.status(409).json({ success:false, message: 'This user application has already been rejected.' });
         return;
       }
 
@@ -149,7 +149,7 @@ export class User_requestController {
 
       if(reject === null)
       {
-        res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
+        res.status(409).json({ success:false, message: 'Unable to find the status ID to reject this application.' });
         return;
       }
 
@@ -159,7 +159,7 @@ export class User_requestController {
 
 
 
-      res.status(200).json({ data: updateUser_requestData, message: 'updated' });
+      res.status(200).json({ success:true, data: updateUser_requestData, message: 'User application has been successfully rejected.' });
     } catch (error) {
       next(error);
     }
