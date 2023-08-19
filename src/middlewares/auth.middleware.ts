@@ -28,8 +28,6 @@ export const AuthMiddleware = (requestedPage?: string) => async (req: RequestWit
       } else { // otherwise, redirect to login
         res.redirect('/login');
       }
-    //} else if () { // if a user has selected a google account that has a pending application
-
     } else if (token == null) { // if a user who has not selected a google account
       if (requestedPage === 'login') { // tries to log in
         next(); // let them through
