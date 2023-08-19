@@ -11,17 +11,14 @@ export class LogService {
 
   public async findAllLog(): Promise<Log[]> {
     return repo.find({
-      select:{
-        id:true,
-        create_time:true,
-        text:true,
-        file_path_input:true,
-        file_path_result:true,
-        type:true,
-        user:{
-          id:true
-        }
-      },
+      select: [
+        'id',
+        'create_time',
+        'text',
+        'file_path_input',
+        'file_path_result',
+        'type'
+      ],
       relations:{
         user:true
       }
@@ -30,17 +27,14 @@ export class LogService {
 
   public async findLogById(logId: number): Promise<Log> {
     return repo.findOne({
-      select:{
-        id:true,
-        create_time:true,
-        text:true,
-        file_path_input:true,
-        file_path_result:true,
-        type:true,
-        user:{
-          id:true
-        }
-      },
+      select: [
+        'id',
+        'create_time',
+        'text',
+        'file_path_input',
+        'file_path_result',
+        'type'
+      ],
       where:{
         id:logId
       },

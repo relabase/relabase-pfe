@@ -23,28 +23,25 @@ export class AnalyzeController {
     }
   };
 
-  public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public sendScript = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const analyze_rscript_path = 'src/resources/analyze_rscript.R';
       const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
       const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
       
-      let filename: string = this.getTimestamp();
+      let filename: string = req.user.last_name + "_" + req.user.first_name + "_" + this.getTimestamp();
       this.generateRFileFromString(analyze_rscript_injected, filename, next);
 
       const listtypes:Type[] = await this.type.findAllType();
 
       let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
-        const currentUser:User = new User();
-        currentUser.id = 1; //TODO: change to real user
         if (error) {
           console.error(`Error executing R script: ${error}`);
-          //TODO switch id user to current user id
           const newLog = new Log();
-          newLog.file_path_input = `src/input/${filename}.Rmd`;
+          newLog.file_path_input = `${filename}.Rmd`;
           newLog.text = `Error executing R script: ${error}`;
-          newLog.user = currentUser;
+          newLog.user = req.user;
 
           newLog.type = listtypes.find(type => type.name_type === "failure");
 
@@ -56,13 +53,11 @@ export class AnalyzeController {
         }
         else
         {
-          //TODO switch id user to current user id
-
           const newLog = new Log();
-          newLog.file_path_input = `src/input/${filename}.Rmd`;
-          newLog.file_path_result = `../output/${filename}.htm`;
+          newLog.file_path_input = `${filename}.Rmd`;
+          newLog.file_path_result = `${filename}.htm`;
           newLog.text = `Success`;
-          newLog.user = currentUser;
+          newLog.user = req.user;
           newLog.type = newLog.type = listtypes.find(type => type.name_type === "success");
           this.log.createLog(newLog).catch((rej) =>
           {
@@ -95,7 +90,6 @@ export class AnalyzeController {
 
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
-      //TODO: add date and author's name
       let prepend: string = '```{r, error=TRUE, echo=FALSE}\n';
       fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
