@@ -8,6 +8,7 @@ import { RequestWithUser } from '@/interfaces/auth.interface';
 import { Log } from '@/models/log';
 import { TypeService } from '@/services/type.service';
 import { Type } from '@/models/type';
+import path from 'path';
 
 
 
@@ -91,7 +92,10 @@ export class AnalyzeController {
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
       let prepend: string = '```{r, error=TRUE, echo=FALSE}\n';
-      fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
+      let libraryPath: string = "file.path(dirname(dirname(getwd())), 'R_packages')";
+      let loadLibraries: string = `.libPaths(c(${libraryPath}, .libPaths()))\n`;
+      
+      fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + loadLibraries + script);
     } catch (error) {
       next(error);
     }
