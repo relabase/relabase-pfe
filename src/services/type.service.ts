@@ -7,6 +7,8 @@ const repo = connection.getRepository(Type);
 
 @Service()
 export class TypeService {
+
+  public SUCCESS: number = 1;
   public async findAllType(): Promise<Type[]> {
     return repo.find();
   }

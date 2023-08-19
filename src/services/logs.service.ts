@@ -24,6 +24,24 @@ export class LogService {
       }
     });
   }
+  public async findAllLogByType(typeId: number): Promise<Log[]> {
+    return repo.find({
+      select: [
+        'id',
+        'create_time',
+        'text',
+        'file_path_input',
+        'file_path_result',
+        'type'
+      ],
+      where: {
+        type: {id: typeId}
+      },
+      relations:{
+        user:true
+      }
+    });
+  }
 
   public async findLogById(logId: number): Promise<Log> {
     return repo.findOne({

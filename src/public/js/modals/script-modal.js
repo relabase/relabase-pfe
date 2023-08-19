@@ -1,5 +1,5 @@
 window.onload = function () {
-    
+  
 }
 
 
@@ -9,8 +9,17 @@ function addClickListener(elements, titleCallback) {
         element.addEventListener('click', function () {
             document.querySelector('#modal-title').textContent = titleCallback(element);
             document.querySelector('#modal').style.display = 'flex';
+            document.querySelector('#download-html-button').setAttribute('data-filename', element.querySelector('td').getAttribute('data-output'));
+            document.querySelector('#download-script-button').setAttribute('data-filename', element.querySelector('td').getAttribute('data-input'));
             displayScript(element.querySelector('td').id);
         });
+    });
+
+    document.getElementById('download-html-button').addEventListener('click', event => {
+      downloadFile(document.getElementById('download-html-button'), 'output');
+    });
+    document.getElementById('download-script-button').addEventListener('click', event => {
+      downloadFile(document.getElementById('download-script-button'), 'input');
     });
 }
 
@@ -26,12 +35,6 @@ async function displayScript(logId) {
     });
 
     response.json().then(data => {
-      document.getElementById('download-html-button').addEventListener('click', event => {
-        downloadFile(data.log.file_path_result, 'output');
-      });
-      document.getElementById('download-script-button').addEventListener('click', event => {
-        downloadFile(data.log.file_path_input, 'input');
-      });
       if (data.success) {
         iframeDocumentResults.head.innerHTML = `
         <style>
@@ -67,26 +70,28 @@ async function displayScript(logId) {
     });
 }
 
-async function downloadFile(filename, type) {
+async function downloadFile(object, type) {
   try {
+    let filename = object.getAttribute('data-filename');
     const response = await fetch(`/download/${type}/${encodeURIComponent(filename)}`, {
       method: 'GET',
     });
 
+
     if (!response.ok) {
-      throw new Error('Error downloading file');
+      alert("Error downloading file.");
+    } else {
+      const link = document.createElement('a');
+      const objectURL = URL.createObjectURL(await response.blob());
+      link.href = objectURL;
+      link.download = filename;
+      link.style.display = 'none';
+  
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectURL);
     }
-
-    const link = document.createElement('a');
-    const objectURL = URL.createObjectURL(await response.blob());
-    link.href = objectURL;
-    link.download = filename;
-    link.style.display = 'none';
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(objectURL);
   } catch (error) {
     console.error('Error:', error);
   }

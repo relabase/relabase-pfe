@@ -28,8 +28,9 @@ export class LogController {
       fs.readFile('src/output/' + findOneLogData.file_path_result, 'utf8', (err, data) => {
         if (err) {
           res.status(500).json({ success: false, message: 'An error occurred while fetching this script.' });
+        } else {
+          res.status(200).json({ success: true, data: data, log: findOneLogData });
         }
-        res.status(200).json({ success: true, data: data, log: findOneLogData });
       });
     } catch (error) {
       next(error);
