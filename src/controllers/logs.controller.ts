@@ -6,6 +6,7 @@ import { User } from '@/models/user';
 import { DeleteResult } from 'typeorm';
 import { CreateLogDto } from '@/dtos/logs.dto';
 import { Type } from '@/models/type';
+import fs from 'fs';
 
 export class LogController {
   public log = Container.get(LogService);
@@ -24,8 +25,12 @@ export class LogController {
     try {
       const logId = Number(req.params.id);
       const findOneLogData: Log = await this.log.findLogById(logId);
-
-      res.status(200).json({ data: findOneLogData, message: 'findOne' });
+      fs.readFile('src/output/' + findOneLogData.file_path_result, 'utf8', (err, data) => {
+        if (err) {
+          res.status(500).json({ success: false, message: 'An error occurred while fetching this script.' });
+        }
+        res.status(200).json({ success: true, data: data });
+      });
     } catch (error) {
       next(error);
     }

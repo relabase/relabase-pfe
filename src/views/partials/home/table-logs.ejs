@@ -4,7 +4,7 @@
 <tbody class="table-body">
     <% sortedLogs.forEach(log=> { %>
         <tr class="table-row" data-text="<%= log.text %>">
-            <td class="table-cell light-text" data-timestamp="<%= log.create_time.getTime() %>">
+            <td id="<%= log.id %>" class="table-cell light-text" data-timestamp="<%= log.create_time.getTime() %>">
                 <%= formatDate(log.create_time) %>
             </td>
         </tr>

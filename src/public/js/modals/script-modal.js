@@ -9,15 +9,15 @@ function addClickListener(elements, titleCallback) {
         element.addEventListener('click', function () {
             document.querySelector('#modal-title').textContent = titleCallback(element);
             document.querySelector('#modal').style.display = 'flex';
-            displayScript();
+            displayScript(element.querySelector('td').id);
         });
     });
 }
 
-async function displayScript() {
+async function displayScript(logId) {
     const iframeResults = document.getElementById('results-iframe');
     const iframeDocumentResults = iframeResults.contentDocument || iframeResults.contentWindow.document;
-    const response = await fetch('/analyze/testscript', {
+    const response = await fetch('/logs/' + logId, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -26,6 +26,7 @@ async function displayScript() {
     });
 
     response.json().then(data => {
+      if (data.success) {
         iframeDocumentResults.head.innerHTML = `
         <style>
           html, body {
@@ -54,5 +55,8 @@ async function displayScript() {
       `;
 
         iframeDocumentResults.body.innerHTML = data.data;
+      } else {
+        alert(data.message);
+      }
     });
 }

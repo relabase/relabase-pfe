@@ -16,14 +16,9 @@ export class LogRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, [AuthMiddleware(), AdminMiddleware], this.log.getLogs);
-    this.router.get(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.log.getLogById);
+    this.router.get(`${this.path}`, AuthMiddleware(), this.log.getLogs);
+    this.router.get(`${this.path}/:id(\\d+)`, AuthMiddleware(), this.log.getLogById);
     this.router.post(`${this.path}`,ValidationMiddleware(CreateLogDto),this.log.createLog);
     this.router.delete(`${this.path}/:id(\\d+)`, [AuthMiddleware(), AdminMiddleware], this.log.deleteLog);
-    /*
-    this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateUserDto), this.user.updateUser);
-
-    */
-
   }
 }
