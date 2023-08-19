@@ -16,5 +16,6 @@ export class AnalyzeRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, AuthMiddleware(), this.analyze.getView);
     this.router.post(`${this.path}`, [AuthMiddleware(), AnalyzeMiddleware], this.analyze.sendScript);
+    this.router.get(`${this.path}/testscript`, AuthMiddleware(), this.analyze.getTestOutputFile);
   }
 }

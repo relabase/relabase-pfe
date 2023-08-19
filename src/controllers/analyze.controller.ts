@@ -25,11 +25,16 @@ export class AnalyzeController {
 
   public sendScript = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const analyze_rscript_path = 'src/resources/analyze_rscript.R';
+      const analyze_rscript = fs.readFileSync(analyze_rscript_path, 'utf8');
+      const analyze_rscript_injected = analyze_rscript.replace('##USER_SCRIPT_INJECTED##', this.change_quotes(String(req.body.script))).replace('##CSV_DATA##', "data <- read.csv('../test/WalkTheDogs.csv')\n");
+      
       let filename: string = this.getTimestamp();
-      this.generateRFileFromString(String(req.body.script), filename, next);
+      this.generateRFileFromString(analyze_rscript_injected, filename, next);
+
       const listtypes:Type[] = await this.type.findAllType();
 
-      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\')"`;
+      let command: string = `Rscript -e "library(rmarkdown); rmarkdown::render(\'src/input/${filename}.Rmd\', output_format = \'html_document\', output_file = \'../output/${filename}.htm\');"`;
       exec(command, (error, stdout, stderr) => {
         const currentUser:User = new User();
         currentUser.id = 1; //TODO: change to real user
@@ -65,8 +70,8 @@ export class AnalyzeController {
           });
         }
         fs.readFile('src/output/' + filename + '.htm', 'utf8', (err, data) => {
-          if (error) {
-            console.error(`Error reading .htm file: ${error}`);
+          if (err) {
+            console.error(`Error reading .htm file: ${err}`);
 
             return;
           }
@@ -78,10 +83,20 @@ export class AnalyzeController {
     }
   };
 
+  public getTestOutputFile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    fs.readFile('src/output/' + '20230807213518' + '.htm', 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading .htm file: ${err}`);
+        return;
+      }
+      res.status(200).json({ data: data });
+    });
+  }
+
   private generateRFileFromString = async (script: string, filename: string, next: NextFunction): Promise<void> => {
     try {
       //TODO: add date and author's name
-      let prepend: string = '```{r}\n';
+      let prepend: string = '```{r, error=TRUE, echo=FALSE}\n';
       fs.writeFileSync(`src/input/${filename}.Rmd`, prepend + script);
     } catch (error) {
       next(error);
@@ -101,5 +116,14 @@ export class AnalyzeController {
     const timestamp = year + month + day + hours + minutes + seconds;
 
     return timestamp;
+  }
+
+  // Need to replace all double quotes with single quotes so that the R script can be executed
+  private change_quotes(script: string): string
+  {
+    //change all double quotes to single quotes
+    script = script.replace(/"/g, '\'');
+
+    return script;
   }
 }

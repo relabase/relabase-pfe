@@ -7,16 +7,15 @@
 
   .user-info,
   .package-info {
-    @include flex-direction;
+    @include flex($direction: column, $align: flex-start);
 
-    align-items: flex-start;
     margin-left: $content-outline-padding;
   }
 }
 
 // User Section
 .item-section {
-  @include flex-direction($direction: row);
+  @include flex($direction: row);
 
   flex-grow: 1;
   overflow: hidden;
@@ -78,4 +77,29 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+// server settings page
+.server-settings-div{
+  @include flex($direction: row, $justify: space-between);
+
+  height: 100%;
+  overflow: hidden;
+
+  > div{
+    @include flex($direction: column, $justify: center);
+
+    width: 100%;
+    margin: 0 $content-padding;
+    background-color: $background-color;
+    border-radius: $border-radius;
+  }
+  
+  > div:first-child{
+    flex: 1;
+  }
+
+  > div:last-child{
+    flex: 3;
+  }
 }
