@@ -25,7 +25,13 @@ export class AdminController {
       let packageRequests = await packageRequestService.findAllPackage_requestByStatus(1);
       let users = await userService.findAllUser();
 
-      res.render('admin', { userRequests, packageRequests, users, currentUser: `${req.user.first_name} ${req.user.last_name}`, isAdmin: req.user.role.id == 1 });
+      res.render('admin', { 
+        userRequests, 
+        packageRequests, 
+        users, 
+        currentUser: `${req.user.first_name} ${req.user.last_name}`, 
+        isAdmin: req.user.role.id == 1 
+      });
     } catch (error) {
       next(error);
     }
@@ -54,7 +60,7 @@ export class AdminController {
       let request: Package_request = await packageRequestController.approvePackage_request(req, res, next);
       if (request != null) {
 
-        let command: string = `Rscript -e "install.packages(${request.name_package})"`;
+        let command: string = `Rscript -e "install.packages('${request.name_package}', repos = 'https://cran.rstudio.com/', lib='src/R_packages')"`;
         exec (command, async (error, stdout, stderr) => {
           if (error) {
             res.status(500).json({ success: false, message: 'An error has occurred while installing the package: ' + error });
