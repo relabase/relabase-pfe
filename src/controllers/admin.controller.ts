@@ -89,4 +89,18 @@ export class AdminController {
       next(error);
     }
   };
+
+  public updateBlacklist = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      fsPromises.writeFile(path.join(__dirname, '../resources/blacklistKeywords.txt'), req.body.blacklist, 'utf-8')
+        .then(() => {
+          res.status(200).json({ success: true, message: 'The blacklist was successfully rewritten.' });
+        })
+        .catch(err => {
+          res.status(500).json({ success: false, message: 'An error has occurred.' });
+        });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
