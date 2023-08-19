@@ -73,7 +73,7 @@ async function displayScript(logId) {
 async function downloadFile(object, type) {
   try {
     let filename = object.getAttribute('data-filename');
-    const response = await fetch(`/download/${type}/${encodeURIComponent(filename)}`, {
+    const response = await fetch(`/download/script/${type}/${encodeURIComponent(filename)}`, {
       method: 'GET',
     });
 

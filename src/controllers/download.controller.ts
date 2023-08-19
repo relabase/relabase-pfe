@@ -26,4 +26,14 @@ export class DownloadController {
       next(error);
     }
   };
+
+  public getImageFile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      let filename: string = String(req.params.filename);
+      let filepath: string = path.join(__dirname, '../files/user_applications/' + filename);
+      res.sendFile(filepath);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

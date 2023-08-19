@@ -5,7 +5,7 @@
         <% if (type==='user' ) { %>
           <div class="user-application" id="<%= item.id %>"
             data-name="<%= item.first_name + ' ' + item.last_name %>" data-email="<%= item.email %>"
-            data-application-message="<%= item.message %>">
+            data-application-message="<%= item.message %>" data-application-image="<%= item.image %>">
             <div class="user-info">
               <div class="small-header">
                 <%= item.first_name + ' ' + item.last_name %>
