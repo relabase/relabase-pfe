@@ -6,10 +6,14 @@ export class CreateLogDto {
   @MaxLength(255)
   public text: string;
 
-  
+
   @IsNotEmpty()
   @IsNumber()
   public id_user: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  public id_type: number;
 }
 
 export class UpdateLogDto {

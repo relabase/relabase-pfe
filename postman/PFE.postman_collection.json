@@ -141,7 +141,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n{\r\n \"text\":\"FA\",\r\n \"id_user\": 1\r\n}\r\n",
+							"raw": "\r\n{\r\n \"text\":\"FA\",\r\n \"id_user\": 1,\r\n \"id_type\": 1\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -805,6 +805,131 @@
 							"path": [
 								"status",
 								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "type",
+			"item": [
+				{
+					"name": "localhost:3000/type (get)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/type",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/type/1 (getone)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/type/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"type",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/type (create)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_type\": \"testType\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/type",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/type/1 (update)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_type\":\"updateType\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/type/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"type",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/type/1 (delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/type/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"type",
+								"3"
 							]
 						}
 					},

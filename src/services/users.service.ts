@@ -11,7 +11,9 @@ export class UserService {
   public async findAllUser(): Promise<User[]> {
     return repo.find({
       relations: {
-        role:true
+        role:true,
+        logs: true,
+        package_requests: true
     }});
   }
 
@@ -21,7 +23,9 @@ export class UserService {
         id: userId
       },
       relations: {
-        role:true
+        role:true,
+        logs: true,
+        package_requests: true
     }});
   }
 
@@ -31,7 +35,9 @@ export class UserService {
         google_id: googleId
       },
       relations: {
-        role:true
+        role:true,
+        logs: true,
+        package_requests: true
     }});
   }
 

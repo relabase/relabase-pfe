@@ -13,7 +13,7 @@ export class Status {
   package_requests: Package_request[];
 
   @OneToMany(()=>User_request, user_request => user_request.status)
-  user_requests: User_request;
+  user_requests: User_request[];
 
 
 }

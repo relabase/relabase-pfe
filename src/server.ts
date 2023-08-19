@@ -14,13 +14,14 @@ import { StatusRoute } from './routes/status.route';
 import { HomeRoute } from './routes/home.route';
 import { HelpRoute } from './routes/help.route';
 import { StyleGuideRoute } from './routes/styleguide.route';
+import { TypeRoute } from './routes/type.route';
 
 ValidateEnv();
 
 const app = new App([
-        new UserRoute(), 
-        new AuthRoute(), 
-        new AnalyzeRoute(), 
+        new UserRoute(),
+        new AuthRoute(),
+        new AnalyzeRoute(),
         new AdminRoute(),
         new HistoryRoute(),
         new DownloadRoute(),
@@ -29,6 +30,7 @@ const app = new App([
         new User_requestRoute(),
         new Package_requestRoute(),
         new StatusRoute(),
+        new TypeRoute(),
         new HomeRoute(),
         new HelpRoute(),
         new StyleGuideRoute()
