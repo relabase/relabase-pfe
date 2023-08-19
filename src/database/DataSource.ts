@@ -6,6 +6,7 @@ import{ DataSource } from 'typeorm';
 import { Package_request } from '@/models/package_request';
 import { Status } from '@/models/status';
 import { User_request } from '@/models/user_request';
+import { Type } from '@/models/type';
 
 export const connection = new DataSource({
   type: "mysql",
@@ -14,7 +15,7 @@ export const connection = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,//TODO change password
   database: DB_DATABASE,
-  entities:[Role,User,Log, Package_request, Status, User_request]
+  entities:[Role,User,Log, Package_request, Status, User_request,Type]
 });
 
 connection.initialize().then(() => {

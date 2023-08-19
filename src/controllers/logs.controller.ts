@@ -5,6 +5,7 @@ import { LogService } from '@/services/logs.service';
 import { User } from '@/models/user';
 import { DeleteResult } from 'typeorm';
 import { CreateLogDto } from '@/dtos/logs.dto';
+import { Type } from '@/models/type';
 
 export class LogController {
   public log = Container.get(LogService);
@@ -36,10 +37,13 @@ export class LogController {
       const logData: Log = req.body;
       const dto: CreateLogDto = req.body;
 
+
       logData.user = new User();
       logData.user.id = dto.id_user;
+      logData.type = new Type();
+      logData.type.id = dto.id_type;
 
-      const createLogData: Log = await this.log.createLog(logData.file_path_input,logData.file_path_result,logData.user,logData.text);
+      const createLogData: Log = await this.log.createLog(logData);
 
       res.status(201).json({ data: createLogData, message: 'created' });
 
