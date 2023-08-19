@@ -13,6 +13,6 @@ export class DownloadRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/:filename`, AuthMiddleware(), this.download.getFile);
+    this.router.get(`${this.path}/:type/:filename`, AuthMiddleware(), this.download.getFile);
   }
 }

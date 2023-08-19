@@ -29,7 +29,7 @@ export class LogController {
         if (err) {
           res.status(500).json({ success: false, message: 'An error occurred while fetching this script.' });
         }
-        res.status(200).json({ success: true, data: data });
+        res.status(200).json({ success: true, data: data, log: findOneLogData });
       });
     } catch (error) {
       next(error);

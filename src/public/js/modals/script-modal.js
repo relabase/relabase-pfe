@@ -26,6 +26,12 @@ async function displayScript(logId) {
     });
 
     response.json().then(data => {
+      document.getElementById('download-html-button').addEventListener('click', event => {
+        downloadFile(data.log.file_path_result, 'output');
+      });
+      document.getElementById('download-script-button').addEventListener('click', event => {
+        downloadFile(data.log.file_path_input, 'input');
+      });
       if (data.success) {
         iframeDocumentResults.head.innerHTML = `
         <style>
@@ -59,4 +65,29 @@ async function displayScript(logId) {
         alert(data.message);
       }
     });
+}
+
+async function downloadFile(filename, type) {
+  try {
+    const response = await fetch(`/download/${type}/${encodeURIComponent(filename)}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('Error downloading file');
+    }
+
+    const link = document.createElement('a');
+    const objectURL = URL.createObjectURL(await response.blob());
+    link.href = objectURL;
+    link.download = filename;
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(objectURL);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }

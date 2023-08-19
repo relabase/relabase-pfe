@@ -4,8 +4,13 @@ import path from 'path';
 export class DownloadController {
   public getFile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      let filename: string = String(req.params.filename); //replace filename by id in db
-      let filepath: string = path.join(__dirname, '../output/' + filename + '.htm');
+      let filename: string = String(req.params.filename);
+      let filepath: string = '';
+      if (req.params.type == 'output') {
+        filepath = path.join(__dirname, '../output/' + filename);
+      } else {
+        filepath = path.join(__dirname, '../input/' + filename);
+      }
       res.sendFile(filepath, { 
         headers: {
           'Content-Type': 'text/html',
