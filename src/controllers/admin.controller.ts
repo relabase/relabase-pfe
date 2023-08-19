@@ -11,6 +11,8 @@ import { User } from '@/models/user';
 import { Package_requestController } from './package_requests.controller';
 import { Package_request } from '@/models/package_request';
 import { exec } from 'child_process';
+import { promises as fsPromises } from 'fs';
+import path from 'path';
 
 const userService = Container.get(UserService);
 const packageRequestService = Container.get(Package_requestService);
@@ -24,14 +26,25 @@ export class AdminController {
       let userRequests = await userRequestService.findAllUser_requestByStatus(1);
       let packageRequests = await packageRequestService.findAllPackage_requestByStatus(1);
       let users = await userService.findAllUser();
-
-      res.render('admin', { 
-        userRequests, 
-        packageRequests, 
-        users, 
-        currentUser: `${req.user.first_name} ${req.user.last_name}`, 
-        isAdmin: req.user.role.id == 1 
-      });
+      let blacklist;
+      
+      fsPromises.readFile(path.join(__dirname, '../resources/blacklistKeywords.txt'), 'utf-8')
+        .then(data => {
+          blacklist = data;
+        })
+        .catch(err => {
+          console.error('Error reading file:', err);
+        })
+        .finally(() => {
+          res.render('admin', { 
+            userRequests, 
+            packageRequests, 
+            users, 
+            currentUser: `${req.user.first_name} ${req.user.last_name}`, 
+            isAdmin: req.user.role.id == 1,
+            blacklist
+          });
+        })
     } catch (error) {
       next(error);
     }
