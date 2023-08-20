@@ -16,7 +16,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
   // Approve user application
   async function approveUser(userId) {
-    const res = await fetch('/user_requests/approve/' + userId, {
+    const res = await fetch('/admin/approve_user_application/' + userId, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -25,8 +25,8 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
     });
     res.json().then(data => {
       if (data.success) {
-        console.log('success');
         removeUser(userId);
+        alert(data.message);
       } else {
         console.log('not success');
       }
@@ -34,10 +34,23 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   }
 
   // Decline user application
-  function declineUser(userId) {
-    //TODO: decline user logic
-    console.log("decline " + userId);
-    removeUser(userId);
+  async function declineUser(userId) {
+    const res = await fetch('/user_requests/reject/' + userId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        removeUser(userId);
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    });
+    
   }
 
   // Remove user application from list
@@ -62,7 +75,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   }
 
   // Show the content of the application
-  function showUserContent(userId, userName, userEmail, userApplicationMessage) {
+  function showUserContent(userId, userName, userEmail, userApplicationMessage, userApplicationImage) {
     UI.userContent.classList.remove('hide-content');
     UI.noUserSelectedMessage.classList.add('hide-content');
 
@@ -70,7 +83,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
     UI.emailLink.href = `mailto:${userEmail}`;
     UI.emailLink.textContent = userEmail;
     UI.applicationMessage.textContent = userApplicationMessage;
-    UI.idImage.src = '../img/test-id.jpg';
+    UI.idImage.src = '/download/image/' + userApplicationImage;
     UI.idImage.style.filter = 'blur(10px)';
 
     UI.approveButton.onclick = () => approveUser(userId);
@@ -90,7 +103,7 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
 
         target.classList.add('active');
 
-        showUserContent(target.id, target.dataset.name, target.dataset.email, target.dataset.applicationMessage);
+        showUserContent(target.id, target.dataset.name, target.dataset.email, target.dataset.applicationMessage, target.dataset.applicationImage);
         return;
       }
       target = target.parentNode;

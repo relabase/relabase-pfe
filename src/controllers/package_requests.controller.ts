@@ -8,6 +8,7 @@ import { Status } from '@models/status';
 import { User } from '@/models/user';
 import { CreatePackage_requestDto } from '@/dtos/package_requests.dto';
 import { DeleteResult } from 'typeorm';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 export class Package_requestController {
   public package_request = Container.get(Package_requestService);
@@ -46,8 +47,10 @@ export class Package_requestController {
     }
   };
 
-  public createPackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createPackage_request = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
+      req.body.id_user = req.user.id;
+
       const package_requestData: Package_request = req.body;
       const dto: CreatePackage_requestDto = req.body;
 
@@ -56,7 +59,7 @@ export class Package_requestController {
 
       if(defaultStatus === null)
       {
-        res.status(409).json({ data: "Status 'in progress' doesn't exist", message: 'created' });
+        res.status(409).json({ success: false, message: 'The status for this request does not exist.' });
         return;
       }
       package_requestData.status = defaultStatus;
@@ -66,21 +69,21 @@ export class Package_requestController {
 
       const createPackage_requestData: Package_request = await this.package_request.createPackage_request(package_requestData);
 
-      res.status(201).json({ data: createPackage_requestData, message: 'created' });
+      res.status(201).json({ success: false, data: createPackage_requestData, message: 'Package request successfully sent.' });
     } catch (error) {
       console.log(error);
       next(error);
     }
   };
 
-  public approvePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public approvePackage_request = async (req: Request, res: Response, next: NextFunction): Promise<Package_request> => {
     try {
       const package_requestId = Number(req.params.id);
       const Package_requestData: Package_request = await this.package_request.findPackage_requestById(package_requestId);
 
       if(Package_requestData === null)
       {
-        res.status(409).json({ data: "Package_request doesn't exist", message: 'approve' });
+        res.status(409).json({ success: false, message: 'This package request does not exist.' });
         return;
       }
 
@@ -89,7 +92,7 @@ export class Package_requestController {
       if (statusData.name_status === "approved")
       {
 
-        res.status(409).json({ data: "already approved", message: 'approve' });
+        res.status(409).json({ success: false, message: 'This package request has already been approved.' });
         return;
       }
 
@@ -97,16 +100,15 @@ export class Package_requestController {
 
       if(approved === null)
       {
-        res.status(409).json({ data: "can't find status id for approved", message: 'approve' });
+        res.status(409).json({ success: false, message: 'Unable to find the status ID to approve this application.' });
         return;
       }
 
       Package_requestData.status = approved;
 
       const updatePackage_requestData: Package_request = await this.package_request.updatePackage_request_status(Package_requestData);
-
-
-      res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
+      return updatePackage_requestData;
+      res.status(200).json({ success: true, data: updatePackage_requestData, message: 'Package request has been successfully approved and the package has been installed.' });
     } catch (error) {
       next(error);
     }
@@ -119,7 +121,7 @@ export class Package_requestController {
 
       if(Package_requestData === null)
       {
-        res.status(409).json({ data: "Package_request doesn't exist", message: 'reject' });
+        res.status(409).json({ success: false, message: 'This package request does not exist.' });
       }
 
       const statusData:Status = await this.status.findStatusById(Package_requestData.status.id);
@@ -127,7 +129,7 @@ export class Package_requestController {
       if (statusData.name_status === "rejected")
       {
 
-        res.status(409).json({ data: "already reject", message: 'reject' });
+        res.status(409).json({ success: false, message: 'This package request has already been rejected.' });
         return;
       }
 
@@ -135,7 +137,7 @@ export class Package_requestController {
 
       if(reject === null)
       {
-        res.status(409).json({ data: "can't find status id for rejected", message: 'reject' });
+        res.status(409).json({ success: false, message: 'Unable to find the status ID to reject this application.' });
         return;
       }
       Package_requestData.status = reject;
@@ -143,7 +145,29 @@ export class Package_requestController {
 
 
 
-      res.status(200).json({ data: updatePackage_requestData, message: 'updated' });
+      res.status(200).json({ success: true, data: updatePackage_requestData, message: 'Package request has been successfully rejected.' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public resetPackageRequest = async (req: Request, res: Response, next: NextFunction): Promise<boolean> => {
+    try {
+      const package_requestId = Number(req.params.id);
+      const Package_requestData: Package_request = await this.package_request.findPackage_requestById(package_requestId);
+
+      const inprogress:Status = await this.status.findStatusByName("in progress");
+
+      if(inprogress === null)
+      {
+        return false;
+      }
+      Package_requestData.status = inprogress;
+      const updatePackage_requestData: Package_request = await this.package_request.updatePackage_request_status(Package_requestData);
+
+
+
+      return true;
     } catch (error) {
       next(error);
     }

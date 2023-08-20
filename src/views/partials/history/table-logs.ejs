@@ -8,11 +8,14 @@
     </tr>
     <% sortedLogs.forEach(log=> { %>
         <tr class="table-row" data-text="<%= log.text %>">
-            <td class="table-cell light-text" data-timestamp="<%= log.create_time.getTime() %>">
+            <td id="<%= log.id %>" class="table-cell light-text" 
+                data-timestamp="<%= log.create_time.getTime() %>" 
+                data-input="<%= log.file_path_input %>" 
+                data-output="<%= log.file_path_result %>">
                 <%= formatDate(log.create_time) %>
             </td>
             <td class="table-cell">
-                <%= log.userFullName %>
+                <%= log.user.first_name + " " + log.user.last_name %>
             </td>
         </tr>
         <% }) %>

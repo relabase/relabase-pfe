@@ -16,17 +16,37 @@ import { hideContent, removeElement, updateEmptyListMessage } from './admin-util
   };
 
   // Approve a package request
-  function approvePackage(packageId) {
-    // TODO: approve package logic
-    console.log('approved ' + packageId);
-    removePackage(packageId);
+  async function approvePackage(packageId) {
+    const res = await fetch('/admin/approve_package_request/' + packageId, {
+      method: 'PUT'
+    });
+    res.json().then(data => {
+      if (data.success) {
+        removePackage(packageId);
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    });
   }
 
   // Decline a package request
-  function declinePackage(packageId) {
-    // TODO: decline package logic
-    console.log('declined ' + packageId);
-    removePackage(packageId);
+  async function declinePackage(packageId) {
+    const res = await fetch('/package_requests/reject/' + packageId, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    res.json().then(data => {
+      if (data.success) {
+        removePackage(packageId);
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    });
   }
 
   // Remove a package request from the list

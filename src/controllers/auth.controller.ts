@@ -36,7 +36,10 @@ export class AuthController {
       let token: string = String(req.body.credential);
       const payload: TokenPayload = await this.verifyIdToken(token);
       if (payload != null) {
-        if (await this.userExists(payload.sub)) {
+        let user = await this.userExists(payload.sub);
+        if (user) {
+          user.last_login = new Date();
+          userService.updateUser(user);
           res.cookie('authToken', token, { httpOnly: true });
           res.status(200).json({ success : true, redirectUrl: 'home' });
         } else {

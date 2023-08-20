@@ -5,7 +5,7 @@
         <% if (type==='user' ) { %>
           <div class="user-application" id="<%= item.id %>"
             data-name="<%= item.first_name + ' ' + item.last_name %>" data-email="<%= item.email %>"
-            data-application-message="<%= item.message %>">
+            data-application-message="<%= item.message %>" data-application-image="<%= item.image %>">
             <div class="user-info">
               <div class="small-header">
                 <%= item.first_name + ' ' + item.last_name %>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <% } else if (type==='package' ) { %>
-            <div class="package-request" id="package-<%= item.id %>"
+            <div class="package-request" id="<%= item.id %>"
               data-name="<%= item.name_package %>"
               data-email="<%= item.user.email %>"
               data-package-link="<%= item.link %>"
